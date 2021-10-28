@@ -1,0 +1,24 @@
+{
+	"" : [
+		{
+			"functionName": "Port",
+			"pinNamePattern": "^(?:G?PI?(?<Group>[A-Z])_?(?<Index>\\d+))|(?:(?<Group>D?IO)_(?<Index>\\d+))|(?:PT(?<Group>[A-Z])(?<Index>\\d+))",
+			"position": "Right-Middle",
+			"electricalType": "I/O" 
+		},
+		{
+			"functionName": "Ground",
+			"pinNamePattern": "^GND$|^VSS",
+			"position": "Left-Lower"
+		},
+		{
+			"functionName": "PowerIn",
+			"pinNamePattern": "^VDD|^VCC",
+			"position": "Left-Upper"
+		},
+		{
+			"functionName": null,
+			"position": "Bottom-Center"
+		}
+	]
+}
