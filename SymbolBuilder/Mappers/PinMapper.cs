@@ -48,6 +48,12 @@ namespace SymbolBuilder.Mappers
             if (pinFunction == null) return;
 
             var match = pinFunction.PinNameRegex.Match(pin.NameClean);
+
+            if (match.Groups["Keep"].Success)
+            {
+                pin.UpdateName(match.Groups["Keep"].Value);
+            }
+
             var groupName = match.Groups["Group"].Success ? match.Groups["Group"].Value : pinFunction.Name;
             int.TryParse(match.Groups["Index"].Value, out var groupIndex);
 
@@ -61,7 +67,6 @@ namespace SymbolBuilder.Mappers
 
         public bool Map(string package, Pin pin)
         {
-
             if (_pinFunctions.Count == 0) LoadMappings();
 
             if (pin.FunctionName == null)

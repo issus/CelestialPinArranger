@@ -1,0 +1,92 @@
+﻿{
+  "": [
+    {
+      "functionName": "Osc",
+      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?|^RTCX?IN$|^RTCX?OUT$",
+      "position": "Left-Middle",
+      "electricalType": "I/O"
+    },
+    {
+      "functionName": "AnalogueGround",
+      "pinNamePattern": "^GNDA$|^(?<Keep>VSSA)\\d*|^AGND|^AVSS|^AVEE|^VIN-|^(?<Keep>VSS_RF)\\d*$",
+      "position": "Left-Lower",
+      "priority": 1
+    },
+    {
+      "functionName": "Ground",
+      "pinNamePattern": "^GND(?:\\d+)?$|^(?<Keep>VSS)\\d*|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD|^DRVSS$",
+      "position": "Left-Lower"
+    },
+    {
+      "functionName": "AnaloguePowerIn",
+      "pinNamePattern": "^VDDA|^VCCA|^AVIN|^PVIN|^AVCC|^AVDD|^VDDA|^DRVDD|^DRVCC",
+      "position": "Left-Upper",
+      "priority": 1,
+      "groupSpacing": 2
+    },
+    {
+      "functionName": "PowerIn",
+      "pinNamePattern": "^VCC\\d*$|^VIN|^DVDD|^PVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^(?<Keep>VCC_RF)\\d*$|^(?<Keep>VDDIO)\\d*$|^(?<Keep>VDD_DCDC)\\d*$|^(?<Keep>VDD_CORE)\\d*$|^(?<Keep>VDD)\\d*$|^VDDE$|^VDD_RADIO$|^VDD_PMU$|^VBATT?_PMU$|^(?<Keep>VDDBATT?)\\d*$|^(?<Keep>VBATT?_DCDC)\\d+$",
+      "position": "Left-Upper"
+    },
+    {
+      "functionName": "PowerInSecondary",
+      "pinNamePattern": "^VBATT?$|^VREGIN$",
+      "position": "Left-Upper",
+      "priority": 2
+    },
+    {
+      "functionName": "VREF",
+      "pinNamePattern": "^VREF[HLPN]",
+      "position": "Left-Middle",
+      "priority": 2
+    },
+    {
+      "functionName": "Enable",
+      "pinNamePattern": "^EN$|^EN1$|^EN2$|^EN_SYNC|^EN_LDO\\d|^EN_DCDC$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "Reset",
+      "pinNamePattern": "^RESET(?:_\\w)$|^RST$|^TRST$|^MCLR$|^RESET\\w$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "ISP",
+      "pinNamePattern": "^JTAG|^SWD$|^SWDIO$|^SWCLK$",
+      "position": "Left-Middle"
+    },
+    {
+      "functionName": "USB",
+      "pinNamePattern": "^(?<Group>USB\\d{0,2})_\\w+$",
+      "position": "Left-Middle"
+    },
+    {
+      "functionName": "RF",
+      "pinNamePattern": "^RF",
+      "position": "Right-Upper"
+    },
+    {
+      "functionName": "SPI",
+      "pinNamePattern": "^CS$|^C\\S\\$|^SDI$|^SDO$|^MOSI$|^MISO$|^SCLK$|^SDIN$|^MISO(SDO)$|^MOSI(SDI)$",
+      "position": "Right-Lower"
+    },
+    {
+      "functionName": "I2C",
+      "pinNamePattern": "^SCL$|^SDA$",
+      "position": "Right-Lower"
+    },
+    {
+      "functionName": "Port",
+      "pinNamePattern": "(?:P(?<Group>\\d)\\[(?<Index>\\d+)\\])|(?:RP?(?<Group>[A-Z])(?<Index>\\d+))|^(?:G?PI?O?(?<Group>[A-Z0-9])_?(?<Index>\\d+))|(?:(?<Group>D?IO)_(?<Index>\\d+))|(?:PT(?<Group>[A-Z])(?<Index>\\d+))",
+      "position": "Right-Middle"
+    },
+    {
+      "functionName": null,
+      "pinNamePattern": "",
+      "position": "Right-Middle"
+    }
+  ]
+}

@@ -6,12 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+    <PackageReference Include="System.Text.Json" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\AltiumSharp\AltiumSharp\AltiumSharp.csproj" />
     <ProjectReference Include="..\..\BxlSharp\BxlSharp\BxlSharp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="JSON\NXP MCUXpresso.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

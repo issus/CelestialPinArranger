@@ -29,6 +29,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new NxpMcuXpressoPinReader());
 
             cmbPinMapper.Items.AddRange(new object[]{ new DefaultMapper() });
+            cmbPinMapper.Items.AddRange(new object[] { new JsonMapper("JSON/NXP MCUXpresso.json") });
             cmbPinMapper.SelectedIndex = 0;
         }
 
@@ -194,6 +195,12 @@ namespace CelestialPinArranger
                 }
             }
             gridData.Rows.AddRange(rows.ToArray());
+        }
+
+        private void btnBatch_Click(object sender, EventArgs e)
+        {
+            var batch = new frmBatch();
+            batch.ShowDialog();
         }
     }
 }

@@ -7,11 +7,11 @@ namespace SymbolBuilder.Mappers
     {
         protected override void LoadMappings()
         {
-            AddFunction(string.Empty, "Osc", "^X(?:\\d\\d)?.+?_?|^OSC\\d+", PinPosition.From(PinSide.Left, PinAlignment.Middle));
+            AddFunction(string.Empty, "Osc", "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?", PinPosition.From(PinSide.Left, PinAlignment.Middle));
             AddFunction(string.Empty, "AnalogueGround", "^GNDA$|^VSSA|^AGND|^AVSS|^AVEE|^VIN-", PinPosition.From(PinSide.Left, PinAlignment.Lower), priority: 1);
             AddFunction(string.Empty, "Ground", "^GND(?:\\d+)?$|^VSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD|^DRVSS|^VSS_RF(?:\\d+)?$", PinPosition.From(PinSide.Left, PinAlignment.Lower));
             AddFunction(string.Empty, "AnaloguePowerIn", "^VDDA|^VCCA|^AVIN|^PVIN|^AVCC|^AVDD|^VDDA|^DRVDD|^DRVCC", PinPosition.From(PinSide.Left, PinAlignment.Upper), priority: 1, groupSpacing: 2);
-            AddFunction(string.Empty, "PowerIn", "^VDD|^VCC|^VIN|^DVDD|^PVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC\\d\\+|^VCC_RF(?:\\d+)?$", PinPosition.From(PinSide.Left, PinAlignment.Upper));
+            AddFunction(string.Empty, "PowerIn", "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$", PinPosition.From(PinSide.Left, PinAlignment.Upper));
             AddFunction(string.Empty, "PowerInSecondary", "^VBAT", PinPosition.From(PinSide.Left, PinAlignment.Upper), priority: 2, groupSpacing: 2);
             AddFunction(string.Empty, "PowerRef", "^VREF", PinPosition.From(PinSide.Left, PinAlignment.Upper), priority: 2);
             AddFunction(string.Empty, "PowerDecoupling", "^VCAP|^DCOUPL", PinPosition.From(PinSide.Left, PinAlignment.Middle));
@@ -20,6 +20,7 @@ namespace SymbolBuilder.Mappers
             AddFunction(string.Empty, "Reset", "^RESET|RESET$|^RST|RST$|^MCLR$", PinPosition.From(PinSide.Left, PinAlignment.Upper), 3);
             AddFunction(string.Empty, "RegulatorSwitch", "^SW$|^DCDC_SW$|^SW\\d$", PinPosition.From(PinSide.Right, PinAlignment.Upper), 1);
             AddFunction(string.Empty, "ISP", "^JTAG|^SWD", PinPosition.From(PinSide.Left, PinAlignment.Middle));
+            AddFunction(string.Empty, "USB", "^USB\\d{0,2}_D[PM]$", PinPosition.From(PinSide.Left, PinAlignment.Middle));
             AddFunction(string.Empty, "RF", "^RF", PinPosition.From(PinSide.Right, PinAlignment.Upper));
             AddFunction(string.Empty, "PowerOut", "^VOUT|^VO|^VOUT\\+$", PinPosition.From(PinSide.Right, PinAlignment.Upper), groupSpacing: 2);
             AddFunction(string.Empty, "SwitchmodeSetup", "^SS|^COMP|^SYNC|^RT$", PinPosition.From(PinSide.Left, PinAlignment.Lower), priority: 5, groupSpacing: 2);

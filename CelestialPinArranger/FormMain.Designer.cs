@@ -39,6 +39,8 @@
             this.btnLoadClipboard = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.btnBatch = new System.Windows.Forms.Button();
+            this.chkOpenAltium = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -55,7 +57,6 @@
             this.lstPackages = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.chkOpenAltium = new System.Windows.Forms.CheckBox();
             this.grpDetails.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -181,6 +182,7 @@
             // 
             // pnlBottom
             // 
+            this.pnlBottom.Controls.Add(this.btnBatch);
             this.pnlBottom.Controls.Add(this.chkOpenAltium);
             this.pnlBottom.Controls.Add(this.btnSave);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -188,6 +190,29 @@
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(921, 43);
             this.pnlBottom.TabIndex = 2;
+            // 
+            // btnBatch
+            // 
+            this.btnBatch.Location = new System.Drawing.Point(9, 8);
+            this.btnBatch.Name = "btnBatch";
+            this.btnBatch.Size = new System.Drawing.Size(118, 23);
+            this.btnBatch.TabIndex = 2;
+            this.btnBatch.Text = "Batch Processing";
+            this.btnBatch.UseVisualStyleBackColor = true;
+            this.btnBatch.Click += new System.EventHandler(this.btnBatch_Click);
+            // 
+            // chkOpenAltium
+            // 
+            this.chkOpenAltium.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkOpenAltium.AutoSize = true;
+            this.chkOpenAltium.Checked = true;
+            this.chkOpenAltium.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkOpenAltium.Location = new System.Drawing.Point(706, 11);
+            this.chkOpenAltium.Name = "chkOpenAltium";
+            this.chkOpenAltium.Size = new System.Drawing.Size(95, 17);
+            this.chkOpenAltium.TabIndex = 1;
+            this.chkOpenAltium.Text = "Open In Altium";
+            this.chkOpenAltium.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -354,19 +379,6 @@
             this.folderBrowserDialog.Description = "Location to save SchLibs";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // chkOpenAltium
-            // 
-            this.chkOpenAltium.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkOpenAltium.AutoSize = true;
-            this.chkOpenAltium.Checked = true;
-            this.chkOpenAltium.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkOpenAltium.Location = new System.Drawing.Point(706, 11);
-            this.chkOpenAltium.Name = "chkOpenAltium";
-            this.chkOpenAltium.Size = new System.Drawing.Size(95, 17);
-            this.chkOpenAltium.TabIndex = 1;
-            this.chkOpenAltium.Text = "Open In Altium";
-            this.chkOpenAltium.UseVisualStyleBackColor = true;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -422,6 +434,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.CheckBox chkOpenAltium;
+        private System.Windows.Forms.Button btnBatch;
     }
 }
 
