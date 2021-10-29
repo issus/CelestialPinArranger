@@ -26,6 +26,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new SchLibPinReader());
             PinDataReader.Register(new BxlPinReader());
             PinDataReader.Register(new CubeMXPinReader());
+            PinDataReader.Register(new NxpMcuXpressoPinReader());
 
             cmbPinMapper.Items.AddRange(new object[]{ new DefaultMapper() });
             cmbPinMapper.SelectedIndex = 0;

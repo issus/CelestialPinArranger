@@ -26,12 +26,12 @@ namespace SymbolBuilder.Readers
         public abstract string Filter { get; }
         public abstract string FileType { get; }
         public abstract bool CanRead(string fileName);
-        public abstract List<Package> LoadFromStream(Stream stream);
+        public abstract List<Package> LoadFromStream(Stream stream, string fileName);
 
         public List<Package> LoadFromFile(string fileName)
         {
             using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            return LoadFromStream(stream);
+            return LoadFromStream(stream, fileName);
         }
 
         public override string ToString()

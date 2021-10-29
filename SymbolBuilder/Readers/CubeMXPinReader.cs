@@ -37,7 +37,7 @@ namespace SymbolBuilder.Readers
             return false;
         }
 
-        public override List<Package> LoadFromStream(Stream stream)
+        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(stream);
@@ -62,7 +62,7 @@ namespace SymbolBuilder.Readers
                 string function = pin.Attributes["Type"]?.Value;
 
                 var signals = pin.SelectNodes("st:Signal", xmlnsManager);
-                var altFunctions = string.Join("/", signals.Cast<XmlNode>().Select(n => n.Attributes["Name"]?.Value));
+                var altFunctions = string.Join("/", signals.Cast<XmlNode>().Select(n => n.Attributes["Name"]?.Value).Where(n => n != "GPIO"));
 
                 Pin devicePin = new Pin(des, $"{name}/{altFunctions}".Trim('/'));
                 device.Pins.Add(devicePin);

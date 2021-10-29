@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using AltiumSharp;
+﻿using AltiumSharp;
 using AltiumSharp.BasicTypes;
 using AltiumSharp.Records;
 using SymbolBuilder.Mappers;
 using SymbolBuilder.Readers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SymbolBuilder
 {
@@ -87,7 +88,7 @@ namespace SymbolBuilder
         {
             return ((120 * (pinsBySide.TryGetValue(side, out var pins)
                 ? pins.Select(p => (int)Math.Ceiling(p.NameClean.Length * 0.5)).DefaultIfEmpty().Max()
-                : 0))/100)*100;
+                : 0)) / 100) * 100;
         }
 
         /// <summary>
@@ -100,8 +101,38 @@ namespace SymbolBuilder
                 _pinMapper.Map(package.Name, pin);
             }
 
+            // fix treating _N as active low when there is _P
+            Regex findDiffPairP = new Regex("(?<PairName>[\\w-]+?)_P\\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            foreach (var pin in package.Pins.Where(p => findDiffPairP.IsMatch(p.Name)))
+            {
+                var pMatch = findDiffPairP.Match(pin.Name).Groups["PairName"].Value;
+                var nName = string.Join("\\", pMatch.ToUpper().Replace("_P", "").ToArray()) + '\\';
+
+                var nPin = package.Pins.FirstOrDefault(p => p.Name.ToUpper() == nName);
+                if (nPin == null)
+                    continue;
+
+                nPin.UpdateName(nPin.Name.Replace(nName, pMatch + "_N"));
+            }
+
+            // Order non-port pins to make it less of a jumble
+            foreach (var alignmentPins in package.Pins.Where(p => p.FunctionName.ToLower() != "port").GroupBy(p => p.Position?.Alignment))
+            {
+                int order = 0;
+                foreach (var fn in alignmentPins.OrderByDescending(p => p.Name).GroupBy(p => p.FunctionName))
+                {
+                    foreach (var pin in fn)
+                    {
+                        pin.GroupIndex = order++;
+                    }
+
+                    order = 0;
+                }
+
+            }
+            
             var pinsBySide = package.Pins.Where(p => p.Position.HasValue).GroupBy(p => p.Position.Value.Side)
-                .ToDictionary(g => g.Key, g => g.OrderBy(p => p.Ordering).ToList());
+            .ToDictionary(g => g.Key, g => g.OrderBy(p => p.Ordering).ToList());
 
             var hcount = Math.Max(CountSideSlots(pinsBySide, PinSide.Top), CountSideSlots(pinsBySide, PinSide.Bottom));
             var vcount = Math.Max(CountSideSlots(pinsBySide, PinSide.Left), CountSideSlots(pinsBySide, PinSide.Right));
@@ -220,6 +251,7 @@ namespace SymbolBuilder
 
                 var lastFunctionName = alignmentPins.FirstOrDefault()?.FunctionName;
                 var lastGroupName = alignmentPins.FirstOrDefault()?.GroupName;
+
                 foreach (var pin in alignmentPins)
                 {
                     if (pin.Function.Name != lastFunctionName)

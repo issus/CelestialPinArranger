@@ -16,12 +16,21 @@ namespace SymbolBuilder.Readers
         public override bool CanRead(string fileName) =>
             Path.GetExtension(fileName).Equals(".bxl", StringComparison.InvariantCultureIgnoreCase);
 
-        public override List<Package> LoadFromStream(Stream stream)
+        public override List<Package> LoadFromStream(Stream stream, string fn = null)
         {
             var fileName = Path.GetTempFileName();
-            using (var fs = File.OpenWrite(fileName))
+            bool createdTempFile = false;
+            if (string.IsNullOrEmpty(fn))
             {
-                stream.CopyTo(fs);
+                using (var fs = File.OpenWrite(fileName))
+                {
+                    createdTempFile = true;
+                    stream.CopyTo(fs);
+                }
+            }
+            else
+            {
+                fileName = fn;
             }
 
             var data = BxlDocument.ReadFromFile(fileName, BxlFileType.FromExtension, out var logs);
@@ -44,7 +53,10 @@ namespace SymbolBuilder.Readers
                 result.Add(package);
             }
 
-            File.Delete(fileName);
+            if (createdTempFile)
+            {
+                File.Delete(fileName);
+            }
 
             return result;
         }

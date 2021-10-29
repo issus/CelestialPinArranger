@@ -10,7 +10,7 @@ namespace SymbolBuilder
     public class Pin
     {
         public string Designator { get; }
-        public string Name { get; }
+        public string Name { get; private set;  }
         public string FunctionName { get; internal set; }
         public PinPosition? Position { get; internal set; }
         public PinElectricalType? ElectricalType { get; internal set; }
@@ -34,6 +34,11 @@ namespace SymbolBuilder
             ElectricalType = pinElectricalType;
 
             Name = CleanupName(name);
+        }
+
+        public void UpdateName(string newName)
+        {
+            Name = newName;
         }
 
         internal static string CleanupName(string name)

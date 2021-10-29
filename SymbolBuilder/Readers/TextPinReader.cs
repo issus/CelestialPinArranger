@@ -63,7 +63,7 @@ namespace SymbolBuilder.Readers
             return null;
         }
 
-        public override List<Package> LoadFromStream(Stream stream)
+        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
         {
             using var reader = new StreamReader(stream, Encoding.UTF8, true);
 
