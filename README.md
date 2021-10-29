@@ -18,3 +18,10 @@ This does not understand opamps/non-rectangular type symbols. It will not split 
 - src/AltiumSharp
 - src/BxlSharp
 - src/CelestialPinArranger
+
+# Data Sources
+Currently you can import 
+* Altium SchLib files
+* Ultra Librarian BXL files
+* STM32CubeMX XML files (C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\db\mcu)
+* TSV/CSV files with very specific column ordering
