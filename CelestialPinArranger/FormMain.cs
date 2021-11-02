@@ -28,6 +28,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new CubeMXPinReader());
             PinDataReader.Register(new NxpMcuXpressoPinReader());
             PinDataReader.Register(new IbisPinReader());
+            PinDataReader.Register(new KiCad5PinReader());
 
             cmbPinMapper.Items.AddRange(new object[]{ new DefaultMapper() });
             cmbPinMapper.Items.AddRange(new object[] { new JsonMapper("JSON/NXP MCUXpresso.json") });
@@ -129,28 +130,47 @@ namespace CelestialPinArranger
             string folderName = Path.GetFileName(folderBrowserDialog.SelectedPath);
             var writer = new SchLibWriter();
 
+            var component = _schLib.Items[lstPackages.SelectedIndex];
+            var packageName = lstPackages.Items[lstPackages.SelectedIndex];
+            string fullFileName = SavePackage(folderName, writer, component, packageName);
+
+            if (chkOpenAltium.Checked)
+            {
+                ProcessStartInfo start = new ProcessStartInfo(fullFileName);
+                Process.Start(start);
+            }
+        }
+
+        private void btnSaveAll_Click(object sender, EventArgs e)
+        {
+            if (_schLib == null) return;
+
+            if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
+
+            string folderName = Path.GetFileName(folderBrowserDialog.SelectedPath);
+            var writer = new SchLibWriter();
+
             for (int i = 0; i < _schLib.Items.Count; ++i)
             {
                 var component = _schLib.Items[i];
                 var packageName = lstPackages.Items[i];
-
-                string fileName = $"SCH - {folderName.ToUpper()} - {String.Join(" ", txtManufacturer.Text.ToUpper(), txtPartNumber.Text.ToUpper(), packageName)}.SchLib".Replace("  ", " ");
-                var fullFileName = Path.Combine(folderBrowserDialog.SelectedPath, fileName);
-                
-                var newLib = new SchLib();
-                
-                component.LibReference = string.Join(" ", txtManufacturer.Text, txtPartNumber.Text, packageName);
-
-                newLib.Add(component);
-
-                writer.Write(newLib, fullFileName, true);
-
-                if (chkOpenAltium.Checked)
-                {
-                    ProcessStartInfo start = new ProcessStartInfo(fullFileName);
-                    Process.Start(start);
-                }
+                string fullFileName = SavePackage(folderName, writer, component, packageName);
             }
+        }
+
+        private string SavePackage(string folderName, SchLibWriter writer, AltiumSharp.Records.SchComponent component, object packageName)
+        {
+            string fileName = $"SCH - {folderName.ToUpper()} - {String.Join(" ", txtManufacturer.Text.ToUpper(), txtPartNumber.Text.ToUpper(), packageName)}.SchLib".Replace("  ", " ");
+            var fullFileName = Path.Combine(folderBrowserDialog.SelectedPath, fileName);
+
+            var newLib = new SchLib();
+
+            component.LibReference = string.Join(" ", txtManufacturer.Text, txtPartNumber.Text, packageName);
+
+            newLib.Add(component);
+
+            writer.Write(newLib, fullFileName, true);
+            return fullFileName;
         }
 
         private void UpdateSchLib(SchLib schLib)

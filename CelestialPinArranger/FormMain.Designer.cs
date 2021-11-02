@@ -57,6 +57,7 @@
             this.lstPackages = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnSaveAll = new System.Windows.Forms.Button();
             this.grpDetails.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -182,6 +183,7 @@
             // 
             // pnlBottom
             // 
+            this.pnlBottom.Controls.Add(this.btnSaveAll);
             this.pnlBottom.Controls.Add(this.btnBatch);
             this.pnlBottom.Controls.Add(this.chkOpenAltium);
             this.pnlBottom.Controls.Add(this.btnSave);
@@ -207,7 +209,7 @@
             this.chkOpenAltium.AutoSize = true;
             this.chkOpenAltium.Checked = true;
             this.chkOpenAltium.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkOpenAltium.Location = new System.Drawing.Point(706, 11);
+            this.chkOpenAltium.Location = new System.Drawing.Point(602, 11);
             this.chkOpenAltium.Name = "chkOpenAltium";
             this.chkOpenAltium.Size = new System.Drawing.Size(95, 17);
             this.chkOpenAltium.TabIndex = 1;
@@ -217,9 +219,9 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(807, 6);
+            this.btnSave.Location = new System.Drawing.Point(703, 6);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(102, 25);
+            this.btnSave.Size = new System.Drawing.Size(100, 25);
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -379,6 +381,16 @@
             this.folderBrowserDialog.Description = "Location to save SchLibs";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
+            // btnSaveAll
+            // 
+            this.btnSaveAll.Location = new System.Drawing.Point(809, 6);
+            this.btnSaveAll.Name = "btnSaveAll";
+            this.btnSaveAll.Size = new System.Drawing.Size(100, 25);
+            this.btnSaveAll.TabIndex = 3;
+            this.btnSaveAll.Text = "Save All";
+            this.btnSaveAll.UseVisualStyleBackColor = true;
+            this.btnSaveAll.Click += new System.EventHandler(this.btnSaveAll_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,6 +447,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.CheckBox chkOpenAltium;
         private System.Windows.Forms.Button btnBatch;
+        private System.Windows.Forms.Button btnSaveAll;
     }
 }
 
