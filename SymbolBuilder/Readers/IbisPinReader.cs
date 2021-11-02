@@ -36,7 +36,7 @@ namespace SymbolBuilder.Readers
                 {
                     string line = file.ReadLine();
                     string lowerLine = line.ToLower();
-                    if (line[0] == '|')
+                    if (line.Length == 0 || line[0] == '|')
                         continue;
 
                     if (!readingPins)
