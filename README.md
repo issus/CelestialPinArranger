@@ -7,12 +7,12 @@
 This is mostly tested on regulators, microcontrollers, rf, digital sensor ICs, and does reasonably well with devices it has never seen before.
 
 
-# What isnt it? 
+# What Isn't It? 
 This does not understand opamps/non-rectangular type symbols. It will not split a large microcontroller into multiple symbols - but it will fix all the pin namings and group ports.
 
 
 
-# USE
+# Use
  You will need to clone this into a directory that also has my AltiumSharp and BxlSharp repositories cloned into it.
  e.g.:
 - src/AltiumSharp
