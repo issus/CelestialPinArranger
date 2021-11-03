@@ -2,7 +2,7 @@
  This is highly experimental and not recommended for typical use. It's mostly a tool to play with building a .net core library that can make a sensible schematic symbol from a variety of input sources and be integrated into web/automation software in the future once it has had a LOT more development.
  
 # What Is It? 
- It will create a "best effort" rectangular schematic symbol from an Altium SchLib, UltraLibrarian BXL or specifically formatted CSV/TSV file then save as an Altium SchLib file format. The exported SchLib file name and component name are specifically formatted for my altium library and may not suit your requirements.
+ It will create a "best effort" rectangular schematic symbol from a variety of data sources then save as an Altium SchLib file format. The exported SchLib file name and component name are specifically formatted for my altium library and may not suit your requirements.
 
 This is mostly tested on regulators, microcontrollers, rf, digital sensor ICs, and does reasonably well with devices it has never seen before.
 
@@ -25,6 +25,7 @@ Currently you can import
 * Ultra Librarian BXL files
 * KiCad Lib files
 * STM32CubeMX XML files (C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\db\mcu)
+* STM8CubeMX XML files (C:\Program Files\STMicroelectronics\STM8Cube\STM8CubeMX\db\mcu)
 * NXP MCUXpresso (download from https://mcuxpresso.nxp.com/en/select_config_tools_data - open signal_configuration.xml from `device`\ksdk2_0\\`package` folder)
 * IBIS Models
 * TSV/CSV files with very specific column ordering
