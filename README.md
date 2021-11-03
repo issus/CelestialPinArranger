@@ -23,6 +23,8 @@ This does not understand opamps/non-rectangular type symbols. It will not split 
 Currently you can import 
 * Altium SchLib files
 * Ultra Librarian BXL files
+* KiCad Lib files
 * STM32CubeMX XML files (C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\db\mcu)
 * NXP MCUXpresso (download from https://mcuxpresso.nxp.com/en/select_config_tools_data - open signal_configuration.xml from `device`\ksdk2_0\\`package` folder)
+* IBIS Models
 * TSV/CSV files with very specific column ordering
