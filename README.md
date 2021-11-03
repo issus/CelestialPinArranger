@@ -1,4 +1,4 @@
-# CelestialPinArranger
+# Celestial Library Pin Arranger
  This is highly experimental and not recommended for typical use. It's mostly a tool to play with building a .net core library that can make a sensible schematic symbol from a variety of input sources and be integrated into web/automation software in the future once it has had a LOT more development.
  
 # What Is It? 
