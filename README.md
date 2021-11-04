@@ -27,5 +27,6 @@ Currently you can import
 * STM32CubeMX XML files (C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\db\mcu)
 * STM8CubeMX XML files (C:\Program Files\STMicroelectronics\STM8Cube\STM8CubeMX\db\mcu)
 * NXP MCUXpresso (download from https://mcuxpresso.nxp.com/en/select_config_tools_data - open signal_configuration.xml from `device`\ksdk2_0\\`package` folder)
+* TI SysConfig (C:\ti\sysconfig_1.10.0\dist\deviceData) NOTE: There is no data on fixed function pins (e.g.: power supply).
 * IBIS Models
 * TSV/CSV files with very specific column ordering
