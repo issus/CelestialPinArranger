@@ -29,6 +29,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new NxpMcuXpressoPinReader());
             PinDataReader.Register(new IbisPinReader());
             PinDataReader.Register(new KiCad5PinReader());
+            PinDataReader.Register(new TiSysConfigPinReader());
 
             cmbPinMapper.Items.AddRange(new object[]{ new DefaultMapper() });
             cmbPinMapper.Items.AddRange(new object[] { new JsonMapper("JSON/NXP MCUXpresso.json") });
