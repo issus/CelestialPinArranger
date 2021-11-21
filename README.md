@@ -14,6 +14,7 @@ This does not understand opamps/non-rectangular type symbols. It will not split 
 
 # Use
  You will need to clone this into a directory that also has my AltiumSharp, EagleSharp and BxlSharp repositories cloned into it. I should really put these into NuGet but haven't gotten around to it.
+ 
  e.g.:
 - src/AltiumSharp
 - src/BxlSharp
