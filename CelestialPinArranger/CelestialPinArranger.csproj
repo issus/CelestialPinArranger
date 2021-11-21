@@ -147,6 +147,10 @@
       <Project>{773d5e2d-e775-4905-a9d1-ef8e2d5ae47f}</Project>
       <Name>BxlSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\EagleSharp\EagleSharp\EagleSharp.csproj">
+      <Project>{0859fda7-c60f-4ebd-8c47-ad44ed7bc730}</Project>
+      <Name>EagleSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SymbolBuilder\SymbolBuilder.csproj">
       <Project>{3B203179-AFDF-479A-A42C-CD572B1ECB5A}</Project>
       <Name>SymbolBuilder</Name>

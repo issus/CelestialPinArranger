@@ -39,6 +39,7 @@
             this.btnLoadClipboard = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.btnSaveAll = new System.Windows.Forms.Button();
             this.btnBatch = new System.Windows.Forms.Button();
             this.chkOpenAltium = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
@@ -57,7 +58,6 @@
             this.lstPackages = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnSaveAll = new System.Windows.Forms.Button();
             this.grpDetails.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -192,6 +192,17 @@
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(921, 43);
             this.pnlBottom.TabIndex = 2;
+            // 
+            // btnSaveAll
+            // 
+            this.btnSaveAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveAll.Location = new System.Drawing.Point(809, 6);
+            this.btnSaveAll.Name = "btnSaveAll";
+            this.btnSaveAll.Size = new System.Drawing.Size(100, 25);
+            this.btnSaveAll.TabIndex = 3;
+            this.btnSaveAll.Text = "Save All";
+            this.btnSaveAll.UseVisualStyleBackColor = true;
+            this.btnSaveAll.Click += new System.EventHandler(this.btnSaveAll_Click);
             // 
             // btnBatch
             // 
@@ -380,16 +391,6 @@
             // 
             this.folderBrowserDialog.Description = "Location to save SchLibs";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            // 
-            // btnSaveAll
-            // 
-            this.btnSaveAll.Location = new System.Drawing.Point(809, 6);
-            this.btnSaveAll.Name = "btnSaveAll";
-            this.btnSaveAll.Size = new System.Drawing.Size(100, 25);
-            this.btnSaveAll.TabIndex = 3;
-            this.btnSaveAll.Text = "Save All";
-            this.btnSaveAll.UseVisualStyleBackColor = true;
-            this.btnSaveAll.Click += new System.EventHandler(this.btnSaveAll_Click);
             // 
             // FormMain
             // 

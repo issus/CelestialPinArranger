@@ -30,6 +30,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new IbisPinReader());
             PinDataReader.Register(new KiCad5PinReader());
             PinDataReader.Register(new TiSysConfigPinReader());
+            PinDataReader.Register(new EaglePinReader());
 
             cmbPinMapper.Items.AddRange(new object[]{ new DefaultMapper() });
             cmbPinMapper.Items.AddRange(new object[] { new JsonMapper("JSON/NXP MCUXpresso.json") });
@@ -52,6 +53,7 @@ namespace CelestialPinArranger
 
             arranger.LoadFromFile(openFileDialog.FileName);
             ArrangePins(arranger);
+            lstPackages.SelectedIndex = 0;
         }
 
         private void btnLoadClipboard_Click(object sender, EventArgs e)

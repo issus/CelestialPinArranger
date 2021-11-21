@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\AltiumSharp\AltiumSharp\AltiumSharp.csproj" />
     <ProjectReference Include="..\..\BxlSharp\BxlSharp\BxlSharp.csproj" />
+    <ProjectReference Include="..\..\EagleSharp\EagleSharp\EagleSharp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

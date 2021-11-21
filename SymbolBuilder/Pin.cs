@@ -82,10 +82,10 @@ namespace SymbolBuilder
                 if (item.ToUpper() == "EVENTOUT" || item.Trim() == "-") continue;
 
                 // handle active low bar
-                if (item.ToLower().Contains("_n") || item.ToLower().Contains("_b") || item.Contains("#") || item.EndsWith("*") || item.StartsWith("*"))
+                if (item.ToLower().Contains("_n") || item.ToLower().Contains("_b") || item.Contains("#") || item.EndsWith("*") || item.StartsWith("*") || item.StartsWith("!"))
                 {
                     var append = new StringBuilder();
-                    var segs = item.Replace("_n", "").Replace("_b", "").Replace("_N", "").Replace("_B", "").Replace("#", "").Trim('*').Trim();
+                    var segs = item.Replace("_n", "").Replace("_b", "").Replace("_N", "").Replace("_B", "").Replace("#", "").Trim('*').TrimStart('!').Trim();
                     foreach (var s in segs)
                     {
                         append.Append(s);
