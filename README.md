@@ -13,10 +13,11 @@ This does not understand opamps/non-rectangular type symbols. It will not split 
 
 
 # Use
- You will need to clone this into a directory that also has my AltiumSharp and BxlSharp repositories cloned into it.
+ You will need to clone this into a directory that also has my AltiumSharp, EagleSharp and BxlSharp repositories cloned into it. I should really put these into NuGet but haven't gotten around to it.
  e.g.:
 - src/AltiumSharp
 - src/BxlSharp
+- src/EagleSharp
 - src/CelestialPinArranger
 
 # Data Sources
@@ -24,6 +25,7 @@ Currently you can import
 * Altium SchLib files
 * Ultra Librarian BXL files
 * KiCad Lib files
+* Eagle Lbr Files
 * STM32CubeMX XML files (C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\db\mcu)
 * STM8CubeMX XML files (C:\Program Files\STMicroelectronics\STM8Cube\STM8CubeMX\db\mcu)
 * NXP MCUXpresso (download from https://mcuxpresso.nxp.com/en/select_config_tools_data - open signal_configuration.xml from `device`\ksdk2_0\\`package` folder)
