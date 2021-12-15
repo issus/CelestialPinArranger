@@ -30,6 +30,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new IbisPinReader());
             PinDataReader.Register(new KiCad5PinReader());
             PinDataReader.Register(new TiSysConfigPinReader());
+            PinDataReader.Register(new SimplicityStudioPinReader());
             PinDataReader.Register(new EaglePinReader());
 
             cmbPinMapper.Items.AddRange(new object[]{ new DefaultMapper() });
