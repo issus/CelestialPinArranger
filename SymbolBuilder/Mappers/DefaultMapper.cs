@@ -30,7 +30,7 @@ namespace SymbolBuilder.Mappers
             AddFunction(string.Empty, "SPI", @"^CS$|^C\S\$|^SDI$|^SDO$|^MOSI$|^MISO$|^SCLK$|^SDIN$|^MISO(SDO)$|^MOSI(SDI)$", PinPosition.From(PinSide.Right, PinAlignment.Lower));
             AddFunction(string.Empty, "I2C", "^SCL$|^SDA$", PinPosition.From(PinSide.Right, PinAlignment.Lower));
 
-            AddFunction(string.Empty, "Port", "(?:P(?<Group>\\d)\\[(?<Index>\\d+)\\])|(?:RP?(?<Group>[A-Z])(?<Index>\\d+))|^(?:G?PI?O?(?<Group>[A-Z0-9])_?(?<Index>\\d+))|(?:(?<Group>D?IO)_(?<Index>\\d+))|(?:PT(?<Group>[A-Z])(?<Index>\\d+))", PinPosition.From(PinSide.Right, PinAlignment.Middle));
+            AddFunction(string.Empty, "Port", "(?:P(?<Group>\\d)\\[(?<Index>\\d+)\\])|(?:RP?(?<Group>[A-Z])(?<Index>\\d+))|^(?:G?PI?O?(?<Group>[A-Z0-9])_?(?<Index>\\d+))|(?:(?<Group>D?IO)_(?<Index>\\d+))|(?:PT(?<Group>[A-Z])(?<Index>\\d+))|^(?<Group>[a-zA-Z]{1,2})(?<Index>\\d+)$", PinPosition.From(PinSide.Right, PinAlignment.Middle));
 
 
             SetDefaultFunction(string.Empty, PinPosition.From(PinSide.Right, PinAlignment.Middle));
