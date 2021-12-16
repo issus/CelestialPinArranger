@@ -6,6 +6,8 @@ namespace SymbolBuilder.Readers
 {
     public class IbisPinReader : PinDataReader
     {
+        static Regex ibisReader = new Regex("\\[[Cc]omponent\\]\\s+(?<Component>[^\\r\\n]+)[ \\t]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}\\[Package Model\\][^\\r\\n]*)?(?:[\\r\\n]{1,2}\\[[Mm]anufacturer\\]\\s+(?<Manufacturer>[^\\r\\n]+)[ \\t]*)(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}\\[Package Model\\][^\\r\\n]*)?(?:[\\r\\n]{1,2}\\[[Pp]ackage\\][^\\r\\n]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*)+(?:[\\r\\n]{1,2}\\[Package Model\\][^\\r\\n]*)?[\\r\\n]{1,2}\\[[Pp][Ii][Nn]]\\s*signal_name\\s+model_name[^\\r\\n]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\w\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}[ \\t]*(?:\\|[^\\r\\n]*)?|(?<PinDef>(?<Pin>\\w+)\\s+(?<Signal>\\S+)[^\\r\\n]*))*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}[\\t ]*\\[)", RegexOptions.Compiled);
+
         public override string Name => "IBIS";
 
         public override string Filter => "IBIS (*.ibs)|*.ibs";
@@ -21,65 +23,28 @@ namespace SymbolBuilder.Readers
         {
             var ret = new List<Package>();
 
-            // super simple, non-robust IBIS paser
+            // regex has been tested on every microchip, onsemi, analog devices IBIS file I could find... seems to work.
             using (StreamReader file = new StreamReader(stream))
             {
-                string component = "";
-                string manufacturer = "";
                 var pins = new List<Pin>();
 
-                bool readingPins = false;
+                string fileContents = file.ReadToEnd();
+                var matches = ibisReader.Matches(fileContents);
 
-                Regex pinLine = new Regex("(?<Designator>\\w{1,4})\\s+(?<Name>\\S+)\\s+", RegexOptions.Compiled);
-
-                while (file.Peek() >= 0)
+                foreach (Match match in matches)
                 {
-                    string line = file.ReadLine();
-                    string lowerLine = line.ToLower();
-                    if (line.Length == 0 || line[0] == '|')
-                        continue;
-
-                    if (!readingPins)
+                    Package pack = new Package(match.Groups["Component"].Value);
+                    int pinCount = match.Groups["Pin"].Captures.Count;
+                    for (int i = 0; i < pinCount; i++)
                     {
-                        if (lowerLine.StartsWith("[component]"))
-                        {
-                            component = line.Split(']')[1].Trim();
+                        if (match.Groups["Signal"].Captures[i].Value.ToLower() == "nc")
                             continue;
-                        }
 
-                        if (lowerLine.StartsWith("[manufacturer]"))
-                        {
-                            manufacturer = line.Split(']')[1].Trim();
-                            continue;
-                        }
-
-                        if (lowerLine.StartsWith("[pin]"))
-                        {
-                            readingPins = true;
-                            continue;
-                        }
+                        pack.Pins.Add(new Pin(match.Groups["Pin"].Captures[i].Value, match.Groups["Signal"].Captures[i].Value));
                     }
-                    else // reading pins
-                    {
-                        if (line[0] == '[')
-                            break;
-
-                        var match = pinLine.Match(line);
-                        if (!match.Success)
-                            continue;
-
-                        if (match.Groups["Name"].Value.ToUpper() == "NC")
-                            continue;
-
-                        pins.Add(new Pin(match.Groups["Designator"].Value, match.Groups["Name"].Value));
-                    }
+                    ret.Add(pack);
                 }
-
-                Package dev = new Package(component);
-                dev.Pins.AddRange(pins);
-                ret.Add(dev);
             }
-
 
             return ret;
         }
