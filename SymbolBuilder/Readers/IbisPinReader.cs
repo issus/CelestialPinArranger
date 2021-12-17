@@ -6,7 +6,7 @@ namespace SymbolBuilder.Readers
 {
     public class IbisPinReader : PinDataReader
     {
-        static Regex ibisReader = new Regex("\\[[Cc]omponent\\]\\s+(?<Component>[^\\r\\n]+)[ \\t]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}\\[Package Model\\][^\\r\\n]*)?(?:[\\r\\n]{1,2}\\[[Mm]anufacturer\\]\\s+(?<Manufacturer>[^\\r\\n]+)[ \\t]*)(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}\\[Package Model\\][^\\r\\n]*)?(?:[\\r\\n]{1,2}\\[[Pp]ackage\\][^\\r\\n]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*)+(?:[\\r\\n]{1,2}\\[Package Model\\][^\\r\\n]*)?[\\r\\n]{1,2}\\[[Pp][Ii][Nn]]\\s*signal_name\\s+model_name[^\\r\\n]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\w\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}[ \\t]*(?:\\|[^\\r\\n]*)?|(?<PinDef>(?<Pin>\\w+)\\s+(?<Signal>\\S+)[^\\r\\n]*))*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}[\\t ]*\\[)", RegexOptions.Compiled);
+        static Regex ibisReader = new Regex("\\[[Cc]omponent\\]\\s+(?<Component>[^\\r\\n]+)[ \\t]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:(?:(?:[\\r\\n]{1,2}\\[[Mm]anufacturer\\]\\s+(?<Manufacturer>[^\\r\\n]+)[ \\t]*)(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*)|(?:[\\r\\n]{1,2}\\[[Pp]ackage\\][^\\r\\n]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*)+|(?:[\\r\\n]{1,2}\\[Package Model\\][^\\r\\n]*)?)+[\\r\\n]{1,2}\\[[Pp][Ii][Nn]]\\s*signal_name\\s+model_name[^\\r\\n]*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\w\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}[ \\t]*(?:\\|[^\\r\\n]*)?|(?<PinDef>(?<Pin>\\w+)\\s+(?<Signal>\\S+)[^\\r\\n]*))*(?:[\\r\\n]{1,2}[ \\t]*(?:[^\\[\\r\\n][^\\r\\n]*)?)*(?:[\\r\\n]{1,2}[ \\t]*\\[)", RegexOptions.Compiled);
 
         public override string Name => "IBIS";
 
