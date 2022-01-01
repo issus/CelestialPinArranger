@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using SymbolBuilder.Model;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace SymbolBuilder.Readers
 {
@@ -19,29 +21,30 @@ namespace SymbolBuilder.Readers
             return File.Exists(fileName) && Path.GetExtension(fileName) == ".ibs";
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName = null)
         {
-            var ret = new List<Package>();
+            var ret = new List<SymbolDefinition>();
 
             // regex has been tested on every microchip, onsemi, analog devices IBIS file I could find... seems to work.
             using (StreamReader file = new StreamReader(stream))
             {
-                var pins = new List<Pin>();
-
                 string fileContents = file.ReadToEnd();
                 var matches = ibisReader.Matches(fileContents);
 
                 foreach (Match match in matches)
                 {
-                    Package pack = new Package(match.Groups["Component"].Value);
+                    SymbolDefinition pack = new SymbolDefinition(match.Groups["Component"].Value, match.Groups["Manufacturer"].Value);
                     int pinCount = match.Groups["Pin"].Captures.Count;
                     for (int i = 0; i < pinCount; i++)
                     {
                         if (match.Groups["Signal"].Captures[i].Value.ToLower() == "nc")
                             continue;
 
-                        pack.Pins.Add(new Pin(match.Groups["Pin"].Captures[i].Value, match.Groups["Signal"].Captures[i].Value));
+                        pack.SymbolBlocks.FirstOrDefault().Pins.Add(new PinDefinition(match.Groups["Pin"].Captures[i].Value, match.Groups["Signal"].Captures[i].Value));
                     }
+
+                    pack.CheckPinNames();
+
                     ret.Add(pack);
                 }
             }

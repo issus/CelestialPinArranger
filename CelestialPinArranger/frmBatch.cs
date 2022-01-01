@@ -2,6 +2,7 @@
 using AltiumSharp.Drawing;
 using SymbolBuilder;
 using SymbolBuilder.Mappers;
+using SymbolBuilder.Translators;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -142,7 +143,10 @@ namespace CelestialPinArranger
                 var arranger = new PinArranger(mapper);
                 arranger.LoadFromFile(Path.Combine(txtSourceDir.Text, file));
 
-                var schLib = arranger.Execute();
+                var symbolDefinitions = arranger.Execute();
+
+                AltiumOutput altiumOutput = new AltiumOutput();
+                var schLib = (SchLib)altiumOutput.GenerateNativeType(symbolDefinitions);
 
                 var component = schLib.Items[0];
 
@@ -164,15 +168,21 @@ namespace CelestialPinArranger
                         BackgroundColor = Color.White
                     };
 
-                    renderer.Component = schLib.Items[0];
-
-                    using (var image = new Bitmap(1024, 1024))
-                    using (var g = Graphics.FromImage(image))
+                    int r = 0;
+                    foreach (var item in schLib.Items)
                     {
-                        renderer.Render(g, 1024, 1024, true, false);
-                        image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", ".png")), ImageFormat.Png);
+                        renderer.Component = item;
+
+                        using (var image = new Bitmap(1024, 1024))
+                        using (var g = Graphics.FromImage(image))
+                        {
+                            renderer.Render(g, 1024, 1024, true, false);
+                            image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", $"_{r++}.png")), ImageFormat.Png);
+                        }
                     }
-                }
+
+
+                    }
 
                 Application.DoEvents();
             }

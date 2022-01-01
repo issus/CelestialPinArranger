@@ -9,6 +9,8 @@ using AltiumSharp.Drawing;
 using SymbolBuilder;
 using SymbolBuilder.Mappers;
 using SymbolBuilder.Readers;
+using SymbolBuilder.Translators;
+using System.Linq;
 
 namespace CelestialPinArranger
 {
@@ -203,18 +205,25 @@ namespace CelestialPinArranger
             lstPackages.Items.Clear();
             gridData.Rows.Clear();
 
-            var schLib = arranger.Execute();
+            var symbolDefinitions = arranger.Execute();
+
+            txtManufacturer.Text = symbolDefinitions.FirstOrDefault()?.Manufacturer;
+            txtPartNumber.Text = symbolDefinitions.FirstOrDefault()?.PartNumber;
+
+            AltiumOutput altiumOutput = new AltiumOutput();
+            var schLib = (SchLib)altiumOutput.GenerateNativeType(symbolDefinitions);
+
             UpdateSchLib(schLib);
 
             var rows = new List<DataGridViewRow>();
-            foreach (var package in arranger.Packages)
+            foreach (var package in arranger.Symbols)
             {
-                lstPackages.Items.Add(package.Name);
+                lstPackages.Items.Add($"{package.PartNumber} {package.DevicePackage}");
 
                 foreach (var pin in package.Pins)
                 {
                     var row = gridData.RowTemplate.Clone() as DataGridViewRow;
-                    row.CreateCells(gridData, package.Name, pin.Designator, pin.Name, pin.FunctionName, pin.Position, pin.ElectricalType);
+                    row.CreateCells(gridData, $"{package.PartNumber} {package.DevicePackage}", pin.Designator, pin.SignalName.Name, pin.Port, pin.PinPosition, pin.ElectricalType);
                     row.Tag = pin;
                     rows.Add(row);
                 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SymbolBuilder
+namespace SymbolBuilder.Model
 {
     public enum PinSide
     {

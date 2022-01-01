@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
+using SymbolBuilder.Model;
 
 namespace SymbolBuilder.Readers
 {
@@ -19,9 +20,9 @@ namespace SymbolBuilder.Readers
             return File.Exists(fileName) && Path.GetExtension(fileName) == ".lbr";
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName)
         {
-            var ret = new List<Package>();
+            var ret = new List<SymbolDefinition>();
 
             var xs = new XmlSerializer(typeof(Eagle),"");
 
@@ -35,9 +36,11 @@ namespace SymbolBuilder.Readers
                 string name = deviceSet.Name;
                 foreach (var device in deviceSet.Devices.Device)
                 {
-                    Package dev = new Package($"{name} {device.Package}");
+                    SymbolDefinition dev = new SymbolDefinition(name, "", device.Package);
 
-                    dev.Pins.AddRange(device.Connects.Connect.Select(o => new Pin(o.Pad, o.Pin)));
+                    dev.SymbolBlocks.FirstOrDefault().Pins.AddRange(device.Connects.Connect.Select(o => new PinDefinition(o.Pad, o.Pin)));
+                    
+                    dev.CheckPinNames();
                     ret.Add(dev);
                 }
             }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SymbolBuilder.Model;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -38,7 +39,7 @@ namespace SymbolBuilder.Readers
             return false;
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName = null)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(stream);
@@ -52,9 +53,9 @@ namespace SymbolBuilder.Readers
             var partInfo = mcu.SelectSingleNode("//part_information/part_number", xmlnsManager);
             string refName = partInfo.Attributes["id"]?.Value;
             string package = partInfo.FirstChild.InnerText;
-            
 
-            Package device = new Package($"{refName} {package}");
+
+            SymbolDefinition device = new SymbolDefinition(refName, "NXP", package);
 
             Regex ncCheck = new Regex("^NC(?:\\d+)?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
@@ -67,10 +68,12 @@ namespace SymbolBuilder.Readers
                 if (ncCheck.IsMatch(name))
                     continue;
 
-                device.Pins.Add(new Pin(des, name));
+                device.SymbolBlocks.FirstOrDefault().Pins.Add(new PinDefinition(des, name));
             }
 
-            var list = new List<Package>();
+            var list = new List<SymbolDefinition>();
+
+            device.CheckPinNames();
             list.Add(device);
             return list;
         }

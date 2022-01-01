@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using SymbolBuilder.Model;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SymbolBuilder.Readers
@@ -17,15 +19,15 @@ namespace SymbolBuilder.Readers
             return File.Exists(fileName) && Path.GetExtension(fileName) == ".lib";
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName = null)
         {
-            var ret = new List<Package>();
+            var ret = new List<SymbolDefinition>();
 
             // super simple, kicad lib parser
             using (StreamReader file = new StreamReader(stream))
             {
                 string component = "";
-                var pins = new List<Pin>();
+                var pins = new List<PinDefinition>();
 
                 bool readingDef = false;
                 bool readingPins = false;
@@ -60,8 +62,10 @@ namespace SymbolBuilder.Readers
                             readingPins = false;
 
 
-                            Package dev = new Package(component);
-                            dev.Pins.AddRange(pins);
+                            SymbolDefinition dev = new SymbolDefinition(component);
+                            dev.SymbolBlocks.FirstOrDefault().Pins.AddRange(pins);
+
+                            dev.CheckPinNames();
                             ret.Add(dev);
                             continue;
                         }
@@ -82,7 +86,7 @@ namespace SymbolBuilder.Readers
                             if (match.Groups["Name"].Value.ToUpper() == "NC")
                                 continue;
 
-                            pins.Add(new Pin(match.Groups["Designator"].Value, match.Groups["Name"].Value));
+                            pins.Add(new PinDefinition(match.Groups["Designator"].Value, match.Groups["Name"].Value));
                         }
                     }
                 }

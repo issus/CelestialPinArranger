@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymbolBuilder.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,7 +66,7 @@ namespace SymbolBuilder.Readers
             return false;
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName = null)
         {
             if (fileName == null)
                 throw new ArgumentException("fileName must be specified, this reader needs to read multiple files.");
@@ -123,7 +124,7 @@ namespace SymbolBuilder.Readers
             string refName = mcu.Attributes["label"]?.Value;
             string package = pinOut.Attributes["description"]?.Value.Replace(",", "");
 
-            Package device = new Package($"SI LABS {refName} {package}");
+            SymbolDefinition device = new SymbolDefinition(refName, "SI Labs", package);
 
             int maxPinNumber = 0;
 
@@ -134,7 +135,7 @@ namespace SymbolBuilder.Readers
                 string des = pin.Attributes["number"]?.Value;
                 string portBank = pin.Attributes["portBankIndex"]?.Value;
                 string pinIndex = pin.Attributes["pinIndex"]?.Value;
-                string altFunctions = "";
+                List<PinSignal> altFunctions = new List<PinSignal>();
 
                 int pinNum = 0;
                 if (Int32.TryParse(des, out pinNum))
@@ -145,21 +146,24 @@ namespace SymbolBuilder.Readers
                 if (!string.IsNullOrEmpty(portBank) && !string.IsNullOrEmpty(pinIndex))
                 {
                     var signals = pinModules.Where(m => m.PortBankIndex == portBank && m.pinIndex == pinIndex);
-                    altFunctions = string.Join("/", signals.Select(s => s.FullName));
+                    altFunctions.AddRange(signals.Select(s => new PinSignal(s.FullName)));
                 }
 
-                Pin devicePin = new Pin(des, $"{name}/{altFunctions}".Trim('/'));
-                device.Pins.Add(devicePin);
+                PinDefinition devicePin = new PinDefinition(des, name) { AlternativeSignals = altFunctions };
+                device.SymbolBlocks.FirstOrDefault().Pins.Add(devicePin);
             }
 
             var padDescription = pinOut.Attributes["padDescription"]?.Value;
 
             if (maxPinNumber != 0 && !string.IsNullOrEmpty(padDescription) && padDescription.Contains("GND"))
             {
-                device.Pins.Add(new Pin((maxPinNumber + 1).ToString(), padDescription));
+                device.SymbolBlocks.FirstOrDefault().Pins.Add(new PinDefinition((maxPinNumber + 1).ToString(), padDescription));
             }
 
-            var list = new List<Package>();
+            var list = new List<SymbolDefinition>();
+
+            device.CheckPinNames();
+
             list.Add(device);
             return list;
         }

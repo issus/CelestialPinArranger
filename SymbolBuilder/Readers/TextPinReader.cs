@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using AltiumSharp.Records;
+using SymbolBuilder.Model;
 
 namespace SymbolBuilder.Readers
 {
@@ -63,7 +63,7 @@ namespace SymbolBuilder.Readers
             return null;
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName = null)
         {
             using var reader = new StreamReader(stream, Encoding.UTF8, true);
 
@@ -78,11 +78,11 @@ namespace SymbolBuilder.Readers
             bool IsPackageDesignator(int index) =>
                 index != ndxName && index != ndxFunction && index != ndxPosition && index != ndxType;
 
-            var packages = new List<Package>();
+            var packages = new List<SymbolDefinition>();
             for (int i = 0; i < columns.Count; i++)
             {
                 if (!IsPackageDesignator(i)) continue;
-                packages.Add(new Package(columns[i].Trim()));
+                packages.Add(new SymbolDefinition(columns[i].Trim()));
             }
 
             foreach (var row in DoGetRows(reader))
@@ -97,7 +97,7 @@ namespace SymbolBuilder.Readers
                     var designator = row[i].Trim();
                     if (IsValueEmpty(designator)) continue;
 
-                    packages[i].Pins.Add(new Pin(designator, pinName, pinFunction, pinPosition, pinType));
+                    packages[i].SymbolBlocks.FirstOrDefault().Pins.Add(new PinDefinition(designator, pinName)); // todo:   pinFunction, pinPosition, pinType));
                 }
             }
 

@@ -16,7 +16,7 @@ namespace SymbolBuilder.Readers
             _instances.Add(reader);
         }
 
-        public static List<Package> Load(string fileName)
+        public static List<Model.SymbolDefinition> Load(string fileName)
         {
             var reader = Instances.FirstOrDefault(r => r.CanRead(fileName));
             return reader?.LoadFromFile(fileName);
@@ -26,9 +26,9 @@ namespace SymbolBuilder.Readers
         public abstract string Filter { get; }
         public abstract string FileType { get; }
         public abstract bool CanRead(string fileName);
-        public abstract List<Package> LoadFromStream(Stream stream, string fileName);
+        public abstract List<Model.SymbolDefinition> LoadFromStream(Stream stream, string fileName);
 
-        public List<Package> LoadFromFile(string fileName)
+        public List<Model.SymbolDefinition> LoadFromFile(string fileName)
         {
             using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             return LoadFromStream(stream, fileName);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SymbolBuilder.Model;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -37,7 +38,7 @@ namespace SymbolBuilder.Readers
             return false;
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName = null)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName = null)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(stream);
@@ -51,9 +52,8 @@ namespace SymbolBuilder.Readers
             string package = mcu.Attributes["Package"]?.Value;
             string refName = mcu.Attributes["RefName"]?.Value;
 
-            Package device = new Package(package);
+            SymbolDefinition device = new SymbolDefinition(refName, "ST Microelectronics", package);
             
-
             var pins = mcu.SelectNodes("/st:Mcu/st:Pin", xmlnsManager);
             foreach (XmlNode pin in pins)
             {
@@ -62,13 +62,15 @@ namespace SymbolBuilder.Readers
                 string function = pin.Attributes["Type"]?.Value;
 
                 var signals = pin.SelectNodes("st:Signal", xmlnsManager);
-                var altFunctions = string.Join("/", signals.Cast<XmlNode>().Select(n => n.Attributes["Name"]?.Value).Where(n => n != "GPIO"));
 
-                Pin devicePin = new Pin(des, $"{name}/{altFunctions}".Trim('/'));
-                device.Pins.Add(devicePin);
+                PinDefinition devicePin = new PinDefinition(des, name);
+                devicePin.AlternativeSignals.AddRange(signals.Cast<XmlNode>().Select(n => n.Attributes["Name"]?.Value).Where(n => n != "GPIO").Select(n => new PinSignal(n)));
+
+                device.SymbolBlocks.FirstOrDefault().Pins.Add(devicePin);
+                device.CheckPinNames();
             }
 
-            var list = new List<Package>();
+            var list = new List<SymbolDefinition>();
             list.Add(device);
             return list;
         }

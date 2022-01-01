@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SymbolBuilder.Model;
+using System;
 using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using AltiumSharp.Records;
 
 namespace SymbolBuilder.Mappers
 {
@@ -76,6 +76,11 @@ namespace SymbolBuilder.Mappers
             return function.TryGetProperty("groupSpacing", out var element) ? element.GetInt32() : 1;
         }
 
+        private static PinClass GetPinClass(JsonElement function)
+        {
+            return function.TryGetProperty("pinClass", out var element) ? Enum.TryParse<PinClass>(element.GetString(), out var result) ? result : PinClass.Generic : PinClass.Generic;
+        }
+
         protected override void LoadMappings()
         {
             var json = JsonDocument.Parse(File.ReadAllText(_fileName));
@@ -90,6 +95,7 @@ namespace SymbolBuilder.Mappers
                 {
                     if (function.ValueKind != JsonValueKind.Object) throw new InvalidDataException("Function mapping should be an object.");
 
+                    var pinClass = GetPinClass(function);
                     var functionName = function.GetProperty("functionName").GetString();
                     var position = GetPinPosition(function);
                     var priority = GetPriority(function);
@@ -104,7 +110,7 @@ namespace SymbolBuilder.Mappers
                     else
                     {
                         var pinNamePattern = function.GetProperty("pinNamePattern").GetString();
-                        AddFunction(packagePattern, functionName, pinNamePattern, position, priority, electricalType, functionSpacing, groupSpacing);
+                        AddFunction(packagePattern, pinClass, functionName, pinNamePattern, position, priority, electricalType, functionSpacing, groupSpacing);
                     }
                 }
             }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.Json;
 using System.Linq;
+using SymbolBuilder.Model;
 
 namespace SymbolBuilder.Readers
 {
@@ -34,9 +35,9 @@ namespace SymbolBuilder.Readers
             return File.Exists(fileName) && Path.GetExtension(fileName) == ".json";
         }
 
-        public override List<Package> LoadFromStream(Stream stream, string fileName)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName)
         {
-            var ret = new List<Package>();
+            var ret = new List<SymbolDefinition>();
 
             var json = JsonDocument.Parse(stream);
 
@@ -84,7 +85,7 @@ namespace SymbolBuilder.Readers
                 if (pins.ValueKind != JsonValueKind.Array)
                     continue;
 
-                Package pack = new Package($"{partName} - {packageName}");
+                SymbolDefinition pack = new SymbolDefinition(partName, "TI", packageName);
 
                 /*
                 foreach (var peripheralId in part.Value.GetProperty("peripheralWrapper").EnumerateArray())
@@ -105,15 +106,18 @@ namespace SymbolBuilder.Readers
 
                     var pinName = json.RootElement.GetProperty("devicePins").GetProperty(pinId).GetProperty("name").GetString();
 
+                    List<PinSignal> altFunctions = new List<PinSignal>();
+
                     var muxPin = muxes.FirstOrDefault(m => m.DevicePinId == pinId);
                     if (muxPin != null)
                     {
-                        pinName = $"{pinName}/" + string.Join("/", muxPin.PeripheralPins.Select(p => p.Name));
+                        altFunctions.AddRange(muxPin.PeripheralPins.Select(p => new PinSignal(p.Name)));
                     }
 
-                    pack.Pins.Add(new Pin(ball, pinName));
+                    pack.SymbolBlocks.FirstOrDefault().Pins.Add(new PinDefinition(ball, pinName) { AlternativeSignals = altFunctions });
                 }
 
+                pack.CheckPinNames();
                 ret.Add(pack);
             }
 

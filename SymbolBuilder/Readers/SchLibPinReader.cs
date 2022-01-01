@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AltiumSharp;
+using SymbolBuilder.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,41 +16,40 @@ namespace SymbolBuilder.Readers
         public override bool CanRead(string fileName) =>
             Path.GetExtension(fileName).Equals(".schlib", StringComparison.InvariantCultureIgnoreCase);
 
-        public override List<Package> LoadFromStream(Stream stream, string fn = null)
+        public override List<SymbolDefinition> LoadFromStream(Stream stream, string fn = null)
         {
-            var fileName = Path.GetTempFileName();
-            bool createdTempFile = false;
+            var reader = new SchLibReader();
+            SchLib schLib;
 
             if (string.IsNullOrEmpty(fn))
-            {
-                using (var fs = File.OpenWrite(fileName))
-                {
-                    stream.CopyTo(fs);
-                    createdTempFile = true;
-                }
-            }
+                 schLib = reader.Read(stream);
             else
-            {
-                fileName = fn;
-            }
+                schLib = reader.Read(fn);
 
-            var reader = new AltiumSharp.SchLibReader();
-            var schLib = reader.Read(fileName);
-            var result = new List<Package>();
+            var result = new List<SymbolDefinition>();
             foreach (var component in schLib.Items)
             {
-                var package = new Package(component.LibReference);
-                package.Pins.AddRange(
+                var package = new SymbolDefinition(component.LibReference);
+                foreach (var pin in
                     component.GetPrimitivesOfType<AltiumSharp.Records.SchPin>()
                         .Where(p => p.Name.ToUpperInvariant() != "NC")
-                        .Select(p => new Pin(p.Designator, p.Name, pinElectricalType: p.Electrical))
-                );
-                result.Add(package);
-            }
+                        .Select(p => new  { Designator = p.Designator, Name = p.Name, ElectricalType = (Model.PinElectricalType)p.Electrical }))
+                {
+                    string name = pin.Name;
+                    List<PinSignal> altSignals = new List<PinSignal>();
 
-            if (createdTempFile)
-            {
-                File.Delete(fileName);
+                    if (pin.Name.Contains("/"))
+                    {
+                        var names = pin.Name.Split('/');
+                        name = names[0];
+                        altSignals.AddRange(names.Skip(1).Select(n => new PinSignal(n.Replace("\\", ""), n.Contains("\\"))));
+                    }
+
+                    package.SymbolBlocks.FirstOrDefault().Pins.Add(new PinDefinition(pin.Designator, name) { AlternativeSignals = altSignals });
+                }
+
+                package.CheckPinNames();
+                result.Add(package);
             }
 
             return result;
