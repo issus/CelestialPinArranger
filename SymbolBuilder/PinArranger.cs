@@ -114,10 +114,9 @@ namespace SymbolBuilder
                     symbol.SymbolBlocks.Add(newBlock);
                 }
 
-                /// break ports out new schematic symbol blocks
-                while (symbol.SymbolBlocks.Last().Pins.Where(p => p.PinPosition.Value.Side == PinSide.Right).Count() > 28 &&
-                       symbol.SymbolBlocks.Last().Pins.Where(p => p.MappingFunction.PinClass == PinClass.IOPort).GroupBy(p => p.Port).Count() > 1 &&
-                       symbol.SymbolBlocks.Count() <= 8)
+                /// break ports out to new schematic symbol blocks
+                while (symbol.SymbolBlocks.Last().Pins.Where(p => p.PinPosition.Value.Side == PinSide.Right).Count() > 30 &&
+                       symbol.SymbolBlocks.Last().Pins.Where(p => p.MappingFunction.PinClass == PinClass.IOPort).GroupBy(p => p.Port).Count() > 1)
                 {
                     var newBlock = new SymbolBlock();
                     var lastBlock = symbol.SymbolBlocks.Last();
@@ -144,8 +143,15 @@ namespace SymbolBuilder
                             }
                         }
 
-                        if (maxPinsReached)
+                        if (maxPinsReached && pinCount == 0)
                         {
+                            // add this port, even if it blows the symbol size limit. Ports can be larger than max count (especially on 32/64bit devices)
+                            // if all ports on device are > 30 pin, this would just generate empty blocks without this
+                            pinCount += group.Count();
+                            continue;
+                        }
+                        else if (maxPinsReached)
+                        { 
                             foreach (var pin in group)
                             {
                                 lastBlock.Pins.Remove(pin);
@@ -154,7 +160,8 @@ namespace SymbolBuilder
                         }
                     }
 
-                    symbol.SymbolBlocks.Add(newBlock);
+                    if (newBlock.Pins.Count > 0)
+                        symbol.SymbolBlocks.Add(newBlock);
                 }
             }
 

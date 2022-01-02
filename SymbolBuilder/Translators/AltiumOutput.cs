@@ -163,9 +163,11 @@ namespace SymbolBuilder.Translators
                 int leftSideTextWidth = positionedPins.Where(p => p.Key.Side == PinSide.Left).Any() ? positionedPins.Where(p => p.Key.Side == PinSide.Left).Max(p => p.Value.Max(v => v.Name.Where(c => c != '\\').Count()) * characterWidth) + 150 : 0;
                 int rightSideTextWidth = positionedPins.Where(p => p.Key.Side == PinSide.Right).Any() ? positionedPins.Where(p => p.Key.Side == PinSide.Right).Max(p => p.Value.Max(v => v.Name.Where(c => c != '\\').Count()) * characterWidth) + 150 : 0;
 
+                // set minium width for text
                 leftSideTextWidth = leftSideTextWidth < 300 ? 300 : leftSideTextWidth;
                 rightSideTextWidth = rightSideTextWidth < 300 ? 300 : rightSideTextWidth;
 
+                // ensure pins will set on a grid square
                 leftSideTextWidth += 100 - (leftSideTextWidth % 100);
                 rightSideTextWidth += 200 - ((leftSideTextWidth + rightSideTextWidth) % 200);
                 int horizontalPinOffset = (leftSideTextWidth + rightSideTextWidth) / 2;
@@ -286,6 +288,13 @@ namespace SymbolBuilder.Translators
             }
         }
 
+        /// <summary>
+        /// Layout pins in each position with correct spacing/order, converting PinDefinition to SchPin.
+        /// </summary>
+        /// <param name="position">Area getting arranged</param>
+        /// <param name="pins">Pins to arrange</param>
+        /// <param name="partId">OwnerPartId in the Altium symbol to assign to each pin</param>
+        /// <returns></returns>
         private KeyValuePair<PinPosition, List<SchPin>> ArrangePosition(PinPosition position, IEnumerable<PinDefinition> pins, int partId)
         {
             KeyValuePair<PinPosition, List<SchPin>> arranged = new KeyValuePair<PinPosition, List<SchPin>>(position, new List<SchPin>());
