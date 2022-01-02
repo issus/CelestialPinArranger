@@ -54,39 +54,62 @@ namespace CelestialPinArranger
 
             var arranger = new PinArranger(SelectedPinMapper);
 
-            arranger.LoadFromFile(openFileDialog.FileName);
-            ArrangePins(arranger);
-            lstPackages.SelectedIndex = 0;
+            try
+            {
+                arranger.LoadFromFile(openFileDialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not load data from file, is it compatible?\r\n\r\n{ex.Message}", "Failed to Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                ArrangePins(arranger);
+                lstPackages.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went wrong arranging imported pins.\r\n\r\n{ex.Message}", "Arranger error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnLoadClipboard_Click(object sender, EventArgs e)
         {
-            var clipboardData = Clipboard.GetDataObject();
-            if (clipboardData == null) return;
+            try
+            {
+                var clipboardData = Clipboard.GetDataObject();
+                if (clipboardData == null) return;
 
-            var arranger = new PinArranger(SelectedPinMapper);
+                var arranger = new PinArranger(SelectedPinMapper);
 
-            if (clipboardData.GetDataPresent(DataFormats.CommaSeparatedValue))
-            {
-                var stream = clipboardData.GetData(DataFormats.CommaSeparatedValue) as Stream;
-                arranger.LoadFromStream(stream);
-            }
-            else if (clipboardData.GetDataPresent(DataFormats.UnicodeText))
-            {
-                var text = clipboardData.GetData(DataFormats.UnicodeText) as string;
-                arranger.LoadFromText(text);
-            }
-            else if (clipboardData.GetDataPresent(DataFormats.Text))
-            {
-                var text = clipboardData.GetData(DataFormats.Text) as string;
-                arranger.LoadFromText(text);
-            }
-            else
-            {
-                return;
-            }
+                if (clipboardData.GetDataPresent(DataFormats.CommaSeparatedValue))
+                {
+                    var stream = clipboardData.GetData(DataFormats.CommaSeparatedValue) as Stream;
+                    arranger.LoadFromStream(stream);
+                }
+                else if (clipboardData.GetDataPresent(DataFormats.UnicodeText))
+                {
+                    var text = clipboardData.GetData(DataFormats.UnicodeText) as string;
+                    arranger.LoadFromText(text);
+                }
+                else if (clipboardData.GetDataPresent(DataFormats.Text))
+                {
+                    var text = clipboardData.GetData(DataFormats.Text) as string;
+                    arranger.LoadFromText(text);
+                }
+                else
+                {
+                    return;
+                }
 
-            ArrangePins(arranger);
+                ArrangePins(arranger);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Clipboard text not in correct format.", "Incorrect format", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void lstPackages_SelectedIndexChanged(object sender, EventArgs e)

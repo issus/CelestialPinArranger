@@ -138,52 +138,62 @@ namespace CelestialPinArranger
                 lblProgress.Text = $"{i++}/{sourceFiles.Length}";
                 pbProgress.Value = i;
 
-                var packageName = Path.GetFileNameWithoutExtension(file.Replace("signal_configuration", "")).Trim();
-
-                var arranger = new PinArranger(mapper);
-                arranger.LoadFromFile(Path.Combine(txtSourceDir.Text, file));
-
-                var symbolDefinitions = arranger.Execute();
-
-                AltiumOutput altiumOutput = new AltiumOutput();
-                var schLib = (SchLib)altiumOutput.GenerateNativeType(symbolDefinitions);
-
-                var component = schLib.Items[0];
-
-                string fileName = $"SCH - {txtFormatFolder.Text} - {txtManufacturerName.Text} {packageName}.SchLib";
-                var fullFileName = Path.Combine(txtDestinationDir.Text, fileName);
-
-                var newLib = new SchLib();
-
-                component.LibReference = string.Join(" ", txtManufacturerName.Text, packageName);
-
-                newLib.Add(component);
-
-                writer.Write(newLib, fullFileName, true);
-                
-                if (chkImages.Checked)
+                try
                 {
-                    var renderer = new SchLibRenderer(schLib.Header, null)
-                    {
-                        BackgroundColor = Color.White
-                    };
+                    var packageName = Path.GetFileNameWithoutExtension(file.Replace("signal_configuration", "")).Trim();
 
-                    int r = 0;
-                    foreach (var item in schLib.Items)
-                    {
-                        renderer.Component = item;
+                    var arranger = new PinArranger(mapper);
+                    // todo: async
+                    arranger.LoadFromFile(Path.Combine(txtSourceDir.Text, file));
 
-                        using (var image = new Bitmap(1024, 1024))
-                        using (var g = Graphics.FromImage(image))
+                    var symbolDefinitions = arranger.Execute();
+
+                    AltiumOutput altiumOutput = new AltiumOutput();
+                    var schLib = (SchLib)altiumOutput.GenerateNativeType(symbolDefinitions);
+
+                    var component = schLib.Items[0];
+
+                    string fileName = $"SCH - {txtFormatFolder.Text} - {txtManufacturerName.Text} {packageName}.SchLib";
+                    var fullFileName = Path.Combine(txtDestinationDir.Text, fileName);
+
+                    var newLib = new SchLib();
+
+                    component.LibReference = string.Join(" ", txtManufacturerName.Text, packageName);
+
+                    newLib.Add(component);
+
+                    // todo: async
+                    writer.Write(newLib, fullFileName, true);
+
+                    if (chkImages.Checked)
+                    {
+                        var renderer = new SchLibRenderer(schLib.Header, null)
                         {
-                            renderer.Render(g, 1024, 1024, true, false);
-                            image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", $"_{r++}.png")), ImageFormat.Png);
+                            BackgroundColor = Color.White
+                        };
+
+                        int r = 0;
+                        foreach (var item in schLib.Items)
+                        {
+                            renderer.Component = item;
+
+                            using (var image = new Bitmap(1024, 1024))
+                            using (var g = Graphics.FromImage(image))
+                            {
+                                renderer.Render(g, 1024, 1024, true, false);
+                                image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", $"_{r++}.png")), ImageFormat.Png);
+                            }
                         }
-                    }
 
 
                     }
+                }
+                catch (Exception ex)
+                {
+                    // todo: Handle errors so the user knows something went wrong, without interrupting the export
+                }
 
+                // todo: kludge. async this method
                 Application.DoEvents();
             }
 
