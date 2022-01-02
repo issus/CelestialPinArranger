@@ -6,7 +6,11 @@ namespace SymbolBuilder.Mappers
 {
     public class DefaultMapper : PinMapper
     {
-        protected override void LoadMappings()
+        public DefaultMapper() : base()
+        {
+        }
+
+        public override void LoadMappings()
         {
             AddFunction(string.Empty, PinClass.ChipConfiguration,   "Osc",              "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?", PinPosition.From(PinSide.Left, PinAlignment.Middle));
             AddFunction(string.Empty, PinClass.PowerSupply,         "AnalogueGround",   "^GNDA$|^VSSA|^AGND|^AVSS|^AVEE|^VIN-", PinPosition.From(PinSide.Left, PinAlignment.Lower), priority: 1);

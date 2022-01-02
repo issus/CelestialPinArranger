@@ -8,14 +8,30 @@ using SymbolBuilder.Model;
 namespace SymbolBuilder.Mappers
 {
     /// <summary>
+    /// Pin mapper intended for programmatically generating a pin mapper, rather than loading mappings from a source
+    /// </summary>
+    public class ProgrammaticPinMapper : PinMapper
+    {
+        public override void LoadMappings()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
     /// Base class for defining pin mappings with a one the defined pin functions.
     /// </summary>
     public abstract class PinMapper
     {
-        private readonly List<PinFunction> _pinFunctions = new List<PinFunction>();
+        public List<PinFunction> Functions { get; private set; }
         private PinFunction _defaultFunction;
 
-        protected abstract void LoadMappings();
+        public abstract void LoadMappings();
+
+        public PinMapper()
+        {
+            Functions = new List<PinFunction>();
+        }
 
         /// <summary>
         /// Adds a new mapping
@@ -29,12 +45,12 @@ namespace SymbolBuilder.Mappers
         /// <param name="electricalType">Pin electrical type</param>
         /// <param name="functionSpacing">Spacing on the generated symbol</param>
         /// <param name="groupSpacing">Spacing around the group on the generated symbol</param>
-        protected void AddFunction(string packagePattern, PinClass pinClass, string functionName, string pinNamePattern, PinPosition position, int priority = 0, Model.PinElectricalType electricalType = Model.PinElectricalType.Passive, int functionSpacing = 1, int groupSpacing = 1)
+        public void AddFunction(string packagePattern, PinClass pinClass, string functionName, string pinNamePattern, PinPosition position, int priority = 0, Model.PinElectricalType electricalType = Model.PinElectricalType.Passive, int functionSpacing = 1, int groupSpacing = 1)
         {
-            _pinFunctions.Add(new PinFunction(functionName, new Regex(packagePattern, RegexOptions.IgnoreCase), pinClass, new Regex(pinNamePattern, RegexOptions.IgnoreCase), position, priority, electricalType, functionSpacing, groupSpacing));
+            Functions.Add(new PinFunction(functionName, new Regex(packagePattern, RegexOptions.IgnoreCase), pinClass, new Regex(pinNamePattern, RegexOptions.IgnoreCase), position, priority, electricalType, functionSpacing, groupSpacing));
         }
 
-        protected void SetDefaultFunction(string packagePattern, PinPosition position, int priority = 0, Model.PinElectricalType electricalType = Model.PinElectricalType.Passive, int functionSpacing = 1, int groupSpacing = 0)
+        public void SetDefaultFunction(string packagePattern, PinPosition position, int priority = 0, Model.PinElectricalType electricalType = Model.PinElectricalType.Passive, int functionSpacing = 1, int groupSpacing = 0)
         {
             _defaultFunction = new PinFunction("(Default)", new Regex(packagePattern, RegexOptions.IgnoreCase), PinClass.Generic, new Regex(@"(?<Group>\w+)?(?<Index>\d+)?"), position, priority, electricalType, functionSpacing, groupSpacing);
         }
@@ -79,11 +95,11 @@ namespace SymbolBuilder.Mappers
 
         public bool Map(string package, PinDefinition pin)
         {
-            if (_pinFunctions.Count == 0) LoadMappings();
+            if (Functions.Count == 0) LoadMappings();
 
             if (pin.MappingFunction == null)
             {
-                foreach (var pinFunction in _pinFunctions)
+                foreach (var pinFunction in Functions)
                 {
                     if (TryMapPin(pinFunction, package, pin))
                     {
@@ -95,7 +111,7 @@ namespace SymbolBuilder.Mappers
             }
             else
             {
-                var pinFunction = _pinFunctions.FirstOrDefault(f => f.Name.Equals(pin.MappingFunction.Name, StringComparison.InvariantCultureIgnoreCase))
+                var pinFunction = Functions.FirstOrDefault(f => f.Name.Equals(pin.MappingFunction.Name, StringComparison.InvariantCultureIgnoreCase))
                                   ?? _defaultFunction;
                 return TryMapPin(pinFunction, package, pin);
             }

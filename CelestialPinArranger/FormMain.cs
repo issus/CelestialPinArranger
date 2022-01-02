@@ -259,5 +259,11 @@ namespace CelestialPinArranger
             var batch = new frmBatch();
             batch.ShowDialog();
         }
+
+        private void btnJsonEditor_Click(object sender, EventArgs e)
+        {
+            frmJsonEditor frmJsonEditor = new frmJsonEditor();
+            frmJsonEditor.Show();
+        }
     }
 }

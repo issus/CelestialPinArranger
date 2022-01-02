@@ -81,7 +81,7 @@ namespace SymbolBuilder.Mappers
             return function.TryGetProperty("pinClass", out var element) ? Enum.TryParse<PinClass>(element.GetString(), out var result) ? result : PinClass.Generic : PinClass.Generic;
         }
 
-        protected override void LoadMappings()
+        public override void LoadMappings()
         {
             var json = JsonDocument.Parse(File.ReadAllText(_fileName));
 

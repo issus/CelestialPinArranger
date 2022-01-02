@@ -58,6 +58,7 @@
             this.lstPackages = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnJsonEditor = new System.Windows.Forms.Button();
             this.grpDetails.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -183,6 +184,7 @@
             // 
             // pnlBottom
             // 
+            this.pnlBottom.Controls.Add(this.btnJsonEditor);
             this.pnlBottom.Controls.Add(this.btnSaveAll);
             this.pnlBottom.Controls.Add(this.btnBatch);
             this.pnlBottom.Controls.Add(this.chkOpenAltium);
@@ -392,6 +394,16 @@
             this.folderBrowserDialog.Description = "Location to save SchLibs";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
+            // btnJsonEditor
+            // 
+            this.btnJsonEditor.Location = new System.Drawing.Point(133, 8);
+            this.btnJsonEditor.Name = "btnJsonEditor";
+            this.btnJsonEditor.Size = new System.Drawing.Size(131, 23);
+            this.btnJsonEditor.TabIndex = 4;
+            this.btnJsonEditor.Text = "JSON Mapping Editor";
+            this.btnJsonEditor.UseVisualStyleBackColor = true;
+            this.btnJsonEditor.Click += new System.EventHandler(this.btnJsonEditor_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -449,6 +461,7 @@
         private System.Windows.Forms.CheckBox chkOpenAltium;
         private System.Windows.Forms.Button btnBatch;
         private System.Windows.Forms.Button btnSaveAll;
+        private System.Windows.Forms.Button btnJsonEditor;
     }
 }
 
