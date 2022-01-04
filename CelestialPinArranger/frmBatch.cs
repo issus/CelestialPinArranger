@@ -26,6 +26,11 @@ namespace CelestialPinArranger
             {
                 cboJson.Items.Add(Path.GetFileNameWithoutExtension(file));
             }
+
+            if (cboJson.Items.Count > 0)
+            {
+                cboJson.SelectedIndex = 0;
+            }
         }
 
         private void btnSourceDirectory_Click(object sender, EventArgs e)
