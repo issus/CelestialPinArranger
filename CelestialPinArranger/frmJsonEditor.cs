@@ -364,6 +364,8 @@ namespace CelestialPinArranger
                 json.Append("\r\n    }");
             }
 
+            // add default mapper
+            json.Append(",\r\n    {\r\n      \"functionName\": null,\r\n      \"pinNamePattern\": \"\",\r\n      \"position\": \"Right-Middle\"\r\n    }");
             json.Append("\r\n  ]\r\n}");
 
             File.WriteAllText(sfd.FileName, json.ToString());
