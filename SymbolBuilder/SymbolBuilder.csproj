@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="JSON\Default.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="JSON\NXP MCUXpresso.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
