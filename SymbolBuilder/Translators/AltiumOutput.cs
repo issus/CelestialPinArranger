@@ -239,6 +239,8 @@ namespace SymbolBuilder.Translators
                     var pinsSide = positionedPins.Select(p => p.Key.Side).FirstOrDefault();
                     int textWidth = positionedPins.SelectMany(p => p.Value).Max(p => p.Name.Where(c => c != '\\').Count() * characterWidth);
 
+                    textWidth = textWidth < 300 ? 300 : textWidth + (100 - (textWidth % 100));
+
                     if (pinsSide == PinSide.Left)
                     {
                         rectMaxX = rectMaxX + textWidth;
@@ -247,6 +249,12 @@ namespace SymbolBuilder.Translators
                     {
                         rectMinX = rectMaxX - textWidth;
                     }
+                }
+
+
+                if (rectMinX % 100 != 0)
+                {
+                    rectMinX -= 100 - (rectMinX % 100);
                 }
 
                 SchRectangle rectangle = new SchRectangle
