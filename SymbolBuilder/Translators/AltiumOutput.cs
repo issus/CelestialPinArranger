@@ -16,10 +16,10 @@ namespace SymbolBuilder.Translators
     {
         public string ProgramName => "Altium Designer";
 
-        int pinSpacing = 100;
-        int characterWidth = 60;
+        private readonly int pinSpacing = 100;
+        private readonly int pinToTextWidth = 70;
 
-
+        private static Graphics g = Graphics.FromImage(new Bitmap(1, 1));
 
         public void GenerateFile(IEnumerable<SymbolDefinition> symbols, string filePath)
         {
@@ -160,8 +160,14 @@ namespace SymbolBuilder.Translators
                     }
                 }
 
-                int leftSideTextWidth = positionedPins.Where(p => p.Key.Side == PinSide.Left).Any() ? positionedPins.Where(p => p.Key.Side == PinSide.Left).Max(p => p.Value.Max(v => v.Name.Where(c => c != '\\').Count()) * characterWidth) + 150 : 0;
-                int rightSideTextWidth = positionedPins.Where(p => p.Key.Side == PinSide.Right).Any() ? positionedPins.Where(p => p.Key.Side == PinSide.Right).Max(p => p.Value.Max(v => v.Name.Where(c => c != '\\').Count()) * characterWidth) + 150 : 0;
+                var leftPins = positionedPins.Where(p => p.Key.Side == PinSide.Left);
+                var rightPins = positionedPins.Where(p => p.Key.Side == PinSide.Right);
+
+                float leftSideFontWidth = leftPins.Any() ? leftPins.Max(p => p.Value.Max(v => GraphicsHelper.MeasureStringWidth(v.Name))) + pinToTextWidth : 0f;
+                float rightSideFontWidth = rightPins.Any() ? rightPins.Max(p => p.Value.Max(v => GraphicsHelper.MeasureStringWidth(v.Name))) + pinToTextWidth : 0f;
+
+                int leftSideTextWidth = (int)leftSideFontWidth + 100;
+                int rightSideTextWidth = (int)leftSideFontWidth + 100;
 
                 // set minium width for text
                 leftSideTextWidth = leftSideTextWidth < 300 ? 300 : leftSideTextWidth;
@@ -196,8 +202,8 @@ namespace SymbolBuilder.Translators
                 }
 
                 // recalc min positions based on actual pins
-                leftMinY = positionedPins.Any(p => p.Key.Side == PinSide.Left) ? (int)positionedPins.Where(p => p.Key.Side == PinSide.Left).Min(p => p.Value.Min(n => Utils.CoordToMils(n.Location.Y))) : 0;
-                rightMinY = positionedPins.Any(p => p.Key.Side == PinSide.Right) ? (int)positionedPins.Where(p => p.Key.Side == PinSide.Right).Min(p => p.Value.Min(n => Utils.CoordToMils(n.Location.Y))) : 0;
+                leftMinY = positionedPins.Any(p => p.Key.Side == PinSide.Left) ? (int)leftPins.Min(p => p.Value.Min(n => Utils.CoordToMils(n.Location.Y))) : 0;
+                rightMinY = positionedPins.Any(p => p.Key.Side == PinSide.Right) ? (int)rightPins.Min(p => p.Value.Min(n => Utils.CoordToMils(n.Location.Y))) : 0;
 
                 // left and right bottom blocks are probably not both aligned at the bottom of the symbol. Move the higher side down.
                 if (leftMinY > rightMinY)
@@ -237,7 +243,7 @@ namespace SymbolBuilder.Translators
                 {
                     // pins only on one side of sch symbol, calc text width
                     var pinsSide = positionedPins.Select(p => p.Key.Side).FirstOrDefault();
-                    int textWidth = positionedPins.SelectMany(p => p.Value).Max(p => p.Name.Where(c => c != '\\').Count() * characterWidth);
+                    int textWidth = (int)positionedPins.SelectMany(p => p.Value).Max(p => GraphicsHelper.MeasureStringWidth(p.Name)) + pinToTextWidth + 100;
 
                     textWidth = textWidth < 300 ? 300 : textWidth + (100 - (textWidth % 100));
 
@@ -371,7 +377,6 @@ namespace SymbolBuilder.Translators
 
             return arranged;
         }
-
 
         private string AddActiveLowBars(string name)
         {
@@ -509,6 +514,22 @@ namespace SymbolBuilder.Translators
                         lastFunctionName = pin.MappingFunction.Name;
                         lastGroupName = pin.Port;
                     }
+                }
+            }
+        }
+
+        private static class GraphicsHelper
+        {
+            public static float MeasureStringWidth(string s)
+            {
+                using (var font = new Font("Times New Roman", 8.6598835f))
+                {
+                    SizeF result;
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
+                    result = g.MeasureString(s.Replace("\\", ""), font, int.MaxValue, StringFormat.GenericTypographic);
+                        
+                    return result.Width * 7.8f;
                 }
             }
         }
