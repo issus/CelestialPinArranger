@@ -167,7 +167,7 @@ namespace SymbolBuilder.Translators
                 float rightSideFontWidth = rightPins.Any() ? rightPins.Max(p => p.Value.Max(v => GraphicsHelper.MeasureStringWidth(v.Name))) + pinToTextWidth : 0f;
 
                 int leftSideTextWidth = (int)leftSideFontWidth + 100;
-                int rightSideTextWidth = (int)leftSideFontWidth + 100;
+                int rightSideTextWidth = (int)rightSideFontWidth + 100;
 
                 // set minium width for text
                 leftSideTextWidth = leftSideTextWidth < 300 ? 300 : leftSideTextWidth;
