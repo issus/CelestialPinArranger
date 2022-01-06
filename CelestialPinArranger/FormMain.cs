@@ -317,6 +317,9 @@ namespace CelestialPinArranger
         
         private void btnSymbolNext_Click(object sender, EventArgs e)
         {
+            if (lstPackages.SelectedIndex < 0)
+                return;
+
             var component = _schLib.Items[lstPackages.SelectedIndex];
             if (!component.GetAllPrimitives().Where(p => p.OwnerPartId > selectedOwnerId).Any())
             {
@@ -334,6 +337,9 @@ namespace CelestialPinArranger
 
         private void btnSymbolPrev_Click(object sender, EventArgs e)
         {
+            if (lstPackages.SelectedIndex < 0)
+                return;
+
             var component = _schLib.Items[lstPackages.SelectedIndex];
             if (!component.GetAllPrimitives().Where(p => p.Owner != null && p.OwnerPartId < selectedOwnerId).Any())
             {

@@ -412,6 +412,7 @@
             // btnSymbolNext
             // 
             this.btnSymbolNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSymbolNext.Enabled = false;
             this.btnSymbolNext.Location = new System.Drawing.Point(281, 302);
             this.btnSymbolNext.Name = "btnSymbolNext";
             this.btnSymbolNext.Size = new System.Drawing.Size(23, 23);
@@ -423,6 +424,7 @@
             // btnSymbolPrev
             // 
             this.btnSymbolPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSymbolPrev.Enabled = false;
             this.btnSymbolPrev.Location = new System.Drawing.Point(251, 302);
             this.btnSymbolPrev.Name = "btnSymbolPrev";
             this.btnSymbolPrev.Size = new System.Drawing.Size(23, 23);
