@@ -20,6 +20,8 @@ namespace CelestialPinArranger
         private SchLib _schLib;
         private SchLibRenderer _renderer;
 
+        private int selectedOwnerId = 1;
+
         public FormMain()
         {
             InitializeComponent();
@@ -116,6 +118,8 @@ namespace CelestialPinArranger
         {
             pnlPreview.Invalidate();
 
+            SymbolNavActivation();
+
             _formZoom.SetSchLib(_schLib, lstPackages.SelectedIndex);
         }
 
@@ -205,11 +209,20 @@ namespace CelestialPinArranger
         private void UpdateSchLib(SchLib schLib)
         {
             _schLib = schLib;
+            if (schLib.Items.Count > 1 && lstPackages.SelectedIndex >= 0)
+                selectedOwnerId = schLib.Items[lstPackages.SelectedIndex].CurrentPartId;
+            else if (schLib.Items.Count == 1)
+                selectedOwnerId = schLib.Items.First().CurrentPartId;
+            else
+                selectedOwnerId = 1;
+
             _renderer = new SchLibRenderer(_schLib.Header, null)
             {
                 BackgroundColor = pnlPreview.BackColor
             };
             pnlPreview.Invalidate();
+
+            SymbolNavActivation();
 
             _formZoom.SetSchLib(_schLib);
         }
@@ -235,6 +248,11 @@ namespace CelestialPinArranger
 
             AltiumOutput altiumOutput = new AltiumOutput();
             var schLib = (SchLib)altiumOutput.GenerateNativeType(symbolDefinitions);
+
+            foreach (var comp in schLib.Items)
+            {
+                comp.CurrentPartId = comp.GetAllPrimitives().Where(p => p.Owner != null).Min(p => p.OwnerPartId) ?? 1;
+            }
 
             UpdateSchLib(schLib);
 
@@ -264,6 +282,73 @@ namespace CelestialPinArranger
         {
             frmJsonEditor frmJsonEditor = new frmJsonEditor();
             frmJsonEditor.Show();
+        }
+
+        private void SymbolNavActivation()
+        {
+            if (lstPackages.SelectedIndex < 0)
+            {
+                btnSymbolNext.Enabled = false;
+                btnSymbolPrev.Enabled = false;
+                return;
+            }
+
+            var component = _schLib.Items[lstPackages.SelectedIndex];
+
+            if (!component.GetAllPrimitives().Where(p => p.OwnerPartId > selectedOwnerId).Any())
+            {
+                btnSymbolNext.Enabled = false;
+            }
+            else
+            {
+                btnSymbolNext.Enabled = true;
+            }
+
+            if (!component.GetAllPrimitives().Where(p => p.Owner != null && p.OwnerPartId < selectedOwnerId).Any())
+            {
+                btnSymbolPrev.Enabled = false;
+            }
+            else
+            {
+                btnSymbolPrev.Enabled = true;
+            }
+
+        }
+        
+        private void btnSymbolNext_Click(object sender, EventArgs e)
+        {
+            var component = _schLib.Items[lstPackages.SelectedIndex];
+            if (!component.GetAllPrimitives().Where(p => p.OwnerPartId > selectedOwnerId).Any())
+            {
+                btnSymbolNext.Enabled = false;
+                return;
+            }
+
+            selectedOwnerId = component.GetAllPrimitives().Where(p => p.OwnerPartId > selectedOwnerId)?.Min(p => p.OwnerPartId) ?? selectedOwnerId;
+            component.CurrentPartId = selectedOwnerId;
+
+            pnlPreview.Invalidate();
+
+            SymbolNavActivation();
+        }
+
+        private void btnSymbolPrev_Click(object sender, EventArgs e)
+        {
+            var component = _schLib.Items[lstPackages.SelectedIndex];
+            if (!component.GetAllPrimitives().Where(p => p.Owner != null && p.OwnerPartId < selectedOwnerId).Any())
+            {
+                btnSymbolNext.Enabled = false;
+                return;
+            }
+
+            selectedOwnerId = component.GetAllPrimitives().Where(p => p.Owner != null && p.OwnerPartId < selectedOwnerId)?.Max(p => p.OwnerPartId) ?? selectedOwnerId;
+            component.CurrentPartId = selectedOwnerId;
+
+            pnlPreview.Invalidate();
+
+            //_formZoom.SetSchLib(_schLib);
+
+            SymbolNavActivation();
         }
     }
 }

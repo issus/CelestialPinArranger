@@ -39,6 +39,7 @@
             this.btnLoadClipboard = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.btnJsonEditor = new System.Windows.Forms.Button();
             this.btnSaveAll = new System.Windows.Forms.Button();
             this.btnBatch = new System.Windows.Forms.Button();
             this.chkOpenAltium = new System.Windows.Forms.CheckBox();
@@ -58,7 +59,9 @@
             this.lstPackages = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnJsonEditor = new System.Windows.Forms.Button();
+            this.btnSymbolNext = new System.Windows.Forms.Button();
+            this.btnSymbolPrev = new System.Windows.Forms.Button();
+            this.pnlPreview.SuspendLayout();
             this.grpDetails.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -76,6 +79,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(232)))));
+            this.pnlPreview.Controls.Add(this.btnSymbolPrev);
+            this.pnlPreview.Controls.Add(this.btnSymbolNext);
             this.pnlPreview.Location = new System.Drawing.Point(6, 123);
             this.pnlPreview.Name = "pnlPreview";
             this.pnlPreview.Size = new System.Drawing.Size(307, 328);
@@ -194,6 +199,16 @@
             this.pnlBottom.Name = "pnlBottom";
             this.pnlBottom.Size = new System.Drawing.Size(921, 43);
             this.pnlBottom.TabIndex = 2;
+            // 
+            // btnJsonEditor
+            // 
+            this.btnJsonEditor.Location = new System.Drawing.Point(133, 8);
+            this.btnJsonEditor.Name = "btnJsonEditor";
+            this.btnJsonEditor.Size = new System.Drawing.Size(131, 23);
+            this.btnJsonEditor.TabIndex = 4;
+            this.btnJsonEditor.Text = "JSON Mapping Editor";
+            this.btnJsonEditor.UseVisualStyleBackColor = true;
+            this.btnJsonEditor.Click += new System.EventHandler(this.btnJsonEditor_Click);
             // 
             // btnSaveAll
             // 
@@ -394,15 +409,27 @@
             this.folderBrowserDialog.Description = "Location to save SchLibs";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // btnJsonEditor
+            // btnSymbolNext
             // 
-            this.btnJsonEditor.Location = new System.Drawing.Point(133, 8);
-            this.btnJsonEditor.Name = "btnJsonEditor";
-            this.btnJsonEditor.Size = new System.Drawing.Size(131, 23);
-            this.btnJsonEditor.TabIndex = 4;
-            this.btnJsonEditor.Text = "JSON Mapping Editor";
-            this.btnJsonEditor.UseVisualStyleBackColor = true;
-            this.btnJsonEditor.Click += new System.EventHandler(this.btnJsonEditor_Click);
+            this.btnSymbolNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSymbolNext.Location = new System.Drawing.Point(281, 302);
+            this.btnSymbolNext.Name = "btnSymbolNext";
+            this.btnSymbolNext.Size = new System.Drawing.Size(23, 23);
+            this.btnSymbolNext.TabIndex = 0;
+            this.btnSymbolNext.Text = ">";
+            this.btnSymbolNext.UseVisualStyleBackColor = true;
+            this.btnSymbolNext.Click += new System.EventHandler(this.btnSymbolNext_Click);
+            // 
+            // btnSymbolPrev
+            // 
+            this.btnSymbolPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSymbolPrev.Location = new System.Drawing.Point(251, 302);
+            this.btnSymbolPrev.Name = "btnSymbolPrev";
+            this.btnSymbolPrev.Size = new System.Drawing.Size(23, 23);
+            this.btnSymbolPrev.TabIndex = 1;
+            this.btnSymbolPrev.Text = "<";
+            this.btnSymbolPrev.UseVisualStyleBackColor = true;
+            this.btnSymbolPrev.Click += new System.EventHandler(this.btnSymbolPrev_Click);
             // 
             // FormMain
             // 
@@ -414,6 +441,7 @@
             this.Name = "FormMain";
             this.Text = "Celestial Pin Arranger";
             this.Resize += new System.EventHandler(this.FormMain_Resize);
+            this.pnlPreview.ResumeLayout(false);
             this.grpDetails.ResumeLayout(false);
             this.grpDetails.PerformLayout();
             this.pnlBottom.ResumeLayout(false);
@@ -462,6 +490,8 @@
         private System.Windows.Forms.Button btnBatch;
         private System.Windows.Forms.Button btnSaveAll;
         private System.Windows.Forms.Button btnJsonEditor;
+        private System.Windows.Forms.Button btnSymbolPrev;
+        private System.Windows.Forms.Button btnSymbolNext;
     }
 }
 
