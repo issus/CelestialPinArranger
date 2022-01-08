@@ -132,6 +132,10 @@ namespace SymbolBuilder.Readers
             foreach (XmlNode pin in pins)
             {
                 string name = pin.Attributes["defaultLabel"]?.Value;
+
+                if (name.ToLower() == "nc")
+                    continue;
+
                 string des = pin.Attributes["number"]?.Value;
                 string portBank = pin.Attributes["portBankIndex"]?.Value;
                 string pinIndex = pin.Attributes["pinIndex"]?.Value;
