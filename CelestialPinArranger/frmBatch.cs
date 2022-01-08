@@ -7,6 +7,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CelestialPinArranger
@@ -124,7 +125,17 @@ namespace CelestialPinArranger
                 }
             }
 
-            var sourceFiles = Directory.GetFiles(txtSourceDir.Text);
+            string[] sourceFiles;
+
+            if (txtSourceDir.Text.Contains("SimplicityStudio"))
+            {
+                sourceFiles = Directory.GetFiles(txtSourceDir.Text, "*.device", SearchOption.AllDirectories);
+            }
+            else
+            {
+                sourceFiles = Directory.GetFiles(txtSourceDir.Text);
+            }
+
 
             pbProgress.Value = 0;
             pbProgress.Maximum = sourceFiles.Length;
@@ -134,8 +145,6 @@ namespace CelestialPinArranger
             lblProgress.Visible = true;
 
             var mapper = new JsonMapper($"JSON/{(string)cboJson.SelectedItem}.json");
-
-            var writer = new SchLibWriter();
 
             int i = 0;
             foreach (var file in sourceFiles)
@@ -156,41 +165,46 @@ namespace CelestialPinArranger
                     AltiumOutput altiumOutput = new AltiumOutput();
                     var schLib = (SchLib)altiumOutput.GenerateNativeType(symbolDefinitions);
 
-                    var component = schLib.Items[0];
-
-                    string fileName = $"SCH - {txtFormatFolder.Text} - {txtManufacturerName.Text} {packageName}.SchLib";
-                    var fullFileName = Path.Combine(txtDestinationDir.Text, fileName);
-
-                    var newLib = new SchLib();
-
-                    component.LibReference = string.Join(" ", txtManufacturerName.Text, packageName);
-
-                    newLib.Add(component);
-
-                    // todo: async
-                    writer.Write(newLib, fullFileName, true);
-
-                    if (chkImages.Checked)
+                    foreach (var comp in schLib.Items)
                     {
-                        var renderer = new SchLibRenderer(schLib.Header, null)
-                        {
-                            BackgroundColor = Color.White
-                        };
+                        comp.CurrentPartId = comp.GetAllPrimitives().Where(p => p.Owner != null).Min(p => p.OwnerPartId) ?? 1;
+                    }
 
-                        int r = 0;
-                        foreach (var item in schLib.Items)
-                        {
-                            renderer.Component = item;
+                    foreach (var component in schLib.Items)
+                    {
+                        string fileName = $"SCH - {txtFormatFolder.Text} - {txtManufacturerName.Text} {packageName}.SchLib";
+                        var fullFileName = Path.Combine(txtDestinationDir.Text, fileName);
 
-                            using (var image = new Bitmap(1024, 1024))
-                            using (var g = Graphics.FromImage(image))
+                        var writer = new SchLibWriter();
+
+                        var newLib = new SchLib();
+
+                        component.LibReference = string.Join(" ", txtManufacturerName.Text, packageName);
+
+                        newLib.Add(component);
+
+                        writer.Write(newLib, fullFileName, true);
+
+                        if (chkImages.Checked)
+                        {
+                            var renderer = new SchLibRenderer(newLib.Header, null)
                             {
-                                renderer.Render(g, 1024, 1024, true, false);
-                                image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", $"_{r++}.png")), ImageFormat.Png);
+                                BackgroundColor = Color.White
+                            };
+
+                            int r = 0;
+                            foreach (var item in newLib.Items)
+                            {
+                                renderer.Component = item;
+
+                                using (var image = new Bitmap(1024, 1024))
+                                using (var g = Graphics.FromImage(image))
+                                {
+                                    renderer.Render(g, 1024, 1024, true, false);
+                                    image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", $"_{r++}.png")), ImageFormat.Png);
+                                }
                             }
                         }
-
-
                     }
                 }
                 catch (Exception ex)
