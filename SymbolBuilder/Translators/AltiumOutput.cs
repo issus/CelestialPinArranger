@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SymbolBuilder.Translators
 {
@@ -20,6 +21,8 @@ namespace SymbolBuilder.Translators
         private readonly int pinToTextWidth = 70;
 
         private static Graphics g = Graphics.FromImage(new Bitmap(1, 1));
+
+        private static Regex pinShortenerRegex = new Regex("(?<Peripheral>[A-Za-z0-9]+)_\\w+", RegexOptions.Compiled);
 
         public void GenerateFile(IEnumerable<SymbolDefinition> symbols, string filePath)
         {
@@ -393,9 +396,82 @@ namespace SymbolBuilder.Translators
             StringBuilder pinName = new StringBuilder();
 
             pinName.Append(pin.SignalName.ActiveLow ? AddActiveLowBars(pin.SignalName.Name) : pin.SignalName.Name);
-            pinName.Append("/");
 
-            pinName.Append(string.Join("/", pin.AlternativeSignals.Select(n => n.ActiveLow ? AddActiveLowBars(n.Name) : n.Name)));
+            int stringLength = pin.SignalName.Name.Length;
+
+            if (pin.AlternativeSignals.Any() && (stringLength + pin.AlternativeSignals.Sum(p => p.Name.Length) + pin.AlternativeSignals.Count() > 100))
+            {
+                // pin name is going to be too long, trim it down.
+                pinName.Append(ShortenPinName(pin));
+            }
+            else
+            {
+                // name will be under 100 characters, or there are no alternative signals.
+                if (pin.AlternativeSignals.Any())
+                {
+                    pinName.Append('/');
+                    pinName.Append(string.Join("/", pin.AlternativeSignals.Select(n => n.ActiveLow ? AddActiveLowBars(n.Name) : n.Name)));
+                }
+            }
+
+            return pinName.ToString();
+        }
+
+        private string ShortenPinName(PinDefinition pin)
+        {
+            // todo: this could create havoc with pins that have their IO port as an AlternativeSignal, it might trim it and lose meaning. Check for Ports?
+
+            List<string> peripherals = new List<string>();
+            List<PinSignal> nonPeripheral = new List<PinSignal>();
+
+            foreach (var altFunc in pin.AlternativeSignals)
+            {
+                if (pinShortenerRegex.IsMatch(altFunc.Name))
+                {
+                    var match = pinShortenerRegex.Match(altFunc.Name);
+                    if (!peripherals.Any(p => p == match.Groups["Peripheral"].Value))
+                    {
+                        peripherals.Add(match.Groups["Peripheral"].Value);
+                    }
+                }
+                else
+                {
+                    nonPeripheral.Add(altFunc);
+                }
+            }
+
+            int nameLength = pin.SignalName.Name.Length + 1;
+            StringBuilder pinName = new StringBuilder();
+
+            foreach(var nonPeriph in nonPeripheral)
+            {
+                if (nameLength + nonPeriph.Name.Length < 100)
+                {
+                    pinName.Append('/');
+                    pinName.Append(nonPeriph.ActiveLow ? AddActiveLowBars(nonPeriph.Name) : nonPeriph.Name);
+
+                    nameLength += nonPeriph.Name.Length + 1;
+                }
+                else
+                {
+                    return pinName.ToString();
+                }
+            }
+
+            foreach (var p in peripherals)
+            {
+                if (nameLength + p.Length < 100)
+                {
+                    pinName.Append('/');
+                    pinName.Append(p);
+
+                    nameLength += p.Length + 1;
+                }
+                else
+                {
+                    return pinName.ToString();
+                }
+            }
 
             return pinName.ToString();
         }
