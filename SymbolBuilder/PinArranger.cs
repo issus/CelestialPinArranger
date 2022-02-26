@@ -63,19 +63,36 @@ namespace SymbolBuilder
                 _pinMapper.Map(symbol.DevicePackage, pin);
             }
 
-            // Order non-port pins to make it less of a jumble
-            foreach (var alignmentPins in symbol.Pins.Where(p => p.MappingFunction.PinClass != PinClass.IOPort).GroupBy(p => p.MappingFunction.Position.Alignment))
+            // debug point
+            var nullMapping = symbol.Pins.Where(p => p.MappingFunction == null);
+            if (nullMapping.Any())
             {
-                int order = 0;
-                foreach (var fn in alignmentPins.OrderByDescending(p => p.SignalName.Name).GroupBy(p => p.MappingFunction.Name))
-                {
-                    foreach (var pin in fn)
-                    {
-                        pin.PortBit = order++;
-                    }
+                int i = 0;
+            }
 
-                    order = 0;
+            var nonIoPins = symbol.Pins.Where(p => p.MappingFunction != null && p.MappingFunction.PinClass != PinClass.IOPort);
+
+            if (nonIoPins.Any())
+            {
+                // Order non-port pins to make it less of a jumble
+                foreach (var alignmentPins in nonIoPins.GroupBy(p => p.MappingFunction.Position.Alignment))
+                {
+                    int order = 0;
+                    foreach (var fn in alignmentPins.OrderByDescending(p => p.SignalName.Name).GroupBy(p => p.MappingFunction.Name))
+                    {
+                        foreach (var pin in fn)
+                        {
+                            pin.PortBit = order++;
+                        }
+
+                        order = 0;
+                    }
                 }
+            }
+            else
+            {
+                // debug point
+                int i = 0;
             }
 
             // Break symbol into blocks if needed

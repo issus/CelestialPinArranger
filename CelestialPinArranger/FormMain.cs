@@ -169,8 +169,8 @@ namespace CelestialPinArranger
 
             if (chkOpenAltium.Checked)
             {
-                ProcessStartInfo start = new ProcessStartInfo(fullFileName);
-                Process.Start(start);
+                var processInfo = new ProcessStartInfo(fullFileName) { UseShellExecute = true };
+                Process.Start(processInfo);
             }
         }
 
