@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - ci
       - releases/*
     paths-ignore:
       - '**.md'
@@ -28,9 +29,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    
-    - name: Restore dependencies
-      run: dotnet restore
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Clone AltiumSharp
       run: git clone https://github.com/issus/AltiumSharp.git
@@ -41,11 +42,23 @@ jobs:
     - name: Clone EagleSharp
       run: git clone https://github.com/issus/EagleSharp.git
 
+    - name: Restore dependencies
+      run: dotnet restore
+
     - name: Build
       run: dotnet build -c Release --no-restore
     
     - name: Test
       run: dotnet test -c Release --no-restore --no-build --verbosity normal --filter "Category!=LongRunning"
+
+
+    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    #- name: Upload build artifacts
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: MSIX Package
+    #    path: ${{ env.Wap_Project_Directory }}\AppPackages
+
 
 #    - name: Pack
 #      run: dotnet pack src/Orleans.SyncWork/Orleans.SyncWork.csproj -c Release --no-restore --no-build --include-symbols -p:SymbolPackageFormat=snupkg -o .
