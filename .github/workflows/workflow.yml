@@ -65,7 +65,7 @@ jobs:
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "CelestialPinArranger\bin\Release\net5.0-windows\publish\release.zip"
+        artifacts: 'CelestialPinArranger\bin\Release\net5.0-windows\publish\release.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
