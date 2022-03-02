@@ -58,13 +58,13 @@ jobs:
       uses: thedoctor0/zip-release@master
       with:
         type: 'zip'
-        filename: 'release-$GITHUB_SHA.zip'
+        filename: 'release.zip'
         path: 'CelestialPinArranger\bin\Release\net5.0-windows\publish'
 
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "release-$GITHUB_SHA.zip"
+        artifacts: "release.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
