@@ -7,9 +7,9 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AltiumSharp\AltiumSharp\AltiumSharp.csproj" />
-    <ProjectReference Include="..\..\BxlSharp\BxlSharp\BxlSharp.csproj" />
-    <ProjectReference Include="..\..\EagleSharp\EagleSharp\EagleSharp.csproj" />
+    <ProjectReference Include="..\AltiumSharp\AltiumSharp\AltiumSharp.csproj" />
+    <ProjectReference Include="..\BxlSharp\BxlSharp\BxlSharp.csproj" />
+    <ProjectReference Include="..\EagleSharp\EagleSharp\EagleSharp.csproj" />
     <ProjectReference Include="..\SymbolBuilder\SymbolBuilder.csproj" />
   </ItemGroup>
   <ItemGroup>
