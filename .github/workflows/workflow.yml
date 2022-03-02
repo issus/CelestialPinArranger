@@ -8,7 +8,8 @@ on:
     branches:
       - main
       - ci
-      - releases/*
+    tags:
+      - '*'
     paths-ignore:
       - '**.md'
 
