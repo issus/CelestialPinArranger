@@ -3,14 +3,21 @@
     {
       "functionName": "Port",
       "pinClass": "IOPort",
-      "pinNamePattern": "(?:P(?<Group>[A-Z])\\.(?<Index>\\d+))",
+      "pinNamePattern": "(?:P(?<Group>\\w)\\.(?<Index>\\d+))",
       "position": "Right-Middle",
       "priority": 0
     },
     {
       "functionName": "Osc",
       "pinClass": "ChipConfiguration",
-      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?",
+      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|XT\\d?_(?:IN|OUT)|X(?:IN|XOUT)|^OSC\\d+|^OSC[IO]|^E?XTAL(?:\\d{1,2})?",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "RfOsc",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^RF_XTAL_(?:OUT|IN)|RF_CLKO",
       "position": "Left-Middle",
       "priority": 0
     },
@@ -18,6 +25,12 @@
       "functionName": "AnalogueGround",
       "pinClass": "PowerSupply",
       "pinNamePattern": "^GNDA$|^VSSA|^AGND|^AVSS|^AVEE|^VIN-",
+      "position": "Left-Lower"
+    },
+    {
+      "functionName": "PowerGround",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^PVSS",
       "position": "Left-Lower"
     },
     {
@@ -32,7 +45,7 @@
       "pinClass": "PowerSupply",
       "pinNamePattern": "^LDO_CAP$",
       "position": "Left-Lower",
-      "priority":  2
+      "priority": 2
     },
     {
       "functionName": "AnaloguePowerIn",
@@ -43,7 +56,14 @@
     {
       "functionName": "PowerIn",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$",
+      "pinNamePattern": "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?|^(?:LCD_)?VLCD|^Vsw|^VBUS$",
+      "position": "Left-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "RfPowerIn",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "RF_A?VDD(?:\\d+(?:V\\d+)?|PA)?",
       "position": "Left-Upper",
       "priority": 0
     },
@@ -85,7 +105,7 @@
     {
       "functionName": "Reset",
       "pinClass": "ChipConfiguration",
-      "pinNamePattern": "^RESET|RESET$|^RST|RST$|^MCLR$|^PAD_RESET$",
+      "pinNamePattern": "^RESET|RESET$|^RST|RST$|^MCLR$|^PAD_RESET$|^nRESET",
       "position": "Left-Upper",
       "priority": 3
     },
@@ -98,13 +118,34 @@
     {
       "functionName": "ISP",
       "pinClass": "ChipConfiguration",
-      "pinNamePattern": "^JTAG|^SWD",
+      "pinNamePattern": "^JTAG|^SWD|^ICE_(?:CL?K|DAT)",
       "position": "Left-Middle",
       "priority": 0
     },
     {
+      "functionName": "RTC",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^RTC",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "HPOUT",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^[LR]HPOUT",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "MIC",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^MIC\\d*_",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
       "functionName": "USB",
-      "pinNamePattern": "^USB\\d{0,2}_D[PM]$|USB_VBUS(?:_\\d{0,2})?",
+      "pinNamePattern": "^(?:HS)?USB\\d{0,2}_D[+-PM]$|USB_VBUS(?:_\\d{0,2})?|HSUSB_VRES|(?:HS)?USB_VDD\\d+(?:_CAP)?|HSUSB_VSS|USB_LDO\\d*_CAP|(?:HS)?USB\\d*_ID|^D[+-PM]$|^USB\\d*_OTG(?:_ID)?|^USB\\d*_R?EXT",
       "position": "Left-Middle",
       "priority": 0
     },
@@ -116,17 +157,23 @@
     },
     {
       "functionName": "RF",
-      "pinNamePattern": "^RF",
+      "pinNamePattern": "^RF|^RF_IO",
       "position": "Right-Upper",
       "priority": 0
     },
     {
       "functionName": "PowerOut",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "^VOUT|^VO|^VOUT\\+$",
+      "pinNamePattern": "^VOUT|^VO|^VOUT\\+$|^LDO$",
       "position": "Right-Upper",
       "priority": 0,
       "groupSpacing": 2
+    },
+    {
+      "functionName": "RfBuckOut",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^RF_BUCK",
+      "position": "Right-Upper"
     },
     {
       "functionName": "SwitchmodeSetup",
@@ -159,6 +206,12 @@
     {
       "functionName": "I2C",
       "pinNamePattern": "^SCL$|^SDA$",
+      "position": "Right-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "PS2",
+      "pinNamePattern": "^PS2(?:CLK|DAT)$",
       "position": "Right-Lower",
       "priority": 0
     },
