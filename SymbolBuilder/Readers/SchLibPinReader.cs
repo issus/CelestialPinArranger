@@ -33,7 +33,8 @@ namespace SymbolBuilder.Readers
                 foreach (var pin in
                     component.GetPrimitivesOfType<AltiumSharp.Records.SchPin>()
                         .Where(p => p.Name.ToUpperInvariant() != "NC")
-                        .Select(p => new  { Designator = p.Designator, Name = p.Name, ElectricalType = (Model.PinElectricalType)p.Electrical }))
+                        .Select(p => new  { Designator = p.Designator, Name = p.Name, ElectricalType = (Model.PinElectricalType)p.Electrical })
+                        .Distinct())
                 {
                     string name = pin.Name;
                     List<PinSignal> altSignals = new List<PinSignal>();
