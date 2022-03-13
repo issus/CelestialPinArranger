@@ -350,7 +350,7 @@ namespace SymbolBuilder.Translators
 
             foreach (var map in pinMap)
             {
-                foreach (var port in map.GroupBy(p => p.Port))
+                foreach (var port in map.GroupBy(p => p.Port).OrderBy(p => p.Key))
                 {
                     foreach (var pin in port.OrderBy(p => p.PortBit))
                     {
