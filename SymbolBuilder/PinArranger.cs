@@ -51,6 +51,9 @@ namespace SymbolBuilder
         /// </summary>
         public List<SymbolDefinition> Execute()
         {
+            if (_pinMapper == null)
+                return null;
+
             _symbols.ForEach(a => ArrangeSymbol(a));
 
             return _symbols;
