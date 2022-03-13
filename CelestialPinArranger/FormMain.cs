@@ -11,9 +11,11 @@ using SymbolBuilder.Mappers;
 using SymbolBuilder.Readers;
 using SymbolBuilder.Translators;
 using System.Linq;
+using CelestialPinArranger.Data;
 
 namespace CelestialPinArranger
 {
+
     public partial class FormMain : Form
     {
         private FormZoom _formZoom = new FormZoom();
@@ -37,8 +39,16 @@ namespace CelestialPinArranger
             PinDataReader.Register(new SimplicityStudioPinReader());
             PinDataReader.Register(new EaglePinReader());
 
-            cmbPinMapper.Items.AddRange(new object[]{ new DefaultMapper() });
-            cmbPinMapper.Items.AddRange(new object[] { new JsonMapper("JSON/NXP MCUXpresso.json") });
+            cmbPinMapper.DisplayMember = "Display";
+            cmbPinMapper.ValueMember = "Value";
+            cmbPinMapper.Items.AddRange(new ComboBoxItem[]{ new ComboBoxItem("Default Mapper", new DefaultMapper()) });
+
+            var files = Directory.GetFiles("JSON", "*.json");
+            foreach (var file in files)
+            {
+                cmbPinMapper.Items.AddRange(new ComboBoxItem[] { new ComboBoxItem(Path.GetFileName(file), new JsonMapper(file)) });
+            }
+
             cmbPinMapper.SelectedIndex = 0;
         }
 
@@ -47,7 +57,7 @@ namespace CelestialPinArranger
             pnlPreview.Invalidate();
         }
 
-        private PinMapper SelectedPinMapper => cmbPinMapper.SelectedItem as PinMapper;
+        private PinMapper SelectedPinMapper => (cmbPinMapper.SelectedItem as ComboBoxItem)?.Value as PinMapper;
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
