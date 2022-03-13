@@ -37,6 +37,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new KiCad5PinReader());
             PinDataReader.Register(new TiSysConfigPinReader());
             PinDataReader.Register(new SimplicityStudioPinReader());
+            PinDataReader.Register(new InfineonSpacwizPinReader());
             PinDataReader.Register(new EaglePinReader());
 
             cmbPinMapper.DisplayMember = "Display";

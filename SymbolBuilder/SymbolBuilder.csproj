@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="JSON\Infineon.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="JSON\Default.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
