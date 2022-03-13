@@ -29,6 +29,7 @@ namespace CelestialPinArranger
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBatch));
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblProgress = new System.Windows.Forms.Label();
             this.pbProgress = new System.Windows.Forms.ProgressBar();
@@ -64,18 +65,20 @@ namespace CelestialPinArranger
             this.panel1.Controls.Add(this.pbProgress);
             this.panel1.Controls.Add(this.btnProcess);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 368);
+            this.panel1.Location = new System.Drawing.Point(0, 425);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(372, 45);
+            this.panel1.Size = new System.Drawing.Size(434, 52);
             this.panel1.TabIndex = 0;
             // 
             // lblProgress
             // 
             this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(203, 15);
+            this.lblProgress.Location = new System.Drawing.Point(237, 17);
+            this.lblProgress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(60, 13);
+            this.lblProgress.Size = new System.Drawing.Size(60, 15);
             this.lblProgress.TabIndex = 2;
             this.lblProgress.Text = "9999/9999";
             this.lblProgress.Visible = false;
@@ -84,18 +87,20 @@ namespace CelestialPinArranger
             // 
             this.pbProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbProgress.Location = new System.Drawing.Point(12, 10);
+            this.pbProgress.Location = new System.Drawing.Point(14, 12);
+            this.pbProgress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbProgress.Name = "pbProgress";
-            this.pbProgress.Size = new System.Drawing.Size(185, 23);
+            this.pbProgress.Size = new System.Drawing.Size(216, 27);
             this.pbProgress.TabIndex = 1;
             this.pbProgress.Visible = false;
             // 
             // btnProcess
             // 
             this.btnProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnProcess.Location = new System.Drawing.Point(285, 10);
+            this.btnProcess.Location = new System.Drawing.Point(332, 12);
+            this.btnProcess.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnProcess.Name = "btnProcess";
-            this.btnProcess.Size = new System.Drawing.Size(75, 23);
+            this.btnProcess.Size = new System.Drawing.Size(88, 27);
             this.btnProcess.TabIndex = 0;
             this.btnProcess.Text = "Process";
             this.btnProcess.UseVisualStyleBackColor = true;
@@ -111,18 +116,21 @@ namespace CelestialPinArranger
             this.groupBox1.Controls.Add(this.btnSourceDirectory);
             this.groupBox1.Controls.Add(this.txtSourceDir);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(14, 14);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(348, 107);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox1.Size = new System.Drawing.Size(406, 123);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Directories";
             // 
             // btnDestDirectory
             // 
-            this.btnDestDirectory.Location = new System.Drawing.Point(314, 69);
+            this.btnDestDirectory.Location = new System.Drawing.Point(366, 80);
+            this.btnDestDirectory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnDestDirectory.Name = "btnDestDirectory";
-            this.btnDestDirectory.Size = new System.Drawing.Size(28, 23);
+            this.btnDestDirectory.Size = new System.Drawing.Size(33, 27);
             this.btnDestDirectory.TabIndex = 5;
             this.btnDestDirectory.Text = "...";
             this.btnDestDirectory.UseVisualStyleBackColor = true;
@@ -130,25 +138,28 @@ namespace CelestialPinArranger
             // 
             // txtDestinationDir
             // 
-            this.txtDestinationDir.Location = new System.Drawing.Point(6, 71);
+            this.txtDestinationDir.Location = new System.Drawing.Point(7, 82);
+            this.txtDestinationDir.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtDestinationDir.Name = "txtDestinationDir";
-            this.txtDestinationDir.Size = new System.Drawing.Size(302, 20);
+            this.txtDestinationDir.Size = new System.Drawing.Size(352, 23);
             this.txtDestinationDir.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 55);
+            this.label2.Location = new System.Drawing.Point(7, 63);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.Size = new System.Drawing.Size(67, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "Destination";
             // 
             // btnSourceDirectory
             // 
-            this.btnSourceDirectory.Location = new System.Drawing.Point(314, 30);
+            this.btnSourceDirectory.Location = new System.Drawing.Point(366, 35);
+            this.btnSourceDirectory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSourceDirectory.Name = "btnSourceDirectory";
-            this.btnSourceDirectory.Size = new System.Drawing.Size(28, 23);
+            this.btnSourceDirectory.Size = new System.Drawing.Size(33, 27);
             this.btnSourceDirectory.TabIndex = 2;
             this.btnSourceDirectory.Text = "...";
             this.btnSourceDirectory.UseVisualStyleBackColor = true;
@@ -156,17 +167,19 @@ namespace CelestialPinArranger
             // 
             // txtSourceDir
             // 
-            this.txtSourceDir.Location = new System.Drawing.Point(6, 32);
+            this.txtSourceDir.Location = new System.Drawing.Point(7, 37);
+            this.txtSourceDir.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtSourceDir.Name = "txtSourceDir";
-            this.txtSourceDir.Size = new System.Drawing.Size(302, 20);
+            this.txtSourceDir.Size = new System.Drawing.Size(352, 23);
             this.txtSourceDir.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Location = new System.Drawing.Point(7, 18);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.Size = new System.Drawing.Size(43, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Source";
             // 
@@ -183,9 +196,11 @@ namespace CelestialPinArranger
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.cboJson);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(12, 125);
+            this.groupBox2.Location = new System.Drawing.Point(14, 144);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(348, 167);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox2.Size = new System.Drawing.Size(406, 193);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Processing";
@@ -194,26 +209,29 @@ namespace CelestialPinArranger
             // 
             this.txtFormatFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFormatFolder.Location = new System.Drawing.Point(6, 72);
+            this.txtFormatFolder.Location = new System.Drawing.Point(7, 83);
+            this.txtFormatFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtFormatFolder.Name = "txtFormatFolder";
-            this.txtFormatFolder.Size = new System.Drawing.Size(336, 20);
+            this.txtFormatFolder.Size = new System.Drawing.Size(391, 23);
             this.txtFormatFolder.TabIndex = 9;
             this.txtFormatFolder.Text = "ARM CORTEX";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 56);
+            this.label6.Location = new System.Drawing.Point(7, 65);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(209, 13);
+            this.label6.Size = new System.Drawing.Size(239, 15);
             this.label6.TabIndex = 8;
             this.label6.Text = "Library Formatting Destination Folder Name";
             // 
             // btnImgsDir
             // 
-            this.btnImgsDir.Location = new System.Drawing.Point(314, 132);
+            this.btnImgsDir.Location = new System.Drawing.Point(366, 152);
+            this.btnImgsDir.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnImgsDir.Name = "btnImgsDir";
-            this.btnImgsDir.Size = new System.Drawing.Size(28, 23);
+            this.btnImgsDir.Size = new System.Drawing.Size(33, 27);
             this.btnImgsDir.TabIndex = 7;
             this.btnImgsDir.Text = "...";
             this.btnImgsDir.UseVisualStyleBackColor = true;
@@ -221,9 +239,10 @@ namespace CelestialPinArranger
             // 
             // txtImagesDir
             // 
-            this.txtImagesDir.Location = new System.Drawing.Point(6, 134);
+            this.txtImagesDir.Location = new System.Drawing.Point(7, 155);
+            this.txtImagesDir.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtImagesDir.Name = "txtImagesDir";
-            this.txtImagesDir.Size = new System.Drawing.Size(302, 20);
+            this.txtImagesDir.Size = new System.Drawing.Size(352, 23);
             this.txtImagesDir.TabIndex = 6;
             // 
             // chkImages
@@ -231,9 +250,10 @@ namespace CelestialPinArranger
             this.chkImages.AutoSize = true;
             this.chkImages.Checked = true;
             this.chkImages.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkImages.Location = new System.Drawing.Point(6, 98);
+            this.chkImages.Location = new System.Drawing.Point(7, 113);
+            this.chkImages.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chkImages.Name = "chkImages";
-            this.chkImages.Size = new System.Drawing.Size(107, 17);
+            this.chkImages.Size = new System.Drawing.Size(114, 19);
             this.chkImages.TabIndex = 3;
             this.chkImages.Text = "Generate Images";
             this.chkImages.UseVisualStyleBackColor = true;
@@ -242,9 +262,10 @@ namespace CelestialPinArranger
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 118);
+            this.label4.Location = new System.Drawing.Point(7, 136);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 13);
+            this.label4.Size = new System.Drawing.Size(99, 15);
             this.label4.TabIndex = 2;
             this.label4.Text = "Images Subfolder";
             // 
@@ -254,17 +275,19 @@ namespace CelestialPinArranger
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboJson.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboJson.FormattingEnabled = true;
-            this.cboJson.Location = new System.Drawing.Point(6, 32);
+            this.cboJson.Location = new System.Drawing.Point(7, 37);
+            this.cboJson.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cboJson.Name = "cboJson";
-            this.cboJson.Size = new System.Drawing.Size(336, 21);
+            this.cboJson.Size = new System.Drawing.Size(391, 23);
             this.cboJson.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 16);
+            this.label3.Location = new System.Drawing.Point(7, 18);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 13);
+            this.label3.Size = new System.Drawing.Size(79, 15);
             this.label3.TabIndex = 0;
             this.label3.Text = "Mapper JSON";
             // 
@@ -274,9 +297,11 @@ namespace CelestialPinArranger
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.txtManufacturerName);
             this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(12, 298);
+            this.groupBox3.Location = new System.Drawing.Point(14, 344);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(348, 64);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox3.Size = new System.Drawing.Size(406, 74);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Manufacturer";
@@ -285,30 +310,34 @@ namespace CelestialPinArranger
             // 
             this.txtManufacturerName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtManufacturerName.Location = new System.Drawing.Point(6, 32);
+            this.txtManufacturerName.Location = new System.Drawing.Point(7, 37);
+            this.txtManufacturerName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtManufacturerName.Name = "txtManufacturerName";
-            this.txtManufacturerName.Size = new System.Drawing.Size(336, 20);
+            this.txtManufacturerName.Size = new System.Drawing.Size(391, 23);
             this.txtManufacturerName.TabIndex = 1;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 16);
+            this.label5.Location = new System.Drawing.Point(7, 18);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(39, 15);
             this.label5.TabIndex = 0;
             this.label5.Text = "Name";
             // 
             // frmBatch
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(372, 413);
+            this.ClientSize = new System.Drawing.Size(434, 477);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBatch";
