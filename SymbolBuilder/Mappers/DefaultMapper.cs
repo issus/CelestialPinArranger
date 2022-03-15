@@ -13,7 +13,7 @@ namespace SymbolBuilder.Mappers
         public override void LoadMappings()
         {
             AddFunction(string.Empty, PinClass.ChipConfiguration,   "Osc",              "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?", PinPosition.From(PinSide.Left, PinAlignment.Middle));
-            AddFunction(string.Empty, PinClass.PowerSupply,         "AnalogueGround",   "^GNDA$|^VSSA|^AGND|^AVSS|^AVEE|^VIN-", PinPosition.From(PinSide.Left, PinAlignment.Lower), priority: 1);
+            AddFunction(string.Empty, PinClass.PowerSupply,         "AnalogueGround",   "^GNDA$|^VSSA|^AGND|^AVSS|^AVEE|^VIN-|^GNDANA|^GNDIO", PinPosition.From(PinSide.Left, PinAlignment.Lower), priority: 1);
             AddFunction(string.Empty, PinClass.PowerSupply,         "Ground",           "^GND(?:\\d+)?$|^VSS|^IOVSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD$|^DRVSS|^VSS_RF(?:\\d+)?$", PinPosition.From(PinSide.Left, PinAlignment.Lower));
             AddFunction(string.Empty, PinClass.PowerSupply,         "AnaloguePowerIn",  "^VDDA|^VCCA|^AVIN|^PVIN|^AVCC|^AVDD|^VDDA|^DRVDD|^DRVCC", PinPosition.From(PinSide.Left, PinAlignment.Upper), priority: 1);
             AddFunction(string.Empty, PinClass.PowerSupply,         "PowerIn",          "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$", PinPosition.From(PinSide.Left, PinAlignment.Upper));
