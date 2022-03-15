@@ -57,6 +57,11 @@ namespace SymbolBuilder.Readers
                 SymbolDefinition device = new SymbolDefinition(ordercode, "Microchip", pack);
 
                 var pinNodes = mcu.SelectNodes($"//pinouts/pinout[@name='{pinoutKey}']/pin");
+                if (pinNodes.Count == 0)
+                {
+                    continue;
+                }
+
                 foreach (XmlNode pinNode in pinNodes)
                 {
                     string name = pinNode.Attributes["pad"]?.Value;
@@ -77,20 +82,17 @@ namespace SymbolBuilder.Readers
                         string group = signalNode.Attributes["group"]?.Value;
                         string index = signalNode.Attributes["index"]?.Value;
 
+                        if (function == null)
+                            function = group;
+
                         var instance = signalNode.ParentNode.ParentNode;
                         var instName = instance.Attributes["name"]?.Value;
 
                         if (instName.StartsWith("PORT"))
                             continue;
 
-                        if (function == "default")
-                        {
-                            pinList.Add($"{instName}_{group.Replace(instName, "")}{index}".Replace("__", "_"));
-                        }
-                        else
-                        {
-                            pinList.Add($"{instName}_{function.Replace(instName, "")}{index}".Replace("__", "_"));
-                        }
+                        
+                        pinList.Add($"{instName}_{group.Replace(instName, "")}{index}".Replace("__", "_"));
                     }
 
                     devicePin.AlternativeSignals.AddRange(pinList.Select(n => new PinSignal(n)));

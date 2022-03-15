@@ -16,7 +16,7 @@
     {
       "functionName": "Ground",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "^GND(?:\\d+)?$|^VSS|^IOVSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD$|^DRVSS|^VSS_RF(?:\\d+)?$",
+      "pinNamePattern": "^GND(?:\\d+)?$|^VSS|^IOVSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD$|^DRVSS|^VSS_RF(?:\\d+)?$|^GND",
       "position": "Left-Lower",
       "priority": 0
     },
