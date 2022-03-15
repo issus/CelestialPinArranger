@@ -1,0 +1,209 @@
+{
+  "": [
+    {
+      "functionName": "AnalogPowersupply",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^AVDD|^AVCC|VCAIN",
+      "position": "Left-Upper",
+      "priority": 2,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Powersupply",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^V\\+|^VCC|^VDD|VDD$|VCC$|^VREG",
+      "position": "Left-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Batt",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VBAT",
+      "position": "Left-Upper",
+      "priority": 3,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "AnalogGround",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^AGND|^AVSS|VCAR",
+      "position": "Left-Upper",
+      "priority": 2,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Ground",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^EP|^GND|^VSS|GND$|VSS$|VEE$|^VEE|^V-$",
+      "position": "Left-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "I2C",
+      "pinNamePattern": "SCL|SDA|ADDR\\d*",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Sync",
+      "pinNamePattern": "SYNC",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Clock",
+      "pinNamePattern": "^CLK|CLK$|XT[IO]",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Input",
+      "pinNamePattern": "IN[TRL]?[+-]|INPUT|[+-]IN|AIN[LR]?\\d?|V[PN]\\d?|IN[A-D]\\d",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Output",
+      "pinNamePattern": "^OUT[RL]?[+-]|OUTPUT|OUT$|^OTR[+-]",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "Test",
+      "pinNamePattern": "^TEST",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Boot",
+      "pinNamePattern": "BOOT[LR][+-]",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Speaker",
+      "pinNamePattern": "[LR]SPK[+-]",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Bias",
+      "pinNamePattern": "BIAS",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Data",
+      "pinNamePattern": "^DATA|DATA$|^SDAT|SDAT$",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Gain",
+      "pinNamePattern": "^GAIN|^RG\\d|^PGA\\d",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Enable",
+      "pinNamePattern": "EN$|^EN|SHUTDOWN|BYPASS|STDN|SD\\d?|POWER DOWN",
+      "position": "Left-Upper",
+      "priority": 6,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "VOUT",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VOUT|VOUT$",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Reference",
+      "pinNamePattern": "REFERENCE|REF\\d?",
+      "position": "Left-Upper",
+      "priority": 5,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Threshold",
+      "pinNamePattern": "SLC_TH",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Mute",
+      "pinNamePattern": "MUTE",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Mode",
+      "pinNamePattern": "MO/ST|MODE|MONO",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "SD",
+      "pinNamePattern": "^\\*?SD$",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Filter",
+      "pinNamePattern": "FILT\\d?",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Feedback",
+      "pinNamePattern": "VNFB\\d?|FB",
+      "position": "Right-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "Boost",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "BSTSW|VBST",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Sense",
+      "pinNamePattern": "SENSE[+-]",
+      "position": "Right-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "ChargePump",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "CF\\d?",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": null,
+      "pinNamePattern": "",
+      "position": "Right-Middle"
+    }
+  ]
+}
