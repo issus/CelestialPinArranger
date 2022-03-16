@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace SymbolBuilder.Readers
@@ -47,7 +48,6 @@ namespace SymbolBuilder.Readers
 
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
             nsmgr.AddNamespace("r", "http://www.tasking.com/schema/pinmappings/v1.1");
-            
 
             string package = mcu.SelectSingleNode("/r:pinMappings/r:device/r:package", nsmgr).Attributes["name"]?.Value;
             string refName = mcu.SelectSingleNode("/r:pinMappings/r:device", nsmgr).Attributes["name"]?.Value;
@@ -82,6 +82,12 @@ namespace SymbolBuilder.Readers
             var list = new List<SymbolDefinition>();
             list.Add(device);
             return list;
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = null)
+        {
+            // todo: Async
+            return LoadFromStream(stream, fileName);
         }
     }
 }

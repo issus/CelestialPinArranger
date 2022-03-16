@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace SymbolBuilder.Readers
@@ -79,16 +80,47 @@ namespace SymbolBuilder.Readers
             XmlDocument deviceDoc = new XmlDocument();
             XmlDocument portioDoc = new XmlDocument();
 
-            XmlNamespaceManager devicensManager = new XmlNamespaceManager(deviceDoc.NameTable);
-            devicensManager.AddNamespace("device", "http://www.silabs.com/ss/hwconfig/device.ecore");
-
             deviceDoc.Load(stream);
 
+            portioDoc.Load(Path.Combine(Path.GetDirectoryName(fileName), "PORTIO.portio"));
 
+            return LoadDocument(deviceDoc, portioDoc);
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName)
+        {
+            if (fileName == null)
+                throw new ArgumentException("fileName must be specified, this reader needs to read multiple files.");
+
+            if (!File.Exists(Path.Combine(Path.GetDirectoryName(fileName), "PORTIO.portio")))
+            {
+                throw new FileNotFoundException("Missing PORTIO.portio file in the same directory as the .device file");
+            }
+
+            XmlDocument deviceDoc = new XmlDocument();
+            XmlDocument portioDoc = new XmlDocument();
+
+            XmlReaderSettings readerSettings = new XmlReaderSettings
+            {
+                Async = true
+            };
+
+            XmlReader deviceDocReader = XmlReader.Create(stream, readerSettings);
+            XmlReader portioDocReader = XmlReader.Create(Path.Combine(Path.GetDirectoryName(fileName), "PORTIO.portio"), readerSettings);
+
+            deviceDoc.Load(deviceDocReader);
+            portioDoc.Load(portioDocReader);
+
+            return LoadDocument(deviceDoc, portioDoc);
+        }
+
+        List<SymbolDefinition> LoadDocument(XmlDocument deviceDoc, XmlDocument portioDoc)
+        {
             XmlNamespaceManager portnsManager = new XmlNamespaceManager(portioDoc.NameTable);
             portnsManager.AddNamespace("portio", "http://www.silabs.com/ss/hwconfig/portio.ecore");
 
-            portioDoc.Load(Path.Combine(Path.GetDirectoryName(fileName), "PORTIO.portio"));
+            XmlNamespaceManager devicensManager = new XmlNamespaceManager(deviceDoc.NameTable);
+            devicensManager.AddNamespace("device", "http://www.silabs.com/ss/hwconfig/device.ecore");
 
             List<pinModule> pinModules = new List<pinModule>();
 
@@ -169,6 +201,7 @@ namespace SymbolBuilder.Readers
             device.CheckPinNames();
 
             list.Add(device);
+
             return list;
         }
     }

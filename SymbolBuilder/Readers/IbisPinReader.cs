@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SymbolBuilder.Readers
 {
@@ -50,6 +51,12 @@ namespace SymbolBuilder.Readers
             }
 
             return ret;
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = null)
+        {
+            // todo: async
+            return LoadFromStream(stream, fileName);
         }
     }
 }

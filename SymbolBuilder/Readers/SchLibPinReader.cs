@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymbolBuilder.Readers
 {
@@ -54,6 +55,12 @@ namespace SymbolBuilder.Readers
             }
 
             return result;
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = null)
+        {
+            //todo: async AltiumSharp
+            return LoadFromStream(stream, fileName);
         }
     }
 }

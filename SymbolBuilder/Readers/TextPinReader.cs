@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using SymbolBuilder.Model;
 
 namespace SymbolBuilder.Readers
@@ -11,8 +12,10 @@ namespace SymbolBuilder.Readers
     public abstract class TextPinReader : PinDataReader
     {
         protected abstract string[] DoGetColumns(StreamReader reader);
+        protected abstract Task<string[]> DoGetColumnsAsync(StreamReader reader);
 
         protected abstract IEnumerable<string[]> DoGetRows(StreamReader reader);
+        protected abstract Task<IEnumerable<string[]>> DoGetRowsAsync(StreamReader reader);
 
         private bool IsValueEmpty(string value)
         {
@@ -86,6 +89,47 @@ namespace SymbolBuilder.Readers
             }
 
             foreach (var row in DoGetRows(reader))
+            {
+                var pinName = row[ndxName];
+                var pinFunction = ndxFunction != -1 ? row[ndxFunction] : null;
+                var pinPosition = GetPinPosition(row, ndxPosition);
+                var pinType = GetPinType(row, ndxType);
+
+                for (int i = 0; i < row.Length - 1; i++)
+                {
+                    var designator = row[i].Trim();
+                    if (IsValueEmpty(designator)) continue;
+
+                    packages[i].SymbolBlocks.FirstOrDefault().Pins.Add(new PinDefinition(designator, pinName)); // todo:   pinFunction, pinPosition, pinType));
+                }
+            }
+
+            return packages;
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = null)
+        {
+            using var reader = new StreamReader(stream, Encoding.UTF8, true);
+
+            var columns = (await DoGetColumnsAsync(reader)).ToList();
+
+            var ndxName = columns.FindIndex(c => c.StartsWith("pin", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("name", StringComparison.InvariantCultureIgnoreCase));
+            if (ndxName == -1) ndxName = columns.Count - 1;
+            var ndxFunction = columns.FindIndex(c => c.StartsWith("fun", StringComparison.InvariantCultureIgnoreCase));
+            var ndxPosition = columns.FindIndex(c => c.StartsWith("pos", StringComparison.InvariantCultureIgnoreCase));
+            var ndxType = columns.FindIndex(c => c.StartsWith("type", StringComparison.InvariantCultureIgnoreCase));
+
+            bool IsPackageDesignator(int index) =>
+                index != ndxName && index != ndxFunction && index != ndxPosition && index != ndxType;
+
+            var packages = new List<SymbolDefinition>();
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (!IsPackageDesignator(i)) continue;
+                packages.Add(new SymbolDefinition(columns[i].Trim()));
+            }
+
+            foreach (var row in await DoGetRowsAsync(reader))
             {
                 var pinName = row[ndxName];
                 var pinFunction = ndxFunction != -1 ? row[ndxFunction] : null;

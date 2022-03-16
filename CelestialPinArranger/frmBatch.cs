@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CelestialPinArranger
@@ -73,7 +74,7 @@ namespace CelestialPinArranger
             }
         }
 
-        private void btnProcess_Click(object sender, EventArgs e)
+        private async void btnProcess_Click(object sender, EventArgs e)
         {
             btnProcess.Enabled = false;
 
@@ -147,10 +148,18 @@ namespace CelestialPinArranger
             var mapper = new JsonMapper($"JSON/{(string)cboJson.SelectedItem}.json");
 
             int i = 0;
-            foreach (var file in sourceFiles)
+            object locker = new object();
+            await Parallel.ForEachAsync(sourceFiles, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, async (file, token) =>
+            //foreach (var file in sourceFiles)
             {
-                lblProgress.Text = $"{i++}/{sourceFiles.Length}";
-                pbProgress.Value = i;
+                lock (locker)
+                {
+                    i++;
+                    lblProgress.Invoke(() => lblProgress.Text = $"{i}/{sourceFiles.Length}");
+                    pbProgress.Invoke(() => pbProgress.Value = i);
+                    //lblProgress.Text = $"{i}/{sourceFiles.Length}";
+                    //pbProgress.Value = i;
+                }
 
                 try
                 {
@@ -220,10 +229,8 @@ namespace CelestialPinArranger
                 {
                     // todo: Handle errors so the user knows something went wrong, without interrupting the export
                 }
-
-                // todo: kludge. async this method
-                Application.DoEvents();
             }
+            );
 
 
             btnProcess.Enabled = true;

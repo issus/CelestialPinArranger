@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
 using SymbolBuilder.Model;
+using System.Threading.Tasks;
 
 namespace SymbolBuilder.Readers
 {
@@ -46,6 +47,12 @@ namespace SymbolBuilder.Readers
             }
 
             return ret;
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = null)
+        {
+            // todo: async
+            return LoadFromStream(stream, fileName);
         }
     }
 }

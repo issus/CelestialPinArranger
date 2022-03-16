@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SymbolBuilder.Readers
 {
@@ -22,16 +23,29 @@ namespace SymbolBuilder.Readers
             return reader?.LoadFromFile(fileName);
         }
 
+        public static async Task<List<Model.SymbolDefinition>> LoadAsync(string fileName)
+        {
+            var reader = Instances.FirstOrDefault(r => r.CanRead(fileName));
+            return await reader?.LoadFromFileAsync(fileName);
+        }
+
         public abstract string Name { get; }
         public abstract string Filter { get; }
         public abstract string FileType { get; }
         public abstract bool CanRead(string fileName);
         public abstract List<Model.SymbolDefinition> LoadFromStream(Stream stream, string fileName);
+        public abstract Task<List<Model.SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName);
 
         public List<Model.SymbolDefinition> LoadFromFile(string fileName)
         {
             using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             return LoadFromStream(stream, fileName);
+        }
+
+        public async Task<List<Model.SymbolDefinition>> LoadFromFileAsync(string fileName)
+        {
+            using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            return await LoadFromStreamAsync(stream, fileName);
         }
 
         public override string ToString()

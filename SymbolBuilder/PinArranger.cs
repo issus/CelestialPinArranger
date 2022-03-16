@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using SymbolBuilder.Translators;
+using System.Threading.Tasks;
 
 namespace SymbolBuilder
 {
@@ -31,6 +32,12 @@ namespace SymbolBuilder
             _symbols.AddRange(PinDataReader.Load(fileName));
         }
 
+        public async Task LoadFromFileAsync(string fileName)
+        {
+            _symbols.Clear();
+            _symbols.AddRange(await PinDataReader.LoadAsync(fileName));
+        }
+
         public void LoadFromText(string text)
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
@@ -43,6 +50,13 @@ namespace SymbolBuilder
 
             var reader = new DelimitedTextPinReader();
             _symbols.AddRange(reader.LoadFromStream(stream));
+        }
+        public async Task LoadFromStreamAsync(Stream stream)
+        {
+            _symbols.Clear();
+
+            var reader = new DelimitedTextPinReader();
+            _symbols.AddRange(await reader.LoadFromStreamAsync(stream));
         }
 
         /// <summary>

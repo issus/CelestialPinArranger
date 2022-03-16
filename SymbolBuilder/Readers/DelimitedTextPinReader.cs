@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace SymbolBuilder.Readers
 {
@@ -44,6 +45,13 @@ namespace SymbolBuilder.Readers
             return header.Split(_separator);
         }
 
+        protected override async Task<string[]> DoGetColumnsAsync(StreamReader reader)
+        {
+            var header = (await reader.ReadLineAsync()) ?? string.Empty;
+            _separator = DetectSeparator(header);
+            return header.Split(_separator);
+        }
+
         protected override IEnumerable<string[]> DoGetRows(StreamReader reader)
         {
             string row;
@@ -51,6 +59,18 @@ namespace SymbolBuilder.Readers
             {
                 yield return row.Split(_separator);
             }
+        }
+
+        protected override async Task<IEnumerable<string[]>> DoGetRowsAsync(StreamReader reader)
+        {
+            List<string[]> rows = new List<string[]>();
+            string row;
+            while ((row = await reader.ReadLineAsync()) != null)
+            {
+                rows.Add(row.Split(_separator));
+            }
+
+            return rows;
         }
     }
 }

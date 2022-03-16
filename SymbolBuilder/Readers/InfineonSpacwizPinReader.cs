@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace SymbolBuilder.Readers
 {
-    public class ShiftJisFakeEecoding : EncodingProvider
-    {
-        public override Encoding GetEncoding(int codepage)
-        {
-            return null;
-        }
-
-        public override Encoding GetEncoding(string name)
-        {
-            if (name == null)
-                return null;
-            
-            if (name.ToLower() == "shift-jis")
-            {
-                return Encoding.UTF8;
-            }
-
-            return null;
-        }
-    }
+    
 
     public class InfineonSpacwizPinReader : PinDataReader
     {
+        class ShiftJisFakeEecoding : EncodingProvider
+        {
+            public override Encoding GetEncoding(int codepage)
+            {
+                return null;
+            }
+
+            public override Encoding GetEncoding(string name)
+            {
+                if (name == null)
+                    return null;
+            
+                if (name.ToLower() == "shift-jis")
+                {
+                    return Encoding.UTF8;
+                }
+
+                return null;
+            }
+        }
+
         public override string Name => "Infineon Spacwiz XML";
 
         public override string Filter => "Infineon Spacwiz XML (*.xml)|*.xml";
@@ -92,6 +95,12 @@ namespace SymbolBuilder.Readers
             var list = new List<SymbolDefinition>();
             list.Add(device);
             return list;
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = null)
+        {
+            // todo: async
+            return LoadFromStream(stream, fileName);
         }
     }
 }

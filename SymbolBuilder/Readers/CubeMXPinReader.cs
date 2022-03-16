@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace SymbolBuilder.Readers
@@ -73,6 +74,12 @@ namespace SymbolBuilder.Readers
             var list = new List<SymbolDefinition>();
             list.Add(device);
             return list;
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = null)
+        {
+            // todo: async
+            return LoadFromStream(stream, fileName);
         }
     }
 }

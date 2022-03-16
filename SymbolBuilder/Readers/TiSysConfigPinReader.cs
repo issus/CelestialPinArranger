@@ -3,27 +3,28 @@ using System.IO;
 using System.Text.Json;
 using System.Linq;
 using SymbolBuilder.Model;
+using System.Threading.Tasks;
 
 namespace SymbolBuilder.Readers
 {
-    internal class TiMux
-    {
-        public string DevicePinId { get; set; }
-        public List<TiPeripheralPin> PeripheralPins { get; set; }
-    }
-    internal class TiPeripheralPin
-    {
-        public string PeripheralPinId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-
-        public string InterfacePinId { get; set; }
-        public string InterfaceName { get; set; }
-        public string InterfaceDescription { get; set; }
-    }
-
     public class TiSysConfigPinReader : PinDataReader
     {
+        class TiMux
+        {
+            public string DevicePinId { get; set; }
+            public List<TiPeripheralPin> PeripheralPins { get; set; }
+        }
+        class TiPeripheralPin
+        {
+            public string PeripheralPinId { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+
+            public string InterfacePinId { get; set; }
+            public string InterfaceName { get; set; }
+            public string InterfaceDescription { get; set; }
+        }
+
         public override string Name => "TI SysConfig";
 
         public override string Filter => "Ti SysConfig (*.json)|*.json";
@@ -37,9 +38,21 @@ namespace SymbolBuilder.Readers
 
         public override List<SymbolDefinition> LoadFromStream(Stream stream, string fileName)
         {
-            var ret = new List<SymbolDefinition>();
-
             var json = JsonDocument.Parse(stream);
+
+            return ProcessJson(json);
+        }
+
+        public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = "")
+        {
+            var json = await JsonDocument.ParseAsync(stream);
+
+            return ProcessJson(json);
+        }
+
+        private List<SymbolDefinition> ProcessJson(JsonDocument json)
+        {
+            var ret = new List<SymbolDefinition>();
 
             List<TiMux> muxes = new List<TiMux>();
 
@@ -61,7 +74,7 @@ namespace SymbolBuilder.Readers
                     var jsonPp = json.RootElement.GetProperty("peripheralPins").GetProperty(pin.PeripheralPinId);
                     pin.Name = jsonPp.GetProperty("name").GetString();
                     pin.Description = jsonPp.GetProperty("description").GetString();
-                    
+
                     pin.InterfacePinId = jsonPp.GetProperty("interfacePinID").GetString();
                     var ifPin = json.RootElement.GetProperty("interfacePins").GetProperty(pin.InterfacePinId);
                     pin.InterfaceName = ifPin.GetProperty("name").GetString();
@@ -87,18 +100,6 @@ namespace SymbolBuilder.Readers
 
                 SymbolDefinition pack = new SymbolDefinition(partName, "TI", packageName);
 
-                /*
-                foreach (var peripheralId in part.Value.GetProperty("peripheralWrapper").EnumerateArray())
-                {
-                    var peripheral = json.RootElement.GetProperty("peripherals").GetProperty(peripheralId.GetString());
-                    var pName = peripheral.GetProperty("name").GetString();
-                    var intId = peripheral.GetProperty("interfaceID").GetString();
-
-                    var iface = json.RootElement.GetProperty("interfaces").GetProperty(intId);
-                    string ifaceName = iface.GetProperty("name").GetString();
-
-                }
-                */
                 foreach (var pin in pins.EnumerateArray())
                 {
                     var pinId = pin.GetProperty("devicePinID").GetString();
