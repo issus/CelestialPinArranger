@@ -5,13 +5,13 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymbolBuilder", "SymbolBuilder\SymbolBuilder.csproj", "{3B203179-AFDF-479A-A42C-CD572B1ECB5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltiumSharp", "..\AltiumSharp\AltiumSharp\AltiumSharp.csproj", "{E33D68E5-1772-4219-A0CB-6F836827CDBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltiumSharp", "AltiumSharp\AltiumSharp\AltiumSharp.csproj", "{E33D68E5-1772-4219-A0CB-6F836827CDBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "File Type Libraries", "File Type Libraries", "{EEB828C5-8B4D-41DE-9E19-6C15726A7C55}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BxlSharp", "..\BxlSharp\BxlSharp\BxlSharp.csproj", "{773D5E2D-E775-4905-A9D1-EF8E2D5AE47F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BxlSharp", "BxlSharp\BxlSharp\BxlSharp.csproj", "{773D5E2D-E775-4905-A9D1-EF8E2D5AE47F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EagleSharp", "..\EagleSharp\EagleSharp\EagleSharp.csproj", "{0859FDA7-C60F-4EBD-8C47-AD44ED7BC730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EagleSharp", "EagleSharp\EagleSharp\EagleSharp.csproj", "{0859FDA7-C60F-4EBD-8C47-AD44ED7BC730}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegexVerifier", "RegexVerifier\RegexVerifier.csproj", "{C1500843-58DC-4544-9E21-FDB7ED9A899B}"
 EndProject
