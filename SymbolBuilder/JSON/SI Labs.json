@@ -1,0 +1,133 @@
+{
+  "": [
+    {
+      "functionName": "Osc",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?|^HFXTAL_[NP]",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "AnalogueGround",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^GNDA$|^VSSA|^AGND|^AVSS|^AVEE|^VIN-|^GNDANA|^GNDIO|^RFVSS",
+      "position": "Left-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "Ground",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^GND(?:\\d+)?$|^VSS|^IOVSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD$|^DRVSS|^VSS_RF(?:\\d+)?$|^GND|^VREGVSS",
+      "position": "Left-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "AnaloguePowerIn",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VDDA|^VCCA|^AVIN|^PVIN|^AVCC|^AVDD|^VDDA|^DRVDD|^DRVCC",
+      "position": "Left-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "PowerIn",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$|^1V8$|^1V2$",
+      "position": "Left-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "PowerInSecondary",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VBAT|^VREG|^VREGVDD|^VREG[IO]|^VBUS",
+      "position": "Left-Upper",
+      "priority": 2
+    },
+    {
+      "functionName": "PowerRef",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VREF",
+      "position": "Left-Upper",
+      "priority": 2
+    },
+    {
+      "functionName": "PowerDecoupling",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VCAP|^DCOUPL|^DECOUPLE",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Enable",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^EN$|^EN1$|^EN2$|^EN_SYNC|^EN_LDO\\d|^EN_DCDC$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "Reset",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^RESET|RESET$|^RST|RST$|^MCLR$|^PAD_RESET$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "RegulatorSwitch",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^SW$|^DCDC_SW$|^SW\\d$|^VREGSW",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "ISP",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^JTAG|^SWD",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "USB",
+      "pinNamePattern": "^USB\\d{0,2}_D[PM]$|USB_VBUS(?:_\\d{0,2})?",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "USBRegulator",
+      "pinNamePattern": "^USB_VREG[IO]?(?:_\\d{1,2})?$",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "RF",
+      "pinNamePattern": "^RF|^2G4RF_IO[NP]|ANTENNA|ANT_GND|RF2G4_IO\\d|RF_2G4|ANT_OUT|ANT_IN",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "PowerOut",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VOUT|^VO|^VOUT\\+$",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 2
+    },
+    {
+      "functionName": "Feedback",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^FB|^FB_LDO\\d|^FB_DCDC|^VFB|^FB\\d$",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Port",
+      "pinClass": "IOPort",
+      "pinNamePattern": "^(?:P(?<Group>\\w)\\.(?<Index>\\d+))$|(?:P(?<Group>\\d)\\[(?<Index>\\d+)\\])|(?:RP?(?<Group>[A-Z])(?<Index>\\d+))|^(?:G?PI?O?(?<Group>[A-Z0-9])_?(?<Index>\\d+))|(?:(?<Group>D?IO)_(?<Index>\\d+))|(?:PT(?<Group>[A-Z])(?<Index>\\d+))|^(?<Group>[a-zA-Z]{1,3})(?<Index>\\d+)$",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": null,
+      "pinNamePattern": "",
+      "position": "Right-Middle"
+    }
+  ]
+}
