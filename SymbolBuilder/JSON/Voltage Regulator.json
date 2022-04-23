@@ -1,0 +1,197 @@
+{
+  "": [
+    {
+      "functionName": "Powersupply",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "VCC|VIN|^IN$|IN\\+|VS\\+|\\+VS",
+      "position": "Left-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "PowerGround",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "PGND",
+      "position": "Left-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Ground",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^GND|GND$|EPAD|^EP$|IN-|^VS$|VS-|-VS",
+      "position": "Left-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Switch",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "SW\\d?",
+      "position": "Right-Upper",
+      "priority": 3,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Enable",
+      "pinNamePattern": "\\*?SHDN|EN",
+      "position": "Left-Upper",
+      "priority": 5,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "PowerGood",
+      "pinNamePattern": "PWGD|PGD|POK\\d?|PWRGD|^PG$|PGOOD|ERROR$",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Frequency",
+      "pinNamePattern": "FREQ|CLKSET|FCB|CLK",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Boost",
+      "pinNamePattern": "BST\\d?|BOOST",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "SoftStart",
+      "pinNamePattern": "SS|RAMP|RUN/SS",
+      "position": "Left-Lower",
+      "priority": 3,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Sync",
+      "pinNamePattern": "SYNC",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Feedback",
+      "pinNamePattern": "FB\\d?|VOSENSE|VFB",
+      "position": "Right-Upper",
+      "priority": 6,
+      "groupSpacing": 2
+    },
+    {
+      "functionName": "Comp",
+      "pinNamePattern": "COMP",
+      "position": "Left-Lower",
+      "priority": 4,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Tracking",
+      "pinNamePattern": "TRK\\d?[NP]?\\d?|TRACK",
+      "position": "Right-Upper",
+      "priority": 7,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "GateDriveH",
+      "pinNamePattern": "DH\\d?|^TG",
+      "position": "Right-Upper",
+      "priority": 2,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "CSL",
+      "pinNamePattern": "CSL\\d?|SENSE\\d?-|SENSE\\+",
+      "position": "Right-Upper",
+      "priority": 4,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "GateDriveL",
+      "pinNamePattern": "DL\\d?|^BG",
+      "position": "Right-Upper",
+      "priority": 5,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Margin",
+      "pinNamePattern": "M(?:DN|UP)",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Control",
+      "pinNamePattern": "MAR|MSEL",
+      "position": "Left-Lower",
+      "priority": 2,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "ClockOut",
+      "pinNamePattern": "CLKOUT",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "PV",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "PV",
+      "position": "Left-Upper",
+      "priority": 6,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "CurrentLimit",
+      "pinNamePattern": "ILIM",
+      "position": "Left-Lower",
+      "priority": 5,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "CurrentSense",
+      "pinNamePattern": "CS|SENSE\\d?\\+|SENSE-",
+      "position": "Left-Middle",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "LPWF",
+      "pinNamePattern": "LPF$",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Threshold",
+      "pinNamePattern": "^ITH",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "VOUT",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "VOUT|^VO$",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": "Uvlo",
+      "pinNamePattern": "UVLO|INH",
+      "position": "Left-Upper",
+      "priority": 7,
+      "groupSpacing": 0
+    },
+    {
+      "functionName": null,
+      "pinNamePattern": "",
+      "position": "Right-Middle"
+    }
+  ]
+}
