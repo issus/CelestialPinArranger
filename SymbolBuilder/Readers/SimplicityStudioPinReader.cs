@@ -165,7 +165,7 @@ namespace SymbolBuilder.Readers
             {
                 string name = pin.Attributes["defaultLabel"]?.Value;
 
-                if (name.ToLower() == "nc")
+                if (name.ToLower() == "nc" || name.ToLower() == "n_c")
                     continue;
 
                 string des = pin.Attributes["number"]?.Value;
