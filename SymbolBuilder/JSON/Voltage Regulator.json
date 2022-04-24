@@ -3,7 +3,7 @@
     {
       "functionName": "Powersupply",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "VCC|VIN|^IN$|IN\\+|VS\\+|\\+VS",
+      "pinNamePattern": "VCC|VIN|^IN$|IN\\+|VS\\+|\\+VS|INPUT",
       "position": "Left-Upper",
       "priority": 0,
       "groupSpacing": 0
@@ -34,14 +34,21 @@
     },
     {
       "functionName": "Enable",
-      "pinNamePattern": "\\*?SHDN|EN",
+      "pinNamePattern": "\\*?SHDN|EN|ON[_/]?OFF(?:_N)?",
       "position": "Left-Upper",
       "priority": 5,
       "groupSpacing": 0
     },
     {
+      "functionName": "Adjust",
+      "pinNamePattern": "\\*?SHDN|EN|ON[_/]?OFF(?:_N)?",
+      "position": "Right-Lower",
+      "priority": 5,
+      "groupSpacing": 0
+    },
+    {
       "functionName": "PowerGood",
-      "pinNamePattern": "PWGD|PGD|POK\\d?|PWRGD|^PG$|PGOOD|ERROR$",
+      "pinNamePattern": "PWGD|PGD|POK\\d?|PWRGD|^PG\\d*$|PGOOD|ERROR$|ERR\\d*(?:_N)",
       "position": "Right-Lower",
       "priority": 0,
       "groupSpacing": 0
@@ -76,7 +83,7 @@
     },
     {
       "functionName": "Feedback",
-      "pinNamePattern": "FB\\d?|VOSENSE|VFB",
+      "pinNamePattern": "FB\\d*|VOSENSE|VFB|FEEDBACK|FB\\d*[_/]NC|^VSENSE|^N[RC][_/]?FB",
       "position": "Right-Upper",
       "priority": 6,
       "groupSpacing": 2
@@ -176,7 +183,7 @@
     {
       "functionName": "VOUT",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "VOUT|^VO$",
+      "pinNamePattern": "VOUT|^VO$|OUTPUT|OUT",
       "position": "Right-Upper",
       "priority": 0,
       "groupSpacing": 0
