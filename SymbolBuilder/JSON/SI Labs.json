@@ -3,7 +3,7 @@
     {
       "functionName": "Osc",
       "pinClass": "ChipConfiguration",
-      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?|^HFXTAL_[NP]",
+      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?|^HFXTAL_[NPIO]",
       "position": "Left-Middle",
       "priority": 0
     },
