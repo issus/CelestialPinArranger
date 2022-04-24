@@ -17,6 +17,8 @@ namespace SymbolBuilder.Translators
     {
         public string ProgramName => "Altium Designer";
 
+        private static object locker = new object();
+
         private readonly int pinSpacing = 100;
         private readonly int pinToTextWidth = 70;
 
@@ -144,6 +146,9 @@ namespace SymbolBuilder.Translators
             int partId = 1;
             foreach (var block in symbol.SymbolBlocks)
             {
+                if (!block.Pins.Where(p => p.PinPosition.HasValue).Any())
+                    continue;
+
                 if (block != symbol.SymbolBlocks.First())
                 {
                     schComponent.AddPart();
@@ -236,7 +241,7 @@ namespace SymbolBuilder.Translators
                     }
                 }
 
-                int totalPinHeight = (int)-positionedPins.Min(p => p.Value.Min(n => Utils.CoordToMils(n.Location.Y)));
+                int totalPinHeight = positionedPins.Any() ? (int)-positionedPins.Min(p => p.Value.Min(n => Utils.CoordToMils(n.Location.Y))) : 0;
 
                 // todo: move everything up to centre it vertically
 
@@ -598,13 +603,15 @@ namespace SymbolBuilder.Translators
         {
             public static float MeasureStringWidth(string s)
             {
-                using (var font = new Font("Times New Roman", 8.6598835f))
+                using var font = new Font("Times New Roman", 8.6598835f);
+
+                lock (locker)
                 {
                     SizeF result;
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
                     result = g.MeasureString(s.Replace("\\", ""), font, int.MaxValue, StringFormat.GenericTypographic);
-                        
+
                     return result.Width * 7.8f;
                 }
             }
