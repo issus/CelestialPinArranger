@@ -17,7 +17,7 @@
     {
       "functionName": "Ground",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "^GND(?:\\d+)?$|^VSS|^IOVSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD$|^DRVSS|^VSS_RF(?:\\d+)?$|^GND|^VREGVSS",
+      "pinNamePattern": "^GND(?:\\d+)?$|^VSS|^IOVSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD$|^DRVSS|^VSS_RF(?:\\d+)?$|^GND|^VREGVSS|^PAVSS",
       "position": "Left-Lower",
       "priority": 0
     },
@@ -31,14 +31,14 @@
     {
       "functionName": "PowerIn",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$|^1V8$|^1V2$",
+      "pinNamePattern": "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$|PAVDD",
       "position": "Left-Upper",
       "priority": 0
     },
     {
       "functionName": "PowerInSecondary",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "^VBAT|^VREG|^VREGVDD|^VREG[IO]|^VBUS",
+      "pinNamePattern": "^VBAT|^VREG|^VREGVDD|^VREG[IO]|^VBUS|^1V8$|^1V2$",
       "position": "Left-Upper",
       "priority": 2
     },
@@ -86,7 +86,7 @@
     },
     {
       "functionName": "USB",
-      "pinNamePattern": "^USB\\d{0,2}_D[PM]$|USB_VBUS(?:_\\d{0,2})?",
+      "pinNamePattern": "^USB\\d{0,2}_D[PM]$|^USB_VBUS(?:_\\d{0,2})?$",
       "position": "Left-Middle",
       "priority": 0
     },
