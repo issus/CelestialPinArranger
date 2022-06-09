@@ -172,14 +172,16 @@ namespace CelestialPinArranger
 
                     foreach (var component in schLib.Items)
                     {
-                        string fileName = $"SCH - {txtFormatFolder.Text} - {txtManufacturerName.Text} {packageName}.SchLib";
+                        string libRef = $"{txtManufacturerName.Text.Trim()} {component.DesignItemId.Trim()}".ToUpper().Trim();
+
+                        string fileName = $"SCH - {txtFormatFolder.Text} - {libRef}.SchLib";
                         var fullFileName = Path.Combine(txtDestinationDir.Text, fileName);
 
                         var writer = new SchLibWriter();
 
                         var newLib = new SchLib();
 
-                        component.LibReference = string.Join(" ", txtManufacturerName.Text, packageName);
+                        component.LibReference = libRef;
 
                         newLib.Add(component);
 
@@ -192,16 +194,23 @@ namespace CelestialPinArranger
                                 BackgroundColor = Color.White
                             };
 
-                            int r = 0;
                             foreach (var item in newLib.Items)
                             {
-                                renderer.Component = item;
+                                int r = 0;
+                                var selectedOwnerId = 0;
 
-                                using (var image = new Bitmap(1024, 1024))
-                                using (var g = Graphics.FromImage(image))
+                                while (component.GetAllPrimitives().Where(p => p.OwnerPartId > selectedOwnerId).Any())
                                 {
-                                    renderer.Render(g, 1024, 1024, true, false);
-                                    image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", $"_{r++}.png")), ImageFormat.Png);
+                                    selectedOwnerId = component.GetAllPrimitives().Where(p => p.OwnerPartId > selectedOwnerId)?.Min(p => p.OwnerPartId) ?? selectedOwnerId;
+                                    component.CurrentPartId = selectedOwnerId;
+                                    renderer.Component = item;
+
+                                    using (var image = new Bitmap(1024, 1024))
+                                    using (var g = Graphics.FromImage(image))
+                                    {
+                                        renderer.Render(g, 1024, 1024, true, false);
+                                        image.Save(Path.Combine(imagesPath, fileName.Replace(".SchLib", $"_{r++}.png")), ImageFormat.Png);
+                                    }
                                 }
                             }
                         }

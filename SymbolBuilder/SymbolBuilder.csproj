@@ -17,7 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="JSON\Amplifier - Audio.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="JSON\Infineon.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="JSON\Default.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="JSON\Nuvoton.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="JSON\NXP MCUXpresso.json">
