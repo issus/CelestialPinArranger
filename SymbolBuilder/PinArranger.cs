@@ -21,6 +21,8 @@ namespace SymbolBuilder
         private List<SymbolDefinition> _symbols = new List<SymbolDefinition>();
         public IEnumerable<SymbolDefinition> Symbols => _symbols;
 
+        object locker = new object();
+
         public PinArranger(PinMapper pinMapper)
         {
             _pinMapper = pinMapper;
@@ -77,7 +79,10 @@ namespace SymbolBuilder
         {
             foreach (var pin in symbol.Pins)
             {
-                _pinMapper.Map(symbol.DevicePackage, pin);
+                lock (locker)
+                {
+                    _pinMapper.Map(symbol.DevicePackage, pin);
+                }
             }
 
             // debug point
