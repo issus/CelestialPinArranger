@@ -87,6 +87,7 @@ namespace SymbolBuilder.Readers
                     symbol.Data
                         .Where(d => d is LibPin &&
                             (d as LibPin).Name.Text.ToUpperInvariant() != "NC" &&
+                            (d as LibPin).Name.Text.ToUpperInvariant() != "N/C" &&
                             (d as LibPin).Name.Text.ToUpperInvariant() != "DNC")
                         .Select(d => d as LibPin)
                         .Select(d => new PinDefinition(d.Designator.Text, d.Name.Text))
