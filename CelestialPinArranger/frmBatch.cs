@@ -4,10 +4,12 @@ using SymbolBuilder;
 using SymbolBuilder.Mappers;
 using SymbolBuilder.Translators;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -146,7 +148,7 @@ namespace CelestialPinArranger
             lblProgress.Visible = true;
 
             var mapper = new JsonMapper($"JSON/{(string)cboJson.SelectedItem}.json");
-
+            
             int i = 0;
             object locker = new object();
             await Parallel.ForEachAsync(sourceFiles, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, async (file, token) =>
@@ -166,8 +168,8 @@ namespace CelestialPinArranger
                     var packageName = Path.GetFileNameWithoutExtension(file.Replace("signal_configuration", "")).Trim();
 
                     var arranger = new PinArranger(mapper);
-                    // todo: async
-                    arranger.LoadFromFile(Path.Combine(txtSourceDir.Text, file));
+                    
+                    await arranger.LoadFromFileAsync(Path.Combine(txtSourceDir.Text, file));
 
                     var symbolDefinitions = arranger.Execute();
 
@@ -200,7 +202,7 @@ namespace CelestialPinArranger
 
                         writer.Write(newLib, fullFileName, true);
 
-                        if (chkImages.Checked)
+                        if (chkImages.Checked && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         {
                             var renderer = new SchLibRenderer(newLib.Header, null)
                             {
@@ -231,6 +233,7 @@ namespace CelestialPinArranger
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine($"Exception: {ex.Message} {Environment.NewLine} AT:  {ex.StackTrace}");
                     // todo: Handle errors so the user knows something went wrong, without interrupting the export
                 }
             }
