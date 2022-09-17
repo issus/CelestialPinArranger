@@ -19,7 +19,7 @@
     {
       "functionName": "Ground",
       "pinClass": "PowerSupply",
-      "pinNamePattern": "^GND|GND$|EPAD|^EP$|IN-|^VS$|VS-|-VS",
+      "pinNamePattern": "^GND|GND$|EPAD|^EP$|IN-|^VS$|VS-|-VS|^DAP$",
       "position": "Left-Lower",
       "priority": 0,
       "groupSpacing": 0
