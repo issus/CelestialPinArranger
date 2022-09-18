@@ -118,7 +118,7 @@ namespace SymbolBuilder
             }
 
             // Break symbol into blocks if needed
-            if (symbol.Pins.Where(p => p.MappingFunction.PinClass == PinClass.IOPort).Count() > 16 && symbol.Pins.Where(p => p.PinPosition?.Side == PinSide.Right).Count() > 24)
+            if (symbol.Pins.Where(p => p.MappingFunction != null && p.MappingFunction.PinClass == PinClass.IOPort).Count() > 16 && symbol.Pins.Where(p => p.PinPosition?.Side == PinSide.Right).Count() > 24)
             {
                 // in Altium, 32 grid squares (3200mil) seems to be a reasonable maximum height for a rectangle if fitting on an A4/Letter schematic sheet.
                 // Try to match blocks to be less than 30 or so pins to allow for spaces between pin groups/functions
