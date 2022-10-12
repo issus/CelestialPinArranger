@@ -1,0 +1,83 @@
+name: Main workflow
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  push:
+    branches:
+      - main
+      - ci
+    tags:
+      - '*'
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Clone AltiumSharp
+      run: git clone https://github.com/issus/AltiumSharp.git
+
+    - name: Clone BxlSharp
+      run: git clone https://github.com/issus/BxlSharp.git
+
+    - name: Clone EagleSharp
+      run: git clone https://github.com/issus/EagleSharp.git
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build -c Release --no-restore
+    
+    - name: Test
+      run: dotnet test -c Release --no-restore --no-build --verbosity normal --filter "Category!=LongRunning"
+
+    - name: Publish
+      run: dotnet publish -c Release --no-restore --no-build --verbosity normal
+
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        type: 'zip'
+        filename: 'release.zip'
+        directory: 'CelestialPinArranger\bin\Release\net5.0-windows\publish'
+
+    - name: Upload Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: 'CelestialPinArranger\bin\Release\net5.0-windows\publish\release.zip'
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    #- name: Upload build artifacts
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: MSIX Package
+    #    path: ${{ env.Wap_Project_Directory }}\AppPackages
+
+
+#    - name: Pack
+#      run: dotnet pack src/Orleans.SyncWork/Orleans.SyncWork.csproj -c Release --no-restore --no-build --include-symbols -p:SymbolPackageFormat=snupkg -o .
+
+#    - name: Push to NuGet
+#      run: dotnet nuget push *.nupkg --skip-duplicate -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
