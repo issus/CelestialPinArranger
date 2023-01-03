@@ -1,55 +1,44 @@
+
 # Celestial Library Pin Arranger
- This is highly experimental and not recommended for typical use. The recent rewrite (Dec 2021/Jan 2022) of the arranger and Altium exporter has gone a long way to making it more reliable and have less glitches. Its still under heavy development, though it can ingest many data formats and create a very good starting point for your own symbol, if the output is not perfectly usable as is.
- 
- ![Symbol Arranger Jan2021](https://github.com/issus/CelestialPinArranger/blob/main/github-img/pinarranger_02jan2021.jpg?raw=true)
- *ST Microelectronics STM32 Microcontroller generated from pin data ingested from STM32CubeMX data*
- 
-## What Is It? 
- It will create a "best effort" rectangular schematic symbol from a variety of data sources then save as an Altium SchLib file format. The exported SchLib file name and component name are specifically formatted for my altium library and may not suit your requirements. It will create multi-part symbols for higher pin count components, however this functionality has only been tested on microcontrollers. If the device doesn't have IO ports, it probably won't make a sensible multi-part symbol
 
+The Celestial Library Pin Arranger is a tool for creating "best effort" rectangular schematic symbols from a variety of data sources, including Altium SchLib files, Ultra Librarian BXL files, and KiCad Lib files. The tool can create multi-part symbols for higher pin count components, such as microcontrollers, but has only been tested on this type of device. It can export Altium SchLib files, but there is scope for adding ECAD exporters for other applications in the future.
 
-This is mostly tested on regulators, microcontrollers, rf, digital sensor ICs, and does reasonably well with devices it has never seen before. 
+![Symbol Arranger Jan 2021](https://github.com/issus/CelestialPinArranger/blob/main/github-img/pinarranger_02jan2021.jpg?raw=true) _ST Microelectronics STM32 Microcontroller generated from pin data ingested from STM32CubeMX data_
 
+## Key Features
 
-You can create your own pin mapping definitions as JSON files to help it understand devices it may not currently handle well.
+-   Ingests pin data from a variety of sources
+-   Creates "best effort" rectangular schematic symbols
+-   Can create multi-part symbols for higher pin count components
+-   Exports Altium SchLib files
 
+## Limitations
 
-Currently it can only export Altium SchLib files, though the arranger logic and export logic have been separated so there is future scope for adding ECAD exporters for any ECAD application.
-
-
-## What Isn't It? 
-* This does not understand opamps/non-rectangular type symbols (yet). 
-* It struggles with application processors like the i.MX7/i.MX8 that have very large numbers of VSS pins - its probably not useful for any device with 400+ pins.
-
-
-
-# Use
- You will need to clone this into a directory that also has my AltiumSharp, EagleSharp and BxlSharp repositories cloned into it. I should really put these into NuGet but haven't gotten around to it.
- 
- e.g.:
-- src/AltiumSharp
-- src/BxlSharp
-- src/EagleSharp
-- src/CelestialPinArranger
-
-
-You can then load the CelestialPinArranger in Visual Studio (free Community version is fine) to compile/run it. You could also compile it by commandline, it should be cross platform, however it has only been tested on Windows.
-
+-   Does not understand opamps or non-rectangular symbols (yet)
+-   Struggles with application processors with 400+ pins, such as the i.MX7/i.MX8
 
 ## Data Sources
-Currently you can ingest pin data from: 
-* Altium SchLib files
-* Ultra Librarian BXL files
-* KiCad Lib files
-* Eagle Lbr Files
-* STM32CubeMX XML files (C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\db\mcu)
-* STM8CubeMX XML files (C:\Program Files\STMicroelectronics\STM8Cube\STM8CubeMX\db\mcu)
-* Silicon Labs SimplicityStudio files (C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.2\platform\hwconf_data\\`family`\\`device`\\`device`.device)
-* NXP MCUXpresso (download from https://mcuxpresso.nxp.com/en/select_config_tools_data - open signal_configuration.xml from `device`\ksdk2_0\\`package` folder)
-* TI SysConfig (C:\ti\sysconfig_1.10.0\dist\deviceData) **NOTE: There is no data on fixed function pins (e.g.: power supply)**.
-* Infineon/Cypress Pin and Code Wizard files (SPaCWiz\\xml\\mcu\\`series`\\`folder`\\`*`.xml)
-* Microchip AVR Tools Device File (atdf) from MPLAB (C:\Program Files\Microchip\MPLABX\\`version`\packs\Microchip\\`mcu`\\`dataversion`\atdf\\`model`.atdf)
-* IBIS Models
-* TSV/CSV files with very specific column ordering (not recommended)
 
-When importing data from ECAD libraries, it will only use the pin designator/name - it will not take into account any existing pin arrangement/how multi-part symbols are divided - this is intentional.
+The Celestial Library Pin Arranger can ingest pin data from the following sources:
+
+-   Altium SchLib files
+-   Ultra Librarian BXL files
+-   KiCad Lib files
+-   Eagle Lbr Files
+-   STM32CubeMX XML files
+-   STM8CubeMX XML files
+-   Silicon Labs SimplicityStudio files
+-   NXP MCUXpresso
+-   TI SysConfig (note: no data on fixed function pins)
+-   Infineon/Cypress Pin and Code Wizard files
+-   Microchip AVR Tools Device File (atdf)
+-   IBIS Models
+-   TSV/CSV files with specific column ordering (not recommended)
+
+## Usage
+
+To use the Celestial Library Pin Arranger, open it in Visual Studio (the free Community version is fine) or compile it by command line. The tool is cross-platform, but has only been tested on Windows.
+
+## Note
+
+When importing data from ECAD libraries, the Celestial Library Pin Arranger only uses the pin designator/name and does not take into account any existing pin arrangement or how multi-part symbols are divided. This is intentional.
