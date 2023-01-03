@@ -1,5 +1,5 @@
-﻿using BxlSharp;
-using BxlSharp.Types;
+﻿using OriginalCircuit.BxlSharp;
+using OriginalCircuit.BxlSharp.Types;
 using SymbolBuilder.Model;
 using System;
 using System.Collections.Generic;

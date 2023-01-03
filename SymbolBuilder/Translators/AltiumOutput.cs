@@ -1,7 +1,7 @@
-﻿using AltiumSharp;
-using AltiumSharp.BasicTypes;
-using AltiumSharp.Drawing;
-using AltiumSharp.Records;
+﻿using OriginalCircuit.AltiumSharp;
+using OriginalCircuit.AltiumSharp.BasicTypes;
+using OriginalCircuit.AltiumSharp.Drawing;
+using OriginalCircuit.AltiumSharp.Records;
 using SymbolBuilder.Model;
 using System;
 using System.Collections.Generic;
@@ -364,7 +364,7 @@ namespace SymbolBuilder.Translators
                             Location = new CoordPoint(Coord.FromMils(xPos), Coord.FromMils(yPos)),
                             Designator = pin.Designator,
                             Name = GeneratePinName(pin),
-                            Electrical = (AltiumSharp.Records.PinElectricalType)pin.ElectricalType.GetValueOrDefault(Model.PinElectricalType.Passive),
+                            Electrical = (OriginalCircuit.AltiumSharp.Records.PinElectricalType)pin.ElectricalType.GetValueOrDefault(Model.PinElectricalType.Passive),
                             Orientation = pinOrientation,
                             OwnerPartId = partId
                         };
@@ -585,7 +585,7 @@ namespace SymbolBuilder.Translators
                             Location = new CoordPoint(Coord.FromMils(x), Coord.FromMils(y)),
                             Designator = pin.Designator,
                             Name = GeneratePinName(pin),
-                            Electrical = (AltiumSharp.Records.PinElectricalType)pin.ElectricalType.GetValueOrDefault(Model.PinElectricalType.Passive),
+                            Electrical = (OriginalCircuit.AltiumSharp.Records.PinElectricalType)pin.ElectricalType.GetValueOrDefault(Model.PinElectricalType.Passive),
                             Orientation = pinOrientation,
                             OwnerPartId = ownerId
                         });

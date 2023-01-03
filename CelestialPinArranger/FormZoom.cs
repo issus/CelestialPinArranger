@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using AltiumSharp;
-using AltiumSharp.BasicTypes;
-using AltiumSharp.Drawing;
+using OriginalCircuit.AltiumSharp;
+using OriginalCircuit.AltiumSharp.BasicTypes;
+using OriginalCircuit.AltiumSharp.Drawing;
 
 namespace CelestialPinArranger
 {

@@ -62,7 +62,55 @@ namespace SymbolBuilder.Model
         /// <summary>
         /// Chip setup/management/static configuration pins, prioritise keeping these on first schematic block
         /// </summary>
-        ChipConfiguration
+        ChipConfiguration,
+        /// <summary>
+        /// Positive Supply input for Analogue/Logic devices
+        /// </summary>
+        PositiveSupply,
+        /// <summary>
+        /// Negative Supply input for Analogue/Logic devices
+        /// </summary>
+        NegativeSupply,
+        /// <summary>
+        /// Inverting input for opamp/comparators
+        /// </summary>
+        InvertingInput,
+        /// <summary>
+        /// Non-inverting input for opamp/comparators
+        /// </summary>
+        NonInvertingInput,
+        /// <summary>
+        /// Input of a single input Analogue/Logic device
+        /// </summary>
+        Input,
+        /// <summary>
+        /// Output of an Analogue/Logic devices
+        /// </summary>
+        Output,
+        /// <summary>
+        /// MOSFET Gate
+        /// </summary>
+        Gate,
+        /// <summary>
+        /// MOSFET Drain
+        /// </summary>
+        Drain,
+        /// <summary>
+        /// MOSFET Source
+        /// </summary>
+        Source,
+        /// <summary>
+        /// BJT Collector
+        /// </summary>
+        Collector,
+        /// <summary>
+        /// BJT Base
+        /// </summary>
+        Base,
+        /// <summary>
+        /// BJT Emitter
+        /// </summary>
+        Emitter
     }
 
     public class PinSignal
@@ -83,7 +131,7 @@ namespace SymbolBuilder.Model
 
             string lowerName = name.ToLower();
 
-            if (lowerName.Contains("_n") || lowerName.Contains("_b") || lowerName.Contains("#") || lowerName.EndsWith("*") || lowerName.StartsWith("*") || lowerName.StartsWith("!"))
+            if (lowerName.Contains("_n") || lowerName.Contains("_b") || lowerName.Contains("#") || lowerName.EndsWith("*") || lowerName.StartsWith("*") || lowerName.StartsWith("!") || lowerName.StartsWith("/") || lowerName.StartsWith("~"))
             {
                 Name
                     .Replace("_n", "")
@@ -91,7 +139,7 @@ namespace SymbolBuilder.Model
                     .Replace("_b", "")
                     .Replace("_B", "")
                     .Replace("#", "")
-                    .Trim('*').TrimStart('!').Trim();
+                    .Trim('*').TrimStart('!').TrimStart('/').TrimStart('~').Trim();
 
                 ActiveLow = true;
             }

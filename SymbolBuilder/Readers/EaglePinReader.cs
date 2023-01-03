@@ -1,4 +1,4 @@
-﻿using EagleSharp.Model;
+﻿using OriginalCircuit.EagleSharp.Model;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;

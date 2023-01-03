@@ -2,11 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using AltiumSharp.Records;
 using SymbolBuilder.Model;
 
 namespace SymbolBuilder.Mappers
 {
+    public enum DeviceLayout
+    {
+        Rectangle,
+        Opamp,
+        Comparator,
+        Inverter,
+        Buffer,
+        LogicNor,
+        LogicAnd,
+        LogicNand,
+        LogicOr,
+        LogicXor,
+        LogicXNor,
+        MOSFETNch,
+        MOSFETPch,
+        TransistorNPN,
+        TransistorPNP
+    }
+
     /// <summary>
     /// Pin mapper intended for programmatically generating a pin mapper, rather than loading mappings from a source
     /// </summary>
@@ -96,25 +114,31 @@ namespace SymbolBuilder.Mappers
         public bool Map(string package, PinDefinition pin)
         {
             if (Functions.Count == 0) LoadMappings();
+            var localFunctions = Functions.ToList();
 
             if (pin.MappingFunction == null)
             {
-                foreach (var pinFunction in Functions)
+                foreach (var pinFunction in localFunctions)
                 {
                     if (TryMapPin(pinFunction, package, pin))
                     {
+                        localFunctions.Clear();
                         return true;
                     }
                 }
 
+                localFunctions.Clear();
                 return TryMapPin(_defaultFunction, package, pin);
             }
             else
             {
-                var pinFunction = Functions.FirstOrDefault(f => f.Name.Equals(pin.MappingFunction.Name, StringComparison.InvariantCultureIgnoreCase))
+                var pinFunction = localFunctions.FirstOrDefault(f => f.Name.Equals(pin.MappingFunction.Name, StringComparison.InvariantCultureIgnoreCase))
                                   ?? _defaultFunction;
+
+                localFunctions.Clear();
                 return TryMapPin(pinFunction, package, pin);
             }
+
         }
     }
 }

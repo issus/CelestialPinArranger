@@ -1,6 +1,6 @@
-﻿using AltiumSharp;
-using AltiumSharp.BasicTypes;
-using AltiumSharp.Records;
+﻿using OriginalCircuit.AltiumSharp;
+using OriginalCircuit.AltiumSharp.BasicTypes;
+using OriginalCircuit.AltiumSharp.Records;
 using SymbolBuilder.Mappers;
 using SymbolBuilder.Model;
 using SymbolBuilder.Readers;

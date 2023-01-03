@@ -1,5 +1,5 @@
-﻿using AltiumSharp;
-using AltiumSharp.Drawing;
+﻿using OriginalCircuit.AltiumSharp;
+using OriginalCircuit.AltiumSharp.Drawing;
 using SymbolBuilder;
 using SymbolBuilder.Mappers;
 using SymbolBuilder.Translators;

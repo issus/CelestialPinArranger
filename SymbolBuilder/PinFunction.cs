@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using AltiumSharp.Records;
 using SymbolBuilder.Model;
 
 namespace SymbolBuilder

@@ -1,4 +1,4 @@
-﻿using AltiumSharp;
+﻿using OriginalCircuit.AltiumSharp;
 using SymbolBuilder.Model;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace SymbolBuilder.Readers
             {
                 var package = new SymbolDefinition(component.LibReference);
                 foreach (var pin in
-                    component.GetPrimitivesOfType<AltiumSharp.Records.SchPin>()
+                    component.GetPrimitivesOfType<OriginalCircuit.AltiumSharp.Records.SchPin>()
                         .Where(p => p.Name.ToUpperInvariant() != "NC")
                         .Select(p => new  { Designator = p.Designator, Name = p.Name, ElectricalType = (Model.PinElectricalType)p.Electrical })
                         .Distinct())

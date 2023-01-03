@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using AltiumSharp;
-using AltiumSharp.Drawing;
+using OriginalCircuit.AltiumSharp;
+using OriginalCircuit.AltiumSharp.Drawing;
 using SymbolBuilder;
 using SymbolBuilder.Mappers;
 using SymbolBuilder.Readers;
@@ -41,6 +41,7 @@ namespace CelestialPinArranger
             PinDataReader.Register(new RenesasSspPackPinReader());
             PinDataReader.Register(new MicrochipAtdfPinReader());
             PinDataReader.Register(new EaglePinReader());
+            PinDataReader.Register(new CelestialCommonPinReader());
 
             cmbPinMapper.DisplayMember = "Display";
             cmbPinMapper.ValueMember = "Value";
@@ -204,7 +205,7 @@ namespace CelestialPinArranger
             }
         }
 
-        private string SavePackage(string folderName, SchLibWriter writer, AltiumSharp.Records.SchComponent component, object packageName)
+        private string SavePackage(string folderName, SchLibWriter writer, OriginalCircuit.AltiumSharp.Records.SchComponent component, object packageName)
         {
             string fileName = $"SCH - {folderName.ToUpper()} - {String.Join(" ", txtManufacturer.Text.ToUpper(), txtPartNumber.Text.ToUpper(), packageName)}.SchLib".Replace("  ", " ");
             var fullFileName = Path.Combine(folderBrowserDialog.SelectedPath, fileName);
