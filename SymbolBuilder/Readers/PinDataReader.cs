@@ -25,7 +25,13 @@ namespace SymbolBuilder.Readers
 
         public static async Task<List<Model.SymbolDefinition>> LoadAsync(string fileName)
         {
-            var reader = Instances.FirstOrDefault(r => r.CanRead(fileName));
+            PinDataReader? reader = Instances.FirstOrDefault(r => r.CanRead(fileName));
+
+            if (reader == null)
+            {
+                return null;
+            }
+
             return await reader?.LoadFromFileAsync(fileName);
         }
 

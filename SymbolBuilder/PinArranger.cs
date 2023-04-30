@@ -37,7 +37,12 @@ namespace SymbolBuilder
         public async Task LoadFromFileAsync(string fileName)
         {
             _symbols.Clear();
-            _symbols.AddRange(await PinDataReader.LoadAsync(fileName));
+            var pinData = await PinDataReader.LoadAsync(fileName);
+
+            if (pinData != null)
+            {
+                _symbols.AddRange(pinData);
+            }
         }
 
         public void LoadFromText(string text)
