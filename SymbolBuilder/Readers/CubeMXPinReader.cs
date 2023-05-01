@@ -59,6 +59,10 @@ namespace SymbolBuilder.Readers
             foreach (XmlNode pin in pins)
             {
                 string name = pin.Attributes["Name"]?.Value;
+
+                if (name.ToUpper() == "NC")
+                    continue;
+
                 string des = pin.Attributes["Position"]?.Value;
                 string function = pin.Attributes["Type"]?.Value;
 
