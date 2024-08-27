@@ -1,0 +1,177 @@
+{
+  "": [
+    {
+      "functionName": "Osc",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "RtcOsc",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^RTC_?OSC\\d+|^RTC_?XTAL(?:\\d{1,2})?",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "AnalogueGround",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^GNDA$|^VSSA|^V?AGND|^AVSS|^AVEE|^VIN-|^GNDANA|^GNDIO",
+      "position": "Left-Lower"
+    },
+    {
+      "functionName": "Ground",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^GND(?:\\d+)?$|^VSS|^IOVSS|^PGND|^EP$|^EPAD$|^DGND|^VEE|^DVEE|^PVEE|^PAD$|^DRVSS|^VSS_RF(?:\\d+)?$|^GND",
+      "position": "Left-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "AnaloguePowerIn",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VDDA|^VCCA|^AVIN|^PVIN|^AVCC|^AVDD|^VDDA|^DRVDD|^DRVCC",
+      "position": "Left-Upper"
+    },
+    {
+      "functionName": "PowerIn",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$",
+      "position": "Left-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "PowerInSecondary",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VBAT",
+      "position": "Left-Upper",
+      "priority": 2
+    },
+    {
+      "functionName": "PowerRef",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VA?REF",
+      "position": "Left-Upper",
+      "priority": 2
+    },
+    {
+      "functionName": "PowerDecoupling",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VCAP|^DCOUPL",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Enable",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^EN$|^EN1$|^EN2$|^EN_SYNC|^EN_LDO\\d|^EN_DCDC$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "Uvlo",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "UVLO",
+      "position": "Left-Upper",
+      "priority": 4
+    },
+    {
+      "functionName": "Reset",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^RESET|RESET$|^RST|^MCLR$|^PORST$|^PAD_RESET$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "RegulatorSwitch",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^SW$|^DCDC_SW$|^SW\\d$",
+      "position": "Right-Upper"
+    },
+    {
+      "functionName": "ISP",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^JTAG|^SWD|^TCK|^TMS|^TDO|^TDI",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "USB",
+      "pinNamePattern": "^USB\\d{0,2}_D[PM]$|USB_VBUS(?:_\\d{0,2})?|^VBUS$",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "USBRegulator",
+      "pinNamePattern": "^USB_VREG[IO]?(?:_\\d{1,2})?$",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "RF",
+      "pinNamePattern": "^RF",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "PowerOut",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VOUT|^VO|^VOUT\\+$",
+      "position": "Right-Upper",
+      "priority": 0,
+      "groupSpacing": 2
+    },
+    {
+      "functionName": "SwitchmodeSetup",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^SS|^COMP|^SYNC|^RT$",
+      "position": "Left-Lower",
+      "priority": 5,
+      "groupSpacing": 2
+    },
+    {
+      "functionName": "PowerGood",
+      "pinNamePattern": "^PG$|^PWRGD$|^PGOOD$",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 2
+    },
+    {
+      "functionName": "Feedback",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^FB|^FB_LDO\\d|^FB_DCDC|^VFB|^FB\\d$",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "SPI",
+      "pinNamePattern": "^CS$|^C\\S\\$|^SDI$|^SDO$|^MOSI$|^MISO$|^SCLK$|^SDIN$|^MISO(SDO)$|^MOSI(SDI)$",
+      "position": "Right-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "I2C",
+      "pinNamePattern": "^SCL$|^SDA$",
+      "position": "Right-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "DDR",
+      "pinNamePattern": "^(?:PS_)DDR",
+      "position": "Right-Centre",
+      "priority": 0
+    },
+    {
+      "functionName": "Port",
+      "pinClass": "IOPort",
+      "pinNamePattern": "^(?:P(?<Group>\\w)\\.(?<Index>\\d+))$|^(?:P(?<Group>\\w)\\.(?<Index>\\d+))/|(?:P(?<Group>\\d)\\[(?<Index>\\d+)\\])|(?:RP?(?<Group>[A-Z])(?<Index>\\d+))|^(?:G?PI?O?(?<Group>[A-Z0-9])_?(?<Index>\\d+))|(?:(?<Group>D?IO)_(?<Index>\\d+))|(?:PT(?<Group>[A-Z])(?<Index>\\d+))|^((?:PS_M)?IO_?L?(?<Index>\\d+).+?(?<Group>\\d+))$|^(?<Group>[a-zA-Z]{1,3})(?<Index>\\d+)$",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": null,
+      "pinNamePattern": "",
+      "position": "Right-Middle"
+    }
+  ]
+}
