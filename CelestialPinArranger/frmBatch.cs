@@ -183,11 +183,17 @@ namespace CelestialPinArranger
 
                     foreach (var component in schLib.Items)
                     {
-                        string libRef = $"{txtManufacturerName.Text.Trim()} {component.DesignItemId.Trim()}"
-                            .ToUpper()
-                            .Trim()
-                            .Replace("\\", "_")
-                            .Replace("/","_");
+                        string libRef;
+                        if (component.DesignItemId.Trim().ToUpper().Contains(txtManufacturerName.Text.Trim().ToUpper()))
+                        {
+                            libRef = component.DesignItemId;
+                        }
+                        else
+                        {
+                            libRef = $"{txtManufacturerName.Text.Trim()} {component.DesignItemId.Trim()}";
+                        }
+                        
+                        libRef = libRef.ToUpper().Trim().Replace("\\", "_").Replace("/","_");
 
                         string fileName = $"SCH - {txtFormatFolder.Text} - {libRef}.SchLib";
                         var fullFileName = Path.Combine(txtDestinationDir.Text, fileName);

@@ -53,7 +53,7 @@ namespace SymbolBuilder.Readers
             string package = mcu.Attributes["Package"]?.Value;
             string refName = mcu.Attributes["RefName"]?.Value;
 
-            SymbolDefinition device = new SymbolDefinition(refName, "ST Microelectronics", package);
+            SymbolDefinition device = new SymbolDefinition(refName, "ST MICROELECTRONICS", package);
             
             var pins = mcu.SelectNodes("/st:Mcu/st:Pin", xmlnsManager);
             foreach (XmlNode pin in pins)
@@ -75,8 +75,7 @@ namespace SymbolBuilder.Readers
                 device.CheckPinNames();
             }
 
-            var list = new List<SymbolDefinition>();
-            list.Add(device);
+            var list = new List<SymbolDefinition> { device };
             return list;
         }
 

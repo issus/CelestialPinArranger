@@ -207,12 +207,33 @@ namespace CelestialPinArranger
 
         private string SavePackage(string folderName, SchLibWriter writer, OriginalCircuit.AltiumSharp.Records.SchComponent component, object packageName)
         {
-            string fileName = $"SCH - {folderName.ToUpper()} - {String.Join(" ", txtManufacturer.Text.ToUpper(), txtPartNumber.Text.ToUpper(), packageName)}.SchLib".Replace("  ", " ");
+            string fileName;
+            string libRef;
+            if (txtPartNumber.Text.ToUpper() == packageName.ToString().ToUpper())
+            {
+                libRef = String.Join(" ", txtManufacturer.Text.ToUpper(), packageName);
+            }
+            else if (packageName.ToString().ToUpper().Contains(txtPartNumber.Text.ToUpper()))
+            {
+                libRef = String.Join(" ", txtManufacturer.Text.ToUpper(), packageName);
+            }
+            else if (txtManufacturer.Text.ToUpper().Contains(txtPartNumber.Text.ToUpper()))
+            {
+                libRef = String.Join(" ", txtManufacturer.Text.ToUpper(), packageName);
+            }
+            else
+            {
+                libRef = String.Join(" ", txtManufacturer.Text.ToUpper(), txtPartNumber.Text.ToUpper(), packageName);
+            }
+            libRef = libRef.Replace("  ", " ").Trim();
+            fileName = $"SCH - {folderName.ToUpper()} - {libRef}.SchLib".Replace("  ", " ");
+
+
             var fullFileName = Path.Combine(folderBrowserDialog.SelectedPath, fileName);
 
             var newLib = new SchLib();
 
-            component.LibReference = string.Join(" ", txtManufacturer.Text, txtPartNumber.Text, packageName);
+            component.LibReference = libRef;
 
             newLib.Add(component);
 
