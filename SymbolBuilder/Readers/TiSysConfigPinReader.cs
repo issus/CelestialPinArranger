@@ -40,17 +40,17 @@ namespace SymbolBuilder.Readers
         {
             var json = JsonDocument.Parse(stream);
 
-            return ProcessJson(json);
+            return ProcessJson(json, fileName);
         }
 
         public override async Task<List<SymbolDefinition>> LoadFromStreamAsync(Stream stream, string fileName = "")
         {
             var json = await JsonDocument.ParseAsync(stream);
 
-            return ProcessJson(json);
+            return ProcessJson(json, fileName);
         }
 
-        private List<SymbolDefinition> ProcessJson(JsonDocument json)
+        private List<SymbolDefinition> ProcessJson(JsonDocument json, string filename)
         {
             var ret = new List<SymbolDefinition>();
 
@@ -85,16 +85,16 @@ namespace SymbolBuilder.Readers
 
                 muxes.Add(mux);
             }
+            
 
-            foreach (var part in json.RootElement.GetProperty("parts").EnumerateObject())
+            foreach (var part in json.RootElement.GetProperty("packages").EnumerateObject())
             {
-                string partName = part.Value.GetProperty("name").GetString();
-                var packageId = part.Value.GetProperty("packageIDWrapper")[0].GetProperty("packageID").GetString();
+                string partName = Path.GetFileNameWithoutExtension(filename);
+                var packageId = part.Value.GetProperty("id").GetString();
 
-                var package = json.RootElement.GetProperty("packages").GetProperty(packageId);
+                var packageName = part.Value.GetProperty("name").GetString().Replace('(', ' ').Replace(')', ' ').Trim();
 
-                var packageName = package.GetProperty("name").GetString();
-                var pins = package.GetProperty("packagePin");
+                var pins = part.Value.GetProperty("packagePin");
                 if (pins.ValueKind != JsonValueKind.Array)
                     continue;
 

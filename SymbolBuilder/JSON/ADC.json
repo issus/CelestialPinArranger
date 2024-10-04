@@ -1,0 +1,152 @@
+{
+  "": [
+    {
+      "functionName": "Input",
+      "pinNamePattern": "^IN_?[NP]?$|^VIN\\w[\\+\\-]$|AIN_?\\d*[NP]?$|^D[AB]\\d+[NP]?$|^[AB]\\d+[NP]?$",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "DataReady",
+      "pinNamePattern": "DRDY(?:_N)?",
+      "position": "Right-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "AnalogIn",
+      "pinNamePattern": "^(?:GPIO\\d*_?)A?IN[NP\\d]*",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Osc",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^X(?:\\d\\d)?.+?_?|^OSC\\d+|^E?XTAL(?:\\d{1,2})?|^CLKIN",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "AnalogueGround",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^GNDA$|^VSSA|^AGND|^(?:HV_)?AVSS|^AVEE|^VIN-|^GNDANA|^GNDIO|ANALOGCOMMON",
+      "position": "Left-Lower"
+    },
+    {
+      "functionName": "Ground",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^EP(?:AD)?$|^[DRP]*GND(?:\\d+)?|^[DP]?VEE|^PAD$|^(?:IO)?[DRP]*VSS|^DIGITALCOMMON",
+      "position": "Left-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "AnaloguePowerIn",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VDDA|^VCCA|^AVIN|^PVIN|^AVCC|^AVDD|^(?:HV_)?VDDA|^DRVDD|^DRVCC|^VA$",
+      "position": "Left-Upper"
+    },
+    {
+      "functionName": "PowerIn",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VDD|^VCC\\d*|^VIN|^DVDD|^PVDD|^IOVDD|^VLOGIC|^DVCC|^V\\+|^IN|^VIN|^VCC|^VCC_RF(?:\\d+)?$|^VDR?$|^LVDD|^VS+|^+VS",
+      "position": "Left-Upper",
+      "priority": 0
+    },
+    {
+      "functionName": "PowerInSecondary",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VBAT",
+      "position": "Left-Upper",
+      "priority": 2
+    },
+    {
+      "functionName": "Enable",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^EN$|^EN1$|^EN2$|^EN_SYNC|^EN_LDO\\d|^EN_DCDC$|^PD_[AB]$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "PowerRef",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VREF|^REF[NP]?\\d?|^REFCOM$|^REF[BT]",
+      "position": "Right-Upper",
+      "priority": 2
+    },
+    {
+      "functionName": "PowerDecoupling",
+      "pinClass": "PowerSupply",
+      "pinNamePattern": "^VCAP|^DCOUPL",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Uvlo",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "UVLO",
+      "position": "Left-Upper",
+      "priority": 4
+    },
+    {
+      "functionName": "Reset",
+      "pinClass": "ChipConfiguration",
+      "pinNamePattern": "^RESET|RESET$|^RST|RST$|^MCLR$|^PAD_RESET$",
+      "position": "Left-Upper",
+      "priority": 3
+    },
+    {
+      "functionName": "USB",
+      "pinNamePattern": "^USB\\d{0,2}_D[PM]$|USB_VBUS(?:_\\d{0,2})?",
+      "position": "Left-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "PowerGood",
+      "pinNamePattern": "^PG$|^PWRGD$|^PGOOD$",
+      "position": "Right-Lower",
+      "priority": 0,
+      "groupSpacing": 2
+    },
+    {
+      "functionName": "SPI",
+      "pinNamePattern": "^CS(?:_N)?$|^C\\S\\$|^SDI$|^SDO$|^MOSI$|^MISO$|^SCLK$|^S?DIN$|^MISO(SDO)$|^MOSI(SDI)$|^S?CLK$|^DOUT$",
+      "position": "Right-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "I2C",
+      "pinNamePattern": "^SCL$|^SDA$",
+      "position": "Right-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "Serial",
+      "pinNamePattern": "^RX$|^TX$",
+      "position": "Right-Lower",
+      "priority": 0
+    },
+    {
+      "functionName": "Port",
+      "pinClass": "IOPort",
+      "pinNamePattern": "^(?:P(?<Group>\\w)\\.(?<Index>\\d+))$|(?:P(?<Group>\\d)\\[(?<Index>\\d+)\\])|(?:RP?(?<Group>[A-Z])(?<Index>\\d+))|^(?:G?PI?O?(?<Group>[A-Z0-9])_?(?<Index>\\d+))|(?:(?<Group>D?IO)_(?<Index>\\d+))|(?:PT(?<Group>[A-Z])(?<Index>\\d+))|^(?<Group>[a-zA-Z]{1,3})(?<Index>\\d+)$",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Filter",
+      "pinNamePattern": "^FILTER\\d?",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": "Opamp",
+      "pinNamePattern": "^OPAMP",
+      "position": "Right-Middle",
+      "priority": 0
+    },
+    {
+      "functionName": null,
+      "pinNamePattern": "",
+      "position": "Right-Middle"
+    }
+  ]
+}

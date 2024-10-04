@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net8.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
@@ -9,8 +9,8 @@
     <PackageReference Include="OriginalCircuit.AltiumSharp" Version="1.0.2" />
     <PackageReference Include="OriginalCircuit.BxlSharp" Version="1.0.0" />
     <PackageReference Include="OriginalCircuit.EagleSharp" Version="1.0.0" />
-    <PackageReference Include="SharpCompress" Version="0.30.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+    <PackageReference Include="SharpCompress" Version="0.38.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +30,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="JSON\SI Labs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="JSON\TI SysConfig MCU.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="JSON\Voltage Regulator.json">
